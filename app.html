@@ -775,7 +775,7 @@ function addAIMsg(text, dreamText) {
 const MONTHLY_URL = 'https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a';
 const ANNUAL_URL = 'https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b';
 
-function showPaywall() {
+window.showPaywall = function showPaywall() {
   document.getElementById('planMonthly').href = MONTHLY_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
   document.getElementById('planAnnual').href = ANNUAL_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
   document.getElementById('paywallOverlay').classList.add('active');
