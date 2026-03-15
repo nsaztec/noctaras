@@ -260,7 +260,7 @@ textarea { line-height: 1.75; min-height: 160px; }
   <div class="paywall-card">
     <span class="paywall-moon">☽</span>
     <h2 class="paywall-title">Unlock unlimited dreams</h2>
-    <p class="paywall-sub">You've used your 3 free interpretations this month.<br>Upgrade to Pro for unlimited access.</p>
+    <p class="paywall-sub" id="paywallMsg">Unlock unlimited dream interpretations, priority processing, and all future features.</p>
     <div class="paywall-plans">
       <a class="paywall-plan featured" id="planMonthly" href="#" target="_blank">
         <div class="plan-badge">Monthly</div>
@@ -775,7 +775,10 @@ function addAIMsg(text, dreamText) {
 const MONTHLY_URL = 'https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a';
 const ANNUAL_URL = 'https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b';
 
-window.showPaywall = function showPaywall() {
+window.showPaywall = function showPaywall(limitReached) {
+  document.getElementById("paywallMsg").innerHTML = limitReached
+    ? "You've used your 3 free interpretations this month.<br>Upgrade to Pro for unlimited access."
+    : "Unlock unlimited dream interpretations, priority processing, and all future features.";
   document.getElementById('planMonthly').href = MONTHLY_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
   document.getElementById('planAnnual').href = ANNUAL_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
   document.getElementById('paywallOverlay').classList.add('active');
@@ -792,7 +795,7 @@ async function callAI(dreamText) {
   if (res.status === 403) {
     const e = await res.json();
     if (e.error === 'limit_reached') {
-      showPaywall();
+      showPaywall(true);
       throw new Error('upgrade_required');
     }
   }
