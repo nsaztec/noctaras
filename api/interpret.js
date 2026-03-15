@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { dream, userId } = req.body;
+  const { dream, userId, email } = req.body;
   if (!dream) return res.status(400).json({ error: 'No dream provided' });
 
   const apiKey = process.env.OPENAI_API_KEY;
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
         // Increment usage
         await db.collection('users').doc(userId).set({
           usage: { ...usage, [monthKey]: monthlyCount + 1 },
-          email: userData.email || '',
+          email: email || userData.email || '',
         }, { merge: true });
       }
     } catch (e) {
@@ -102,4 +102,3 @@ Detect the language the user wrote in and respond in that same language. Poetic,
     return res.status(500).json({ error: err.message });
   }
 }
-

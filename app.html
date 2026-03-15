@@ -789,7 +789,7 @@ window.closePaywall = () => document.getElementById('paywallOverlay').classList.
 // ── AI ──
 async function callAI(dreamText) {
   const body = { dream: dreamText };
-  if (currentUser) body.userId = currentUser.uid;
+  if (currentUser) { body.userId = currentUser.uid; body.email = currentUser.email || ''; }
   
   const res = await fetch('/api/interpret', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
   
