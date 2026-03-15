@@ -209,13 +209,74 @@ textarea { line-height: 1.75; min-height: 160px; }
 .no-interp p { font-family: var(--serif); font-size: 16px; font-style: italic; color: var(--dim); margin-bottom: 20px; }
 .saving-indicator { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; text-align: center; padding: 8px; opacity: 0; transition: opacity 0.3s; }
 .saving-indicator.show { opacity: 1; }
-@media(max-width:600px){ #screen-chat{padding:26px 16px 32px;} .journal-wrap{padding:0 16px 60px;} .j-title{font-size:28px;} .j-actions{flex-direction:column;} }
+
+/* ── PAYWALL MODAL ── */
+.paywall-overlay {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(5,3,13,0.88); backdrop-filter: blur(12px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+.paywall-overlay.active { display: flex; animation: fadeUp 0.35s ease; }
+.paywall-card {
+  width: 100%; max-width: 520px;
+  background: rgba(15,13,28,0.98);
+  border: 0.5px solid rgba(155,143,232,0.25);
+  border-radius: 8px; padding: 48px 40px; text-align: center;
+  box-shadow: 0 0 60px rgba(155,143,232,0.1);
+}
+.paywall-moon { font-size: 40px; display: block; margin-bottom: 20px; animation: moonpulse 4s infinite ease-in-out; }
+.paywall-title { font-family: var(--serif); font-size: 30px; font-weight: 300; color: #fff; margin-bottom: 10px; }
+.paywall-sub { font-family: var(--serif); font-size: 16px; font-style: italic; color: var(--muted); margin-bottom: 36px; line-height: 1.6; }
+.paywall-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+.paywall-plan {
+  background: rgba(155,143,232,0.06); border: 0.5px solid rgba(155,143,232,0.2);
+  border-radius: 6px; padding: 20px 16px; cursor: pointer; transition: all 0.2s;
+  text-decoration: none; display: block;
+}
+.paywall-plan:hover { background: rgba(155,143,232,0.14); border-color: rgba(155,143,232,0.4); }
+.paywall-plan.featured { border-color: rgba(155,143,232,0.45); background: rgba(155,143,232,0.1); }
+.plan-badge { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); background: rgba(155,143,232,0.2); border-radius: 999px; padding: 3px 10px; display: inline-block; margin-bottom: 10px; }
+.plan-price { font-family: var(--sans); font-size: 28px; font-weight: 300; color: #fff; margin-bottom: 2px; }
+.plan-period { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+.plan-save { font-size: 11px; color: var(--accent); margin-top: 4px; }
+.paywall-close { font-size: 12px; color: var(--dim); cursor: pointer; letter-spacing: 0.08em; background: none; border: none; margin-top: 4px; transition: color 0.2s; }
+.paywall-close:hover { color: var(--muted); }
+.usage-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--muted); letter-spacing: 0.06em;
+  background: var(--purple-dim); border: 0.5px solid var(--border);
+  border-radius: 999px; padding: 5px 14px; margin-top: 12px;
+}
+
+@media(max-width:600px){ #screen-chat{padding:26px 16px 32px;} .journal-wrap{padding:0 16px 60px;} .j-title{font-size:28px;} .j-actions{flex-direction:column;} .paywall-plans{grid-template-columns:1fr;} .paywall-card{padding:36px 24px;} }
 </style>
 </head>
 <body>
 
 <div id="stars"></div>
 <canvas id="wavyCanvas"></canvas>
+<!-- ══════════════ PAYWALL MODAL ══════════════ -->
+<div class="paywall-overlay" id="paywallOverlay">
+  <div class="paywall-card">
+    <span class="paywall-moon">☽</span>
+    <h2 class="paywall-title">Unlock unlimited dreams</h2>
+    <p class="paywall-sub">You've used your 3 free interpretations this month.<br>Upgrade to Pro for unlimited access.</p>
+    <div class="paywall-plans">
+      <a class="paywall-plan featured" id="planMonthly" href="#" target="_blank">
+        <div class="plan-badge">Monthly</div>
+        <div class="plan-price">$7.99</div>
+        <div class="plan-period">per month</div>
+      </a>
+      <a class="paywall-plan" id="planAnnual" href="#" target="_blank">
+        <div class="plan-badge">Annual</div>
+        <div class="plan-price">$49.99</div>
+        <div class="plan-period">per year</div>
+        <div class="plan-save">Save 48%</div>
+      </a>
+    </div>
+    <button class="paywall-close" onclick="closePaywall()">Maybe later</button>
+  </div>
+</div>
 
 <!-- ══════════════ AUTH SCREEN ══════════════ -->
 <div id="screen-auth">
@@ -666,7 +727,9 @@ window.submitChat = async () => {
       addAIMsg(analysis, text);
     } catch(e) {
       load.remove();
-      addAIMsg('The stars grew silent... ' + e.message, '');
+      if (e.message !== 'upgrade_required') {
+        addAIMsg('The stars grew silent... ' + e.message, '');
+      }
     }
   });
 };
@@ -707,9 +770,32 @@ function addAIMsg(text, dreamText) {
   }, 14);
 }
 
+// ── Paywall ──
+const MONTHLY_URL = 'https://store.noctaras.com/checkout/buy/1406944';
+const ANNUAL_URL = 'https://store.noctaras.com/checkout/buy/1406969';
+
+function showPaywall() {
+  document.getElementById('planMonthly').href = MONTHLY_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
+  document.getElementById('planAnnual').href = ANNUAL_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
+  document.getElementById('paywallOverlay').classList.add('active');
+}
+window.closePaywall = () => document.getElementById('paywallOverlay').classList.remove('active');
+
 // ── AI ──
 async function callAI(dreamText) {
-  const res = await fetch('/api/interpret', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({dream: dreamText}) });
+  const body = { dream: dreamText };
+  if (currentUser) body.userId = currentUser.uid;
+  
+  const res = await fetch('/api/interpret', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  
+  if (res.status === 403) {
+    const e = await res.json();
+    if (e.error === 'limit_reached') {
+      showPaywall();
+      throw new Error('upgrade_required');
+    }
+  }
+  
   if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'API error'); }
   const d = await res.json();
   return d.result || 'The stars kept their secrets tonight...';
