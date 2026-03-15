@@ -461,8 +461,8 @@ textarea { line-height: 1.75; min-height: 160px; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtLITcSC2vN_dSCvgG5Jz0TQ8AaU5Z0VM",
@@ -493,6 +493,7 @@ onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     showScreen('chat');
     await loadDreams();
+    try { await setDoc(doc(db, 'users', user.uid), { email: user.email || '' }, { merge: true }); } catch(e) {}
   } else {
     currentUser = null;
     showAuthScreen('login');
@@ -527,8 +528,13 @@ window.registerEmail = async () => {
   const email = document.getElementById('registerEmail').value.trim();
   const password = document.getElementById('registerPassword').value;
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await sendEmailVerification(cred.user);
+    await fbSignOut(auth);
+    document.getElementById('registerError').style.color = '#9B8FE8';
+    document.getElementById('registerError').textContent = 'Verification email sent! Please check your inbox before signing in.';
   } catch (e) {
+    document.getElementById('registerError').style.color = '';
     document.getElementById('registerError').textContent = friendlyError(e.code);
   }
 };
