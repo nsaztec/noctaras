@@ -248,6 +248,54 @@ textarea { line-height: 1.75; min-height: 160px; }
   border-radius: 999px; padding: 5px 14px; margin-top: 12px;
 }
 
+
+/* ══════════════ DREAM TREE ══════════════ */
+#screen-tree { background: var(--bg); overflow-y: auto; }
+.tree-wrap { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+.tree-topbar { display: flex; align-items: center; justify-content: space-between; padding: 36px 0 48px; border-bottom: 0.5px solid var(--border); margin-bottom: 48px; }
+.tree-title-area h1 { font-family: var(--serif); font-size: 32px; font-weight: 300; color: #fff; }
+.tree-title-area p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.tree-year-selector { display: flex; align-items: center; gap: 12px; }
+.tree-year-btn { background: none; border: 0.5px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+.tree-year-btn:hover, .tree-year-btn.active { border-color: var(--purple); color: var(--accent); }
+
+.tree-container { position: relative; display: flex; flex-direction: column; align-items: center; min-height: 600px; }
+.tree-svg-wrap { width: 100%; max-width: 700px; margin: 0 auto; }
+
+.tree-months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+.tree-month-card {
+  background: var(--surface); border: 0.5px solid var(--border);
+  border-radius: 8px; padding: 20px; cursor: pointer;
+  transition: all 0.2s; position: relative;
+}
+.tree-month-card:hover { border-color: rgba(155,143,232,0.35); background: var(--surface2); }
+.tree-month-card.has-dreams { border-color: rgba(155,143,232,0.25); }
+.tree-month-card.empty { opacity: 0.4; cursor: default; }
+.tree-month-card.future { opacity: 0.25; cursor: default; }
+.month-card-name { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple); margin-bottom: 8px; }
+.month-card-count { font-family: var(--serif); font-size: 28px; color: #fff; font-weight: 300; }
+.month-card-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.month-card-dreams { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
+.month-dream-chip { font-size: 11px; color: var(--muted); padding: 4px 8px; background: rgba(155,143,232,0.06); border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.month-analyze-btn { margin-top: 12px; width: 100%; background: none; border: 0.5px solid rgba(155,143,232,0.3); color: var(--accent); font-size: 11px; letter-spacing: 0.08em; padding: 8px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+.month-analyze-btn:hover { background: rgba(155,143,232,0.1); }
+
+.tree-annual-btn { display: block; margin: 40px auto 0; background: none; border: 0.5px solid rgba(155,143,232,0.4); color: var(--accent); font-size: 13px; letter-spacing: 0.1em; padding: 14px 32px; border-radius: 30px; cursor: pointer; transition: all 0.2s; }
+.tree-annual-btn:hover { background: rgba(155,143,232,0.1); }
+.tree-annual-btn:disabled { opacity: 0.3; cursor: default; }
+
+.tree-analysis-panel { margin-top: 32px; background: var(--surface); border: 0.5px solid rgba(155,143,232,0.2); border-radius: 8px; padding: 32px; display: none; }
+.tree-analysis-panel.active { display: block; }
+.tree-analysis-title { font-family: var(--serif); font-size: 22px; color: #fff; margin-bottom: 16px; }
+.tree-analysis-text { font-family: var(--serif); font-size: 15px; color: var(--muted); line-height: 1.9; white-space: pre-wrap; }
+.tree-analysis-loading { color: var(--purple); font-size: 13px; letter-spacing: 0.1em; }
+
+.seedling-state { text-align: center; padding: 60px 20px; }
+.seedling-state .seedling-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.6; }
+.seedling-state p { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: 16px; }
+
+@media(max-width:600px){ .tree-months-grid{grid-template-columns:1fr 1fr;} .tree-wrap{padding:0 16px 60px;} }
+
 @media(max-width:600px){ #screen-chat{padding:26px 16px 32px;} .journal-wrap{padding:0 16px 60px;} .j-title{font-size:28px;} .j-actions{flex-direction:column;} .paywall-plans{grid-template-columns:1fr;} .paywall-card{padding:36px 24px;} }
 </style>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -337,6 +385,7 @@ textarea { line-height: 1.75; min-height: 160px; }
       <span class="logo-text">Noctaras</span>
     </a>
     <div class="topbar-right">
+      <button class="btn-your-dreams" onclick="goTree()" style="margin-right:4px;">🌳</button>
       <button class="btn-your-dreams" onclick="goJournal()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
@@ -557,9 +606,7 @@ function friendlyError(code) {
 
 // ── Screen management ──
 function showScreen(name) {
-  document.getElementById('screen-auth').classList.remove('active');
-  document.getElementById('screen-chat').classList.remove('active');
-  document.getElementById('screen-journal').classList.remove('active');
+  ['auth','chat','journal','tree'].forEach(s => document.getElementById('screen-'+s)?.classList.remove('active'));
   if (name === 'auth') {
     document.getElementById('screen-auth').classList.add('active');
   } else {
@@ -568,14 +615,263 @@ function showScreen(name) {
 }
 
 function showAuthScreen(form) {
+  ['auth','chat','journal','tree'].forEach(s => document.getElementById('screen-'+s)?.classList.remove('active'));
   document.getElementById('screen-auth').classList.add('active');
-  document.getElementById('screen-chat').classList.remove('active');
-  document.getElementById('screen-journal').classList.remove('active');
   window.showAuthForm(form);
 }
 
 window.goJournal = () => { showScreen('journal'); renderJournal(); };
 window.goChat = () => showScreen('chat');
+window.goTree = () => { showScreen('tree'); renderTree(); };
+
+// ══════════════ DREAM TREE ══════════════
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+let treeYear = new Date().getFullYear();
+let allDreams = [];
+
+async function renderTree() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth(); // 0-indexed
+
+  // Load dreams from Firestore
+  if (!currentUser) return;
+  try {
+    const q = query(collection(db, 'users', currentUser.uid, 'dreams'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    allDreams = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch(e) {
+    allDreams = [];
+  }
+
+  // Year selector
+  const years = [...new Set(allDreams.map(d => {
+    const date = d.createdAt?.toDate ? d.createdAt.toDate() : new Date(d.createdAt);
+    return date.getFullYear();
+  }))].filter(Boolean);
+  if (!years.includes(currentYear)) years.push(currentYear);
+  years.sort((a,b) => b-a);
+
+  const selector = document.getElementById('treeYearSelector');
+  selector.innerHTML = years.map(y => 
+    `<button class="tree-year-btn ${y === treeYear ? 'active' : ''}" onclick="setTreeYear(${y})">${y}</button>`
+  ).join('');
+
+  // Filter dreams for selected year
+  const yearDreams = allDreams.filter(d => {
+    const date = d.createdAt?.toDate ? d.createdAt.toDate() : new Date(d.createdAt);
+    return date.getFullYear() === treeYear;
+  });
+
+  // Group by month
+  const byMonth = Array(12).fill(null).map(() => []);
+  yearDreams.forEach(d => {
+    const date = d.createdAt?.toDate ? d.createdAt.toDate() : new Date(d.createdAt);
+    byMonth[date.getMonth()].push(d);
+  });
+
+  const totalDreams = yearDreams.length;
+  const content = document.getElementById('treeContent');
+
+  if (totalDreams === 0) {
+    content.innerHTML = `
+      <div class="seedling-state">
+        <div class="seedling-icon">🌱</div>
+        <p>Your dream tree is waiting to grow.</p>
+        <p style="margin-top:8px;font-size:13px;">Record your first dream and watch it take root.</p>
+        <button onclick="goJournal()" style="margin-top:24px;background:none;border:0.5px solid rgba(155,143,232,0.3);color:var(--accent);padding:10px 24px;border-radius:20px;cursor:pointer;font-size:13px;">Record a dream</button>
+      </div>`;
+    return;
+  }
+
+  // Tree SVG — grows based on dream count
+  const treeStage = totalDreams <= 2 ? 'seedling' : totalDreams <= 6 ? 'sapling' : totalDreams <= 15 ? 'young' : 'full';
+  const treeSvg = getTreeSvg(treeStage, byMonth, treeYear === currentYear ? currentMonth : 11);
+
+  // Month cards
+  const monthCards = byMonth.map((dreams, i) => {
+    const isFuture = treeYear === currentYear && i > currentMonth;
+    const isEmpty = dreams.length === 0;
+    let cardClass = 'tree-month-card';
+    if (isFuture) cardClass += ' future';
+    else if (isEmpty) cardClass += ' empty';
+    else cardClass += ' has-dreams';
+
+    const dreamChips = dreams.slice(0,3).map(d => 
+      `<div class="month-dream-chip">✦ ${d.title || d.dream?.substring(0,40) || 'Dream'}</div>`
+    ).join('');
+
+    const analyzeBtn = (!isEmpty && !isFuture) ? 
+      `<button class="month-analyze-btn" onclick="analyzeMonth(${i}, ${treeYear})">✦ Analyze ${MONTHS_SHORT[i]}</button>` : '';
+
+    return `
+      <div class="${cardClass}">
+        <div class="month-card-name">${MONTHS[i]}</div>
+        <div class="month-card-count">${isFuture ? '—' : dreams.length}</div>
+        <div class="month-card-label">${isFuture ? 'upcoming' : dreams.length === 1 ? 'dream' : 'dreams'}</div>
+        ${!isEmpty && !isFuture ? `<div class="month-card-dreams">${dreamChips}${dreams.length > 3 ? `<div class="month-dream-chip" style="opacity:0.5">+${dreams.length-3} more</div>` : ''}</div>` : ''}
+        ${analyzeBtn}
+      </div>`;
+  }).join('');
+
+  const annualDisabled = totalDreams < 3 ? 'disabled' : '';
+  const annualTitle = treeYear < currentYear ? `Get ${treeYear} Annual Analysis` : `Get ${treeYear} Year-So-Far Analysis`;
+
+  content.innerHTML = `
+    <div class="tree-title-area" style="margin-bottom:32px;">
+      <h1>Your Dream Tree — ${treeYear}</h1>
+      <p>${totalDreams} dream${totalDreams !== 1 ? 's' : ''} recorded this year</p>
+    </div>
+    <div class="tree-svg-wrap">${treeSvg}</div>
+    <div class="tree-months-grid" style="margin-top:40px;">${monthCards}</div>
+    <button class="tree-annual-btn" onclick="analyzeYear(${treeYear})" ${annualDisabled}>✦ ${annualTitle}</button>
+    <div class="tree-analysis-panel" id="treeAnalysisPanel">
+      <div class="tree-analysis-title" id="treeAnalysisTitle"></div>
+      <div class="tree-analysis-text" id="treeAnalysisText"></div>
+    </div>
+  `;
+}
+
+function getTreeSvg(stage, byMonth, currentMonthIdx) {
+  const activeMonths = byMonth.filter((m,i) => i <= currentMonthIdx && m.length > 0).length;
+  
+  const stageConfigs = {
+    seedling: { trunkH: 80, trunkW: 6, branches: 2, foliage: 40 },
+    sapling:  { trunkH: 140, trunkW: 8, branches: 5, foliage: 60 },
+    young:    { trunkH: 200, trunkW: 12, branches: 8, foliage: 90 },
+    full:     { trunkH: 260, trunkW: 16, branches: 12, foliage: 110 },
+  };
+  const cfg = stageConfigs[stage];
+  const W = 700, H = 400, cx = W/2, base = H - 20;
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+  <defs>
+    <radialGradient id="tg1" cx="50%" cy="100%"><stop offset="0%" stop-color="#2a1f5e"/><stop offset="100%" stop-color="#07060F" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse cx="${cx}" cy="${base}" rx="180" ry="12" fill="url(#tg1)" opacity="0.4"/>
+  <rect x="${cx - cfg.trunkW/2}" y="${base - cfg.trunkH}" width="${cfg.trunkW}" height="${cfg.trunkH}" rx="${cfg.trunkW/2}" fill="#3d2f6e" opacity="0.8"/>`;
+
+  // Branches — spread along the trunk
+  const branchCount = Math.min(cfg.branches, activeMonths + 1);
+  for (let i = 0; i < 12; i++) {
+    const side = i % 2 === 0 ? -1 : 1;
+    const progress = (i / 11);
+    const branchY = base - cfg.trunkH * (0.25 + progress * 0.7);
+    const branchLen = cfg.foliage * (0.4 + progress * 0.6);
+    const angle = side * (40 + progress * 20);
+    const rad = angle * Math.PI / 180;
+    const ex = cx + Math.sin(rad) * branchLen;
+    const ey = branchY - Math.cos(rad) * branchLen * 0.5;
+    
+    const hasMonth = byMonth[i]?.length > 0;
+    const isFuture = i > currentMonthIdx;
+    const isActive = i < branchCount;
+    
+    if (!isActive) continue;
+    
+    const opacity = isFuture ? 0.15 : hasMonth ? 0.9 : 0.3;
+    const color = hasMonth ? '#9B8FE8' : '#3d2f6e';
+    const leafColor = hasMonth ? '#C4B8FF' : '#4a3880';
+    const leafR = hasMonth ? (6 + byMonth[i].length * 3) : 4;
+
+    svg += `<line x1="${cx}" y1="${branchY}" x2="${ex}" y2="${ey}" stroke="${color}" stroke-width="${hasMonth ? 2 : 1}" opacity="${opacity}"/>`;
+    if (!isFuture) {
+      svg += `<circle cx="${ex}" cy="${ey}" r="${leafR}" fill="${leafColor}" opacity="${opacity}" filter="url(#blur)"/>`;
+      if (hasMonth) {
+        svg += `<circle cx="${ex}" cy="${ey}" r="${leafR + 4}" fill="${leafColor}" opacity="${opacity * 0.2}"/>`;
+        svg += `<text x="${ex + side*14}" y="${ey + 4}" font-size="9" fill="${leafColor}" opacity="${opacity * 0.8}" font-family="serif" text-anchor="${side > 0 ? 'start' : 'end'}">${MONTHS_SHORT[i]}</text>`;
+      }
+    }
+  }
+
+  // Top crown
+  if (stage !== 'seedling') {
+    const crownY = base - cfg.trunkH;
+    svg += `<circle cx="${cx}" cy="${crownY}" r="${cfg.foliage * 0.45}" fill="#1a1245" opacity="0.5"/>
+    <circle cx="${cx}" cy="${crownY}" r="${cfg.foliage * 0.3}" fill="#9B8FE8" opacity="0.15"/>`;
+  }
+
+  svg += `</svg>`;
+  return svg;
+}
+
+window.setTreeYear = (y) => { treeYear = y; renderTree(); };
+
+window.analyzeMonth = async (monthIdx, year) => {
+  const monthDreams = allDreams.filter(d => {
+    const date = d.createdAt?.toDate ? d.createdAt.toDate() : new Date(d.createdAt);
+    return date.getFullYear() === year && date.getMonth() === monthIdx;
+  });
+  if (monthDreams.length === 0) return;
+
+  const panel = document.getElementById('treeAnalysisPanel');
+  const title = document.getElementById('treeAnalysisTitle');
+  const text = document.getElementById('treeAnalysisText');
+  
+  panel.classList.add('active');
+  title.textContent = `${MONTHS[monthIdx]} ${year} — Monthly Analysis`;
+  text.innerHTML = `<span class="tree-analysis-loading">Analyzing your dreams...</span>`;
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const dreamSummary = monthDreams.map((d,i) => `Dream ${i+1}: ${d.dream || d.title}`).join('\n');
+  
+  try {
+    const res = await fetch('/api/interpret', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        dream: `Monthly analysis request for ${MONTHS[monthIdx]} ${year}. The user had ${monthDreams.length} dreams this month:\n${dreamSummary}\n\nProvide a monthly psychological analysis: recurring themes, emotional patterns, what the subconscious was processing this month, and key insights.`,
+        userId: currentUser?.uid,
+        skipLimit: true
+      })
+    });
+    const data = await res.json();
+    text.textContent = data.result || 'The stars kept their secrets...';
+  } catch(e) {
+    text.textContent = 'Analysis could not be completed.';
+  }
+};
+
+window.analyzeYear = async (year) => {
+  const yearDreams = allDreams.filter(d => {
+    const date = d.createdAt?.toDate ? d.createdAt.toDate() : new Date(d.createdAt);
+    return date.getFullYear() === year;
+  });
+  if (yearDreams.length < 3) return;
+
+  const panel = document.getElementById('treeAnalysisPanel');
+  const title = document.getElementById('treeAnalysisTitle');
+  const text = document.getElementById('treeAnalysisText');
+  
+  panel.classList.add('active');
+  title.textContent = `${year} — Annual Dream Analysis`;
+  text.innerHTML = `<span class="tree-analysis-loading">Weaving your year's dreams into insight...</span>`;
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const dreamSummary = yearDreams.map((d,i) => {
+    const date = d.createdAt?.toDate ? d.createdAt.toDate() : new Date(d.createdAt);
+    return `[${MONTHS_SHORT[date.getMonth()]}] ${d.dream || d.title}`;
+  }).join('\n');
+
+  try {
+    const res = await fetch('/api/interpret', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        dream: `Annual dream analysis for ${year}. The user had ${yearDreams.length} dreams throughout the year:\n${dreamSummary}\n\nProvide a deep annual psychological analysis: the overarching themes of the year, emotional and subconscious evolution across months, recurring symbols and what they collectively reveal, mood patterns, and a profound reflection on what this year meant for the dreamer's inner world.`,
+        userId: currentUser?.uid,
+        skipLimit: true
+      })
+    });
+    const data = await res.json();
+    text.textContent = data.result || 'The stars kept their secrets...';
+  } catch(e) {
+    text.textContent = 'Analysis could not be completed.';
+  }
+};
+
 
 // ── Firestore ──
 async function loadDreams() {

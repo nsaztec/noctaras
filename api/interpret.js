@@ -20,14 +20,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { dream, userId, email } = req.body;
+  const { dream, userId, email, skipLimit } = req.body;
   if (!dream) return res.status(400).json({ error: 'No dream provided' });
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'API key not configured' });
 
   // Check usage limit if userId provided
-  if (userId) {
+  if (userId && !skipLimit) {
     try {
       const userDoc = await db.collection('users').doc(userId).get();
       const userData = userDoc.data() || {};
