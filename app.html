@@ -304,6 +304,31 @@ textarea { line-height: 1.75; min-height: 160px; }
 
 <div id="stars"></div>
 <canvas id="wavyCanvas"></canvas>
+
+<!-- ══════════════ SCREEN 3: DREAM TREE ══════════════ -->
+<div id="screen-tree" class="screen">
+  <div class="tree-wrap">
+    <div class="tree-topbar">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <button class="btn-back-home" onclick="goChat()" style="margin:0;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5"/><path d="M12 5l-7 7 7 7"/></svg>
+          Back
+        </button>
+        <div class="j-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="9" cy="12" r="6.5" stroke="#9B8FE8" stroke-width="1.1" fill="none"/>
+            <circle cx="15" cy="12" r="6.5" stroke="#C4B8FF" stroke-width="1.1" fill="none" opacity="0.6"/>
+            <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.25"/>
+          </svg>
+          <span class="j-logo-text">Noctaras</span>
+        </div>
+      </div>
+      <div class="tree-year-selector" id="treeYearSelector"></div>
+    </div>
+    <div id="treeContent"></div>
+  </div>
+</div>
+
 <!-- ══════════════ PAYWALL MODAL ══════════════ -->
 <div class="paywall-overlay" id="paywallOverlay">
   <div class="paywall-card">
@@ -385,7 +410,7 @@ textarea { line-height: 1.75; min-height: 160px; }
       <span class="logo-text">Noctaras</span>
     </a>
     <div class="topbar-right">
-      <button class="btn-your-dreams" onclick="goTree()" style="margin-right:4px;">🌳</button>
+      <button class="btn-your-dreams" onclick="goTree()" style="margin-right:4px;">✦ Dream Tree</button>
       <button class="btn-your-dreams" onclick="goJournal()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
@@ -606,16 +631,29 @@ function friendlyError(code) {
 
 // ── Screen management ──
 function showScreen(name) {
-  ['auth','chat','journal','tree'].forEach(s => document.getElementById('screen-'+s)?.classList.remove('active'));
+  ['auth','chat','journal','tree'].forEach(s => {
+    const el = document.getElementById('screen-'+s);
+    if (!el) return;
+    el.classList.remove('active');
+    el.style.display = '';
+  });
   if (name === 'auth') {
     document.getElementById('screen-auth').classList.add('active');
+  } else if (name === 'chat') {
+    document.getElementById('screen-chat').classList.add('active');
   } else {
+    // Keep chat mounted but hidden so AI animation continues
+    const chat = document.getElementById('screen-chat');
+    chat.style.display = 'none';
     document.getElementById('screen-' + name).classList.add('active');
   }
 }
 
 function showAuthScreen(form) {
-  ['auth','chat','journal','tree'].forEach(s => document.getElementById('screen-'+s)?.classList.remove('active'));
+  ['auth','chat','journal','tree'].forEach(s => {
+    const el = document.getElementById('screen-'+s);
+    if (el) { el.classList.remove('active'); el.style.display = ''; }
+  });
   document.getElementById('screen-auth').classList.add('active');
   window.showAuthForm(form);
 }
@@ -1052,8 +1090,19 @@ function addAIMsg(text, dreamText) {
   const el = document.createElement('div'); el.className = 'msg-ai';
   const c = document.getElementById('chatMessages'); c.appendChild(el);
   let i = 0;
+  let userScrolled = false;
+  const onScroll = () => {
+    const atBottom = c.scrollHeight - c.scrollTop - c.clientHeight < 60;
+    if (!atBottom) userScrolled = true;
+    else userScrolled = false;
+  };
+  c.addEventListener('scroll', onScroll, { passive: true });
   const iv = setInterval(() => {
-    if (i < text.length) { el.innerHTML = text.slice(0,i+1).replace(/\n/g,'<br>') + '<span class="cursor"></span>'; i++; }
+    if (i < text.length) { 
+      el.innerHTML = text.slice(0,i+1).replace(/\n/g,'<br>') + '<span class="cursor"></span>'; 
+      i++;
+      if (!userScrolled) c.scrollTop = c.scrollHeight;
+    }
     else {
       el.innerHTML = text.replace(/\n/g,'<br>');
       if (dreamText) {
@@ -1068,9 +1117,9 @@ function addAIMsg(text, dreamText) {
         };
         el.appendChild(document.createElement('br')); el.appendChild(btn);
       }
+      c.removeEventListener('scroll', onScroll);
       clearInterval(iv);
     }
-    c.scrollTop = c.scrollHeight;
   }, 14);
 }
 
