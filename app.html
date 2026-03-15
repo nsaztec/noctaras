@@ -61,7 +61,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
   color: var(--accent);
 }
 .btn-auth-primary:hover { background: rgba(155,143,232,0.32); }
-.btn-auth-primary:disabled { opacity: 0.4; cursor: default; }
+.btn-auth-primary:disabled { opacity: 0.4; cursor: pointer; }
 .btn-google {
   width: 100%; padding: 13px; border-radius: 4px; cursor: pointer;
   font-family: var(--sans); font-size: 13px; letter-spacing: 0.08em;
@@ -82,7 +82,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 /* ── CHAT ── */
 #screen-chat { align-items: center; padding: 36px 24px 40px; }
 .chat-topbar { width: 100%; padding: 0 8px 0 0; display: flex; align-items: center; justify-content: space-between; }
-.logo { display: flex; align-items: center; gap: 10px; cursor: default; }
+.logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .logo-text { font-family: 'Space Grotesk', var(--sans); font-size: 17px; font-weight: 500; color: var(--accent); letter-spacing: 0.22em; text-transform: uppercase; }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 .btn-your-dreams {
@@ -113,7 +113,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 .msg-ai { align-self: flex-start; background: rgba(15,13,28,0.9); border: 0.5px solid var(--border); border-radius: 20px 20px 20px 5px; padding: 18px 22px; font-family: var(--serif); font-size: 17.5px; line-height: 1.9; color: var(--text); max-width: 90%; animation: msgIn 0.28s ease; white-space: pre-wrap; }
 .msg-save-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.28); border-radius: 2px; padding: 7px 16px; cursor: pointer; transition: all 0.2s; }
 .msg-save-btn:hover { background: rgba(155,143,232,0.24); }
-.msg-save-btn:disabled { opacity: 0.4; cursor: default; }
+.msg-save-btn:disabled { opacity: 0.4; cursor: pointer; }
 @keyframes msgIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .msg-loading { align-self: flex-start; background: rgba(15,13,28,0.9); border: 0.5px solid var(--border); border-radius: 20px 20px 20px 5px; padding: 16px 24px; animation: msgIn 0.28s ease; }
 .dots span { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--purple); margin: 0 3px; opacity: 0.3; animation: dotbounce 1.3s infinite ease-in-out; }
@@ -132,7 +132,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 .vanish-placeholder.out { opacity: 0; transform: translateY(-8px); }
 .vanish-submit { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; z-index: 3; background: rgba(155,143,232,0.18); border: 0.5px solid rgba(155,143,232,0.3); color: var(--accent); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
 .vanish-submit:hover:not(:disabled) { background: rgba(155,143,232,0.32); }
-.vanish-submit:disabled { opacity: 0.28; cursor: default; }
+.vanish-submit:disabled { opacity: 0.28; cursor: pointer; }
 .cursor { display: inline-block; width: 1.5px; height: 1.05em; background: var(--purple); margin-left: 2px; vertical-align: text-bottom; animation: blink 1s infinite; }
 @keyframes blink { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
 
@@ -183,10 +183,10 @@ textarea { line-height: 1.75; min-height: 160px; }
 .j-actions { display: flex; gap: 10px; margin-top: 8px; }
 .btn-interp { flex: 1; font-family: var(--sans); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.3); border-radius: 2px; padding: 14px; cursor: pointer; transition: all 0.2s; }
 .btn-interp:hover { background: rgba(155,143,232,0.24); }
-.btn-interp:disabled { opacity: 0.28; cursor: default; }
+.btn-interp:disabled { opacity: 0.28; cursor: pointer; }
 .btn-save-plain { flex: 1; font-family: var(--sans); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: transparent; border: 0.5px solid var(--border); border-radius: 2px; padding: 14px; cursor: pointer; transition: all 0.2s; }
 .btn-save-plain:hover { border-color: var(--border-h); color: var(--text); }
-.btn-save-plain:disabled { opacity: 0.28; cursor: default; }
+.btn-save-plain:disabled { opacity: 0.28; cursor: pointer; }
 .btn-full-j { width: 100%; font-family: var(--sans); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.3); border-radius: 2px; padding: 14px; cursor: pointer; transition: all 0.2s; margin-top: 18px; }
 .btn-full-j:hover { background: rgba(155,143,232,0.24); }
 .j-loading { display: none; text-align: center; padding: 26px 0; }
@@ -327,14 +327,14 @@ textarea { line-height: 1.75; min-height: 160px; }
 <!-- ══════════════ SCREEN 1: CHAT ══════════════ -->
 <div id="screen-chat" class="screen">
   <div class="chat-topbar">
-    <div class="logo">
+    <a href="index.html" class="logo" style="text-decoration:none;">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
         <circle cx="9" cy="12" r="6.5" stroke="#9B8FE8" stroke-width="1.1" fill="none"/>
         <circle cx="15" cy="12" r="6.5" stroke="#C4B8FF" stroke-width="1.1" fill="none" opacity="0.6"/>
         <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.25"/>
       </svg>
       <span class="logo-text">Noctaras</span>
-    </div>
+    </a>
     <div class="topbar-right">
       <button class="btn-your-dreams" onclick="goJournal()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
