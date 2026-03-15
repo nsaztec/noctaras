@@ -8,10 +8,10 @@
 <style>
 :root {
   --bg: #07060F; --surface: #0F0D1C; --surface2: #161428;
-  --border: rgba(160,140,255,0.12); --border-h: rgba(160,140,255,0.28);
+  --border: rgba(160,140,255,0.22); --border-h: rgba(160,140,255,0.45);
   --purple: #9B8FE8; --purple-dim: rgba(155,143,232,0.14);
   --purple-glow: rgba(155,143,232,0.06); --text: #EAE6FF;
-  --muted: rgba(234,230,255,0.45); --dim: rgba(234,230,255,0.22);
+  --muted: rgba(234,230,255,0.70); --dim: rgba(234,230,255,0.45);
   --accent: #C4B8FF; --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Outfit', sans-serif;
 }
@@ -87,18 +87,18 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 .btn-your-dreams {
   display: flex; align-items: center; gap: 8px;
-  font-family: var(--sans); font-size: 12.5px; font-weight: 400;
-  letter-spacing: 0.07em; color: var(--muted); background: transparent;
-  border: 0.5px solid var(--border); border-radius: 999px; padding: 8px 20px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.04em; color: rgba(234,230,255,0.85); background: rgba(155,143,232,0.08);
+  border: 1px solid rgba(160,140,255,0.3); border-radius: 999px; padding: 9px 20px;
   cursor: pointer; transition: all 0.25s;
 }
-.btn-your-dreams:hover { color: var(--text); border-color: var(--border-h); background: var(--purple-glow); }
+.btn-your-dreams:hover { color: #fff; border-color: rgba(160,140,255,0.6); background: rgba(155,143,232,0.18); }
 .btn-signout {
-  font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--dim); background: transparent; border: 0.5px solid var(--border);
-  border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: all 0.2s;
+  font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.06em;
+  color: rgba(234,230,255,0.65); background: transparent; border: 1px solid rgba(160,140,255,0.25);
+  border-radius: 999px; padding: 8px 16px; cursor: pointer; transition: all 0.2s;
 }
-.btn-signout:hover { color: var(--muted); border-color: var(--border-h); }
+.btn-signout:hover { color: rgba(234,230,255,0.9); border-color: rgba(160,140,255,0.5); }
 .chat-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 700px; margin: 0 auto; }
 .chat-hero { text-align: center; margin-bottom: 44px; transition: opacity 0.4s; }
 .chat-moon { display: flex; justify-content: center; margin-bottom: 28px; animation: moonpulse 4s infinite ease-in-out; }
@@ -140,8 +140,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 #screen-journal { background: var(--bg); }
 .journal-wrap { max-width: 740px; margin: 0 auto; padding: 0 24px 80px; }
 .journal-topbar { display: flex; align-items: center; justify-content: space-between; padding: 36px 0 48px; border-bottom: 0.5px solid var(--border); margin-bottom: 48px; }
-.btn-back-home { display: flex; align-items: center; gap: 8px; font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); background: transparent; border: 0.5px solid var(--border); border-radius: 2px; padding: 8px 16px; cursor: pointer; transition: all 0.2s; }
-.btn-back-home:hover { color: var(--muted); border-color: var(--border-h); }
+.btn-back-home { display: flex; align-items: center; gap: 8px; font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(234,230,255,0.75); background: rgba(155,143,232,0.08); border: 1px solid rgba(160,140,255,0.3); border-radius: 6px; padding: 9px 18px; cursor: pointer; transition: all 0.2s; }
+.btn-back-home:hover { color: #fff; border-color: rgba(160,140,255,0.6); background: rgba(155,143,232,0.16); }
 .j-logo { display: flex; align-items: center; gap: 9px; }
 .j-logo-text { font-family: 'Space Grotesk', var(--sans); font-size: 15px; font-weight: 500; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; }
 .btn-new-dream { font-family: var(--sans); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: transparent; border: 0.5px solid var(--border); border-radius: 2px; padding: 9px 20px; cursor: pointer; transition: all 0.2s; }
@@ -253,11 +253,11 @@ textarea { line-height: 1.75; min-height: 160px; }
 #screen-tree { background: var(--bg); overflow-y: auto; }
 .tree-wrap { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
 .tree-topbar { display: flex; align-items: center; justify-content: space-between; padding: 36px 0 48px; border-bottom: 0.5px solid var(--border); margin-bottom: 48px; }
-.tree-title-area h1 { font-family: var(--serif); font-size: 32px; font-weight: 300; color: #fff; }
-.tree-title-area p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.tree-title-area h1 { font-family: var(--serif); font-size: 36px; font-weight: 400; color: #fff; letter-spacing: 0.02em; }
+.tree-title-area p { font-size: 14px; color: rgba(234,230,255,0.65); margin-top: 6px; }
 .tree-year-selector { display: flex; align-items: center; gap: 12px; }
-.tree-year-btn { background: none; border: 0.5px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
-.tree-year-btn:hover, .tree-year-btn.active { border-color: var(--purple); color: var(--accent); }
+.tree-year-btn { background: rgba(155,143,232,0.08); border: 1px solid rgba(160,140,255,0.3); color: rgba(234,230,255,0.8); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 500; font-family: var(--sans); transition: all 0.2s; }
+.tree-year-btn:hover, .tree-year-btn.active { border-color: rgba(155,143,232,0.8); color: #fff; background: rgba(155,143,232,0.18); }
 
 .tree-container { position: relative; display: flex; flex-direction: column; align-items: center; min-height: 600px; }
 .tree-svg-wrap { width: 100%; max-width: 700px; margin: 0 auto; }
@@ -418,7 +418,7 @@ textarea { line-height: 1.75; min-height: 160px; }
         </svg>
         Your Dreams
       </button>
-      <button class="btn-get-pro" id="btnGetPro" onclick="showPaywall()" style="background:rgba(155,143,232,0.15);border:0.5px solid rgba(155,143,232,0.4);color:#C4B8FF;font-size:12px;letter-spacing:0.08em;padding:7px 16px;border-radius:20px;cursor:pointer;transition:all 0.2s;">✦ Get Pro</button>
+      <button class="btn-get-pro" id="btnGetPro" onclick="showPaywall()" style="background:rgba(155,143,232,0.2);border:1px solid rgba(155,143,232,0.6);color:#ddd4ff;font-size:13px;font-weight:600;letter-spacing:0.05em;padding:9px 18px;border-radius:20px;cursor:pointer;transition:all 0.2s;">✦ Get Pro</button>
       <button class="btn-signout" onclick="signOut()">Sign out</button>
     </div>
   </div>
@@ -716,10 +716,23 @@ async function renderTree() {
   if (totalDreams === 0) {
     content.innerHTML = `
       <div class="seedling-state">
-        <div class="seedling-icon">🌱</div>
-        <p>Your dream tree is waiting to grow.</p>
-        <p style="margin-top:8px;font-size:13px;">Record your first dream and watch it take root.</p>
-        <button onclick="goJournal()" style="margin-top:24px;background:none;border:0.5px solid rgba(155,143,232,0.3);color:var(--accent);padding:10px 24px;border-radius:20px;cursor:pointer;font-size:13px;">Record a dream</button>
+        <svg width="80" height="100" viewBox="0 0 80 100" style="margin:0 auto 20px;display:block;">
+          <defs><filter id="sg"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <style>
+            .sprout { animation: sproutway 3s ease-in-out infinite; transform-origin: 40px 80px; }
+            @keyframes sproutway { 0%,100%{transform:rotate(0deg)} 40%{transform:rotate(2deg)} 70%{transform:rotate(-2deg)} }
+          </style>
+          <ellipse cx="40" cy="92" rx="28" ry="5" fill="#1a3a0a" opacity="0.5"/>
+          <g class="sprout">
+            <path d="M40,85 Q40,60 40,45" stroke="#5a8a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <circle cx="40" cy="38" r="14" fill="#4a9a2a" opacity="0.9" filter="url(#sg)"/>
+            <circle cx="30" cy="43" r="10" fill="#5aaa3a" opacity="0.8" filter="url(#sg)"/>
+            <circle cx="50" cy="44" r="9" fill="#3a8a22" opacity="0.8" filter="url(#sg)"/>
+          </g>
+        </svg>
+        <p style="font-size:17px;">Your dream tree is waiting to grow.</p>
+        <p style="margin-top:8px;font-size:14px;opacity:0.6;">Record your first dream and watch it take root.</p>
+        <button onclick="goJournal()" style="margin-top:28px;background:rgba(74,154,42,0.15);border:1px solid rgba(74,154,42,0.4);color:#8fd86a;padding:11px 28px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:500;">Record a dream →</button>
       </div>`;
     return;
   }
@@ -773,65 +786,140 @@ async function renderTree() {
 }
 
 function getTreeSvg(stage, byMonth, currentMonthIdx) {
-  const activeMonths = byMonth.filter((m,i) => i <= currentMonthIdx && m.length > 0).length;
-  
-  const stageConfigs = {
-    seedling: { trunkH: 80, trunkW: 6, branches: 2, foliage: 40 },
-    sapling:  { trunkH: 140, trunkW: 8, branches: 5, foliage: 60 },
-    young:    { trunkH: 200, trunkW: 12, branches: 8, foliage: 90 },
-    full:     { trunkH: 260, trunkW: 16, branches: 12, foliage: 110 },
+  const totalDreams = byMonth.flat().length;
+  const W = 500, H = 420, cx = W/2, base = H - 30;
+
+  const stages = {
+    seedling: { trunkH: 70, trunkW: 5, trunkColor: '#5a7a3a' },
+    sapling:  { trunkH: 130, trunkW: 8, trunkColor: '#4a6a2e' },
+    young:    { trunkH: 200, trunkW: 13, trunkColor: '#3d5a25' },
+    full:     { trunkH: 270, trunkW: 18, trunkColor: '#2e4a1a' },
   };
-  const cfg = stageConfigs[stage];
-  const W = 700, H = 400, cx = W/2, base = H - 20;
+  const s = stages[stage];
+  
+  // Unique animation id to avoid conflicts
+  const aid = 'tree_' + Math.random().toString(36).slice(2,6);
 
-  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;margin:0 auto;display:block;">
   <defs>
-    <radialGradient id="tg1" cx="50%" cy="100%"><stop offset="0%" stop-color="#2a1f5e"/><stop offset="100%" stop-color="#07060F" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ground_${aid}" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#2a4a1a" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#07060F" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow_${aid}"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="softglow_${aid}"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
-  <ellipse cx="${cx}" cy="${base}" rx="180" ry="12" fill="url(#tg1)" opacity="0.4"/>
-  <rect x="${cx - cfg.trunkW/2}" y="${base - cfg.trunkH}" width="${cfg.trunkW}" height="${cfg.trunkH}" rx="${cfg.trunkW/2}" fill="#3d2f6e" opacity="0.8"/>`;
+  <style>
+    .branch_${aid} { transform-origin: ${cx}px ${base - s.trunkH * 0.3}px; animation: sway_${aid} 4s ease-in-out infinite; }
+    .leaf_${aid} { animation: leafsway_${aid} 3s ease-in-out infinite; }
+    @keyframes sway_${aid} {
+      0%,100% { transform: rotate(0deg); }
+      25% { transform: rotate(0.8deg); }
+      75% { transform: rotate(-0.8deg); }
+    }
+    @keyframes leafsway_${aid} {
+      0%,100% { transform: scale(1) rotate(0deg); }
+      33% { transform: scale(1.03) rotate(1deg); }
+      66% { transform: scale(0.98) rotate(-1deg); }
+    }
+  </style>`;
 
-  // Branches — spread along the trunk
-  const branchCount = Math.min(cfg.branches, activeMonths + 1);
-  for (let i = 0; i < 12; i++) {
-    const side = i % 2 === 0 ? -1 : 1;
-    const progress = (i / 11);
-    const branchY = base - cfg.trunkH * (0.25 + progress * 0.7);
-    const branchLen = cfg.foliage * (0.4 + progress * 0.6);
-    const angle = side * (40 + progress * 20);
+  // Ground shadow
+  svg += `<ellipse cx="${cx}" cy="${base + 5}" rx="120" ry="10" fill="url(#ground_${aid})"/>`;
+
+  // Roots (only for young/full)
+  if (stage === 'young' || stage === 'full') {
+    const rootPairs = [[cx-8, base, cx-30, base+15],[cx+8, base, cx+30, base+15],[cx-4, base, cx-16, base+18],[cx+4, base, cx+16, base+18]];
+    rootPairs.forEach(([x1,y1,x2,y2]) => {
+      svg += `<path d="M${x1},${y1} Q${(x1+x2)/2+5},${(y1+y2)/2} ${x2},${y2}" stroke="${s.trunkColor}" stroke-width="3" fill="none" opacity="0.7" stroke-linecap="round"/>`;
+    });
+  }
+
+  // Trunk — tapered
+  const trunkTopW = s.trunkW * 0.55;
+  const trunkTop = base - s.trunkH;
+  svg += `<path d="M${cx - s.trunkW/2},${base} Q${cx - s.trunkW*0.3},${base - s.trunkH*0.5} ${cx - trunkTopW/2},${trunkTop} L${cx + trunkTopW/2},${trunkTop} Q${cx + s.trunkW*0.3},${base - s.trunkH*0.5} ${cx + s.trunkW/2},${base} Z" fill="${s.trunkColor}" opacity="0.95"/>`;
+  // Trunk highlight
+  svg += `<path d="M${cx - s.trunkW*0.15},${base} Q${cx},${base - s.trunkH*0.4} ${cx - trunkTopW*0.1},${trunkTop}" stroke="#7aaa4a" stroke-width="${s.trunkW*0.18}" fill="none" opacity="0.3" stroke-linecap="round"/>`;
+
+  // Branches with leaves — wrapped in sway group
+  svg += `<g class="branch_${aid}">`;
+
+  const branchDefs = [
+    // [monthIdx, side(-1=left,1=right), heightFraction, length, leafSize]
+    [0,  -1, 0.25, 55, 28],
+    [1,   1, 0.32, 60, 30],
+    [2,  -1, 0.40, 65, 32],
+    [3,   1, 0.47, 68, 34],
+    [4,  -1, 0.54, 70, 35],
+    [5,   1, 0.60, 72, 36],
+    [6,  -1, 0.65, 73, 37],
+    [7,   1, 0.70, 71, 36],
+    [8,  -1, 0.75, 68, 34],
+    [9,   1, 0.80, 64, 32],
+    [10, -1, 0.86, 58, 29],
+    [11,  1, 0.92, 50, 26],
+  ];
+
+  const maxBranches = { seedling: 2, sapling: 5, young: 9, full: 12 }[stage];
+
+  branchDefs.forEach(([mi, side, hf, len, leafR], idx) => {
+    if (idx >= maxBranches) return;
+    const hasMonth = byMonth[mi]?.length > 0;
+    const isFuture = mi > currentMonthIdx;
+    const by = base - s.trunkH * hf;
+    const angle = side * (50 + idx * 2);
     const rad = angle * Math.PI / 180;
-    const ex = cx + Math.sin(rad) * branchLen;
-    const ey = branchY - Math.cos(rad) * branchLen * 0.5;
-    
-    const hasMonth = byMonth[i]?.length > 0;
-    const isFuture = i > currentMonthIdx;
-    const isActive = i < branchCount;
-    
-    if (!isActive) continue;
-    
-    const opacity = isFuture ? 0.15 : hasMonth ? 0.9 : 0.3;
-    const color = hasMonth ? '#9B8FE8' : '#3d2f6e';
-    const leafColor = hasMonth ? '#C4B8FF' : '#4a3880';
-    const leafR = hasMonth ? (6 + byMonth[i].length * 3) : 4;
+    const bex = cx + Math.sin(rad) * len;
+    const bey = by - Math.cos(rad) * len * 0.45;
+    const bw = Math.max(1.5, s.trunkW * 0.18 * (1 - idx*0.04));
 
-    svg += `<line x1="${cx}" y1="${branchY}" x2="${ex}" y2="${ey}" stroke="${color}" stroke-width="${hasMonth ? 2 : 1}" opacity="${opacity}"/>`;
+    if (isFuture) {
+      // Ghost branch — very faint
+      svg += `<line x1="${cx}" y1="${by}" x2="${bex}" y2="${bey}" stroke="#2a3a1a" stroke-width="${bw}" opacity="0.3" stroke-linecap="round"/>`;
+      return;
+    }
+
+    // Branch line
+    const bcolor = hasMonth ? '#5a8a3a' : '#3a5a22';
+    svg += `<path d="M${cx},${by} Q${(cx+bex)/2 + side*8},${(by+bey)/2 - 10} ${bex},${bey}" stroke="${bcolor}" stroke-width="${bw}" fill="none" opacity="0.9" stroke-linecap="round"/>`;
+
+    // Leaves cluster
     if (!isFuture) {
-      svg += `<circle cx="${ex}" cy="${ey}" r="${leafR}" fill="${leafColor}" opacity="${opacity}" filter="url(#blur)"/>`;
+      const dreamCount = hasMonth ? byMonth[mi].length : 0;
+      const lSize = hasMonth ? leafR + dreamCount * 4 : leafR * 0.6;
+      const lOpacity = hasMonth ? 0.92 : 0.35;
+      
+      // Leaf colors — greener for dreams, muted for no dreams  
+      const lc1 = hasMonth ? '#4a9a2a' : '#2a4a18';
+      const lc2 = hasMonth ? '#5aaa3a' : '#344a20';
+      const lc3 = hasMonth ? '#3a8a22' : '#1e3812';
+      
+      const animDelay = idx * 0.3;
+      // Main leaf blob
+      svg += `<circle cx="${bex}" cy="${bey}" r="${lSize}" fill="${lc1}" opacity="${lOpacity}" style="animation:leafsway_${aid} ${3 + idx*0.2}s ${animDelay}s ease-in-out infinite; transform-origin:${bex}px ${bey}px;"/>`;
+      // Sub-blobs for organic look
+      svg += `<circle cx="${bex - lSize*0.4}" cy="${bey - lSize*0.35}" r="${lSize*0.65}" fill="${lc2}" opacity="${lOpacity*0.85}" style="animation:leafsway_${aid} ${3.4 + idx*0.15}s ${animDelay+0.5}s ease-in-out infinite; transform-origin:${bex}px ${bey}px;"/>`;
+      svg += `<circle cx="${bex + lSize*0.38}" cy="${bey - lSize*0.28}" r="${lSize*0.6}" fill="${lc3}" opacity="${lOpacity*0.8}" style="animation:leafsway_${aid} ${2.8 + idx*0.18}s ${animDelay+1}s ease-in-out infinite; transform-origin:${bex}px ${bey}px;"/>`;
+
+      // Glow for months with dreams
       if (hasMonth) {
-        svg += `<circle cx="${ex}" cy="${ey}" r="${leafR + 4}" fill="${leafColor}" opacity="${opacity * 0.2}"/>`;
-        svg += `<text x="${ex + side*14}" y="${ey + 4}" font-size="9" fill="${leafColor}" opacity="${opacity * 0.8}" font-family="serif" text-anchor="${side > 0 ? 'start' : 'end'}">${MONTHS_SHORT[i]}</text>`;
+        svg += `<circle cx="${bex}" cy="${bey}" r="${lSize*1.3}" fill="#6abf40" opacity="0.08" filter="url(#softglow_${aid})"/>`;
+        // Month label
+        svg += `<text x="${bex + side*( lSize + 6)}" y="${bey + 4}" font-size="10" fill="rgba(180,255,120,0.8)" font-family="'Outfit',sans-serif" font-weight="500" text-anchor="${side > 0 ? 'start' : 'end'}" opacity="0.9">${MONTHS_SHORT[mi]}</text>`;
       }
     }
+  });
+
+  // Crown at top for bigger trees
+  if (stage === 'young' || stage === 'full') {
+    const crownY = trunkTop - 10;
+    svg += `<circle cx="${cx}" cy="${crownY}" r="${stage === 'full' ? 42 : 32}" fill="#3a8a22" opacity="0.85" style="animation:leafsway_${aid} 5s ease-in-out infinite; transform-origin:${cx}px ${crownY}px;"/>`;
+    svg += `<circle cx="${cx - 18}" cy="${crownY - 12}" r="${stage === 'full' ? 34 : 26}" fill="#4a9a2a" opacity="0.8" style="animation:leafsway_${aid} 4.5s 0.8s ease-in-out infinite; transform-origin:${cx}px ${crownY}px;"/>`;
+    svg += `<circle cx="${cx + 16}" cy="${crownY - 8}" r="${stage === 'full' ? 36 : 28}" fill="#3d9020" opacity="0.78" style="animation:leafsway_${aid} 4.8s 0.4s ease-in-out infinite; transform-origin:${cx}px ${crownY}px;"/>`;
   }
 
-  // Top crown
-  if (stage !== 'seedling') {
-    const crownY = base - cfg.trunkH;
-    svg += `<circle cx="${cx}" cy="${crownY}" r="${cfg.foliage * 0.45}" fill="#1a1245" opacity="0.5"/>
-    <circle cx="${cx}" cy="${crownY}" r="${cfg.foliage * 0.3}" fill="#9B8FE8" opacity="0.15"/>`;
-  }
-
-  svg += `</svg>`;
+  svg += `</g></svg>`;
   return svg;
 }
 
