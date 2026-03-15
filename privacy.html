@@ -3,607 +3,245 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noctaras — AI Dream Interpreter</title>
-
+<title>Privacy Policy — Noctaras</title>
 <style>
 :root {
   --bg: #07060F;
   --surface: #0F0D1C;
-  --surface2: #161428;
   --border: rgba(160,140,255,0.1);
-  --border-h: rgba(160,140,255,0.25);
   --purple: #9B8FE8;
-  --purple-dim: rgba(155,143,232,0.12);
   --text: #EAE6FF;
-  --muted: rgba(234,230,255,0.78);
-  --dim: rgba(234,230,255,0.52);
+  --muted: rgba(234,230,255,0.6);
   --accent: #C4B8FF;
-  --serif: Georgia, 'Times New Roman', serif;
   --sans: 'Segoe UI', Tahoma, sans-serif;
+  --serif: Georgia, 'Times New Roman', serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
 
-/* Stars */
 #stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 .star { position: absolute; border-radius: 50%; background: #fff; animation: twinkle var(--dur) var(--delay) infinite ease-in-out; }
-@keyframes twinkle { 0%,100%{opacity:var(--min-op);transform:scale(1)} 50%{opacity:var(--max-op);transform:scale(1.4)} }
+@keyframes twinkle { 0%,100%{opacity:var(--min-op)} 50%{opacity:var(--max-op)} }
 
-/* Wavy canvas */
-#wavyCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-
-/* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 48px;
-  background: rgba(7,6,15,0.6);
+  padding: 20px 48px;
+  background: rgba(7,6,15,0.85);
   backdrop-filter: blur(20px);
-  border-bottom: 0.5px solid transparent;
-  transition: border-color 0.3s;
+  border-bottom: 0.5px solid var(--border);
 }
-nav.scrolled { border-bottom-color: var(--border); }
-
 .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .nav-logo-text { font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; }
-.nav-links { display: flex; align-items: center; gap: 32px; }
-.nav-links a { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover { color: var(--text); }
-.nav-cta {
-  font-size: 13px; font-weight: 500; letter-spacing: 0.01em;
-  color: #07060F; background: #fff;
-  border: none; border-radius: 980px;
-  padding: 9px 22px; text-decoration: none; transition: all 0.22s;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.3);
-}
-.nav-cta:hover { background: #f0ecff; }
+.nav-back { font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; }
+.nav-back:hover { color: var(--text); }
 
-/* ── HERO ── */
-#hero {
+.page-wrap {
   position: relative; z-index: 1;
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 120px 24px 80px;
+  max-width: 760px; margin: 0 auto;
+  padding: 120px 32px 80px;
 }
-.hero-eyebrow {
-  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: #B8AEFF; margin-bottom: 32px;
-  display: flex; align-items: center; gap: 12px;
-  animation: fadeUp 0.8s ease both;
-}
-.hero-eyebrow::before, .hero-eyebrow::after {
-  content: ''; display: block; width: 32px; height: 0.5px; background: var(--purple); opacity: 0.4;
-}
-.hero-title {
-  font-family: var(--serif); font-size: clamp(52px, 9vw, 110px);
-  font-weight: 400; line-height: 0.95; letter-spacing: -0.01em;
-  color: #fff; margin-bottom: 16px;
-  text-shadow: 0 2px 12px rgba(0,0,0,1), 0 0 60px rgba(0,0,0,1), 0 0 120px rgba(0,0,0,0.9);
-  animation: fadeUp 0.8s 0.1s ease both;
-}
-.hero-title em { font-style: italic; color: var(--accent); }
-.hero-sub {
-  font-family: var(--serif); font-size: clamp(18px, 2.5vw, 24px);
-  font-style: italic; color: rgba(234,230,255,0.9); margin-bottom: 52px;
-  max-width: 520px; line-height: 1.6;
-  text-shadow: 0 2px 8px rgba(0,0,0,1), 0 0 40px rgba(0,0,0,1), 0 0 80px rgba(0,0,0,0.9);
-  animation: fadeUp 0.8s 0.2s ease both;
-  position: relative; z-index: 2;
-}
-.hero-actions {
-  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;
-  animation: fadeUp 0.8s 0.3s ease both;
-}
-.btn-primary {
-  font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
-  color: #07060F; background: #fff;
-  border: none; border-radius: 980px; padding: 15px 32px;
-  text-decoration: none; cursor: pointer; transition: all 0.22s;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-}
-.btn-primary:hover { background: #f0ecff; transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,0,0,0.35); }
-.btn-ghost {
-  font-family: var(--sans); font-size: 13px; font-weight: 400; letter-spacing: 0.02em;
-  color: rgba(234,230,255,0.9); background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.18); border-radius: 980px; padding: 15px 32px;
-  text-decoration: none; cursor: pointer; transition: all 0.22s;
-  backdrop-filter: blur(10px);
-}
-.btn-ghost:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.3); color: #fff; }
-.hero-scroll {
-  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(234,230,255,0.6);
-  animation: fadeUp 1s 0.6s ease both; z-index:2;
-}
-.scroll-line { width: 0.5px; height: 40px; background: linear-gradient(to bottom, var(--purple), transparent); animation: scrollpulse 2s infinite; }
-@keyframes scrollpulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
 
-@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
-/* ── SECTION BASE ── */
-section { position: relative; z-index: 1; }
-.section-wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
-.section-label {
+.page-label {
   font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: #B8AEFF; margin-bottom: 20px;
+  color: var(--purple); margin-bottom: 16px;
   display: flex; align-items: center; gap: 10px;
 }
-.section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); max-width: 60px; }
+.page-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); max-width: 60px; }
 
-/* ── HOW IT WORKS ── */
-#how { padding: 140px 0; background: rgba(7,6,15,0.7); }
-.how-header { text-align: center; margin-bottom: 80px; }
-.section-title {
-  font-family: var(--serif); font-size: clamp(36px, 5vw, 58px);
-  font-weight: 400; color: #fff; letter-spacing: 0.01em; line-height: 1.1;
+h1 {
+  font-family: var(--serif); font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400; color: #fff; margin-bottom: 8px; line-height: 1.1;
 }
-.section-title em { font-style: italic; color: var(--accent); }
-.how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-.how-step {
-  background: rgba(14,12,28,0.96); padding: 48px 40px;
-  border: 0.5px solid rgba(160,140,255,0.15);
-  position: relative; overflow: hidden;
-  transition: border-color 0.3s;
+.last-updated {
+  font-size: 13px; color: var(--muted); margin-bottom: 48px;
+  padding-bottom: 32px; border-bottom: 0.5px solid var(--border);
 }
-.how-step:hover { border-color: var(--border-h); }
-.how-step::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(to right, transparent, var(--purple), transparent);
-  opacity: 0; transition: opacity 0.3s;
-}
-.how-step:hover::before { opacity: 1; }
-.step-num {
-  font-family: var(--sans); font-size: 13px; font-weight: 500;
-  color: var(--purple); line-height: 1; margin-bottom: 20px;
-  letter-spacing: 0.15em; opacity: 0.9;
-}
-.step-icon { font-size: 28px; margin-bottom: 20px; display: block; }
-.step-title { font-family: var(--sans); font-size: 20px; font-weight: 500; color: #fff; margin-bottom: 12px; }
-.step-desc { font-size: 15px; line-height: 1.75; color: rgba(234,230,255,0.72); }
 
-/* ── FEATURES ── */
-#features { padding: 140px 0; background: rgba(7,6,15,0.7); }
-.features-header { margin-bottom: 80px; }
-.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
-.feature-card {
-  background: rgba(14,12,28,0.96); padding: 44px 40px;
-  border: 0.5px solid var(--border); transition: all 0.3s;
+.intro {
+  font-family: var(--serif); font-size: 17px; font-style: italic;
+  color: rgba(234,230,255,0.75); margin-bottom: 48px; line-height: 1.8;
 }
-.feature-card:hover { border-color: var(--border-h); background: var(--surface2); }
-.feature-icon {
-  width: 40px; height: 40px; border: 0.5px solid var(--border);
-  border-radius: 2px; display: flex; align-items: center; justify-content: center;
-  font-size: 18px; margin-bottom: 24px; transition: border-color 0.3s;
-}
-.feature-card:hover .feature-icon { border-color: var(--border-h); }
-.feature-title { font-family: var(--sans); font-size: 18px; font-weight: 500; color: #fff; margin-bottom: 10px; }
-.feature-desc { font-size: 15px; line-height: 1.75; color: rgba(234,230,255,0.72); }
 
-/* ── TESTIMONIALS ── */
-#testimonials { padding: 140px 0; background: rgba(7,6,15,0.7); }
-.testimonials-header { text-align: center; margin-bottom: 80px; }
-.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-.testimonial {
-  background: rgba(14,12,28,0.96); padding: 40px;
-  border: 0.5px solid var(--border);
-}
-.testimonial-quote {
-  font-family: var(--serif); font-size: 18px; font-style: italic;
-  font-weight: 300; line-height: 1.75; color: rgba(234,230,255,0.9);
-  margin-bottom: 28px;
-}
-.testimonial-quote::before { content: '"'; color: var(--purple); font-size: 32px; line-height: 0; vertical-align: -10px; margin-right: 4px; }
-.testimonial-author { display: flex; align-items: center; gap: 12px; }
-.author-avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; color: var(--purple);
-}
-.author-name { font-size: 13px; font-weight: 500; color: #fff; }
-.author-handle { font-size: 11px; color: var(--dim); margin-top: 1px; }
-.stars { color: var(--accent); font-size: 11px; letter-spacing: 2px; margin-bottom: 20px; }
+section { margin-bottom: 40px; }
 
-/* ── PRICING ── */
-#pricing { padding: 140px 0; background: rgba(7,6,15,0.7); }
-.pricing-header { text-align: center; margin-bottom: 80px; }
-.pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; max-width: 720px; margin: 0 auto; }
-.pricing-card {
-  background: rgba(14,12,28,0.96); padding: 48px 44px;
-  border: 0.5px solid var(--border); position: relative;
+h2 {
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 0.5px solid var(--border);
 }
-.pricing-card.featured {
-  border-color: rgba(155,143,232,0.35);
-  background: linear-gradient(160deg, rgba(155,143,232,0.08) 0%, var(--surface) 60%);
-}
-.pricing-badge {
-  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
-  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--bg); background: var(--accent);
-  padding: 5px 16px; border-radius: 0 0 2px 2px;
-}
-.pricing-plan { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8AEFF; margin-bottom: 20px; font-weight: 500; }
-.pricing-price {
-  font-family: var(--sans); font-size: 56px; font-weight: 300;
-  color: #fff; line-height: 1; margin-bottom: 6px;
-}
-.pricing-price sup { font-size: 24px; vertical-align: top; margin-top: 10px; }
-.pricing-period { font-size: 13px; color: rgba(234,230,255,0.5); margin-bottom: 32px; }
-.pricing-divider { height: 0.5px; background: var(--border); margin-bottom: 28px; }
-.pricing-features { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 14px; }
-.pricing-features li { font-size: 14px; color: rgba(234,230,255,0.9); display: flex; align-items: center; gap: 10px; }
-.pricing-features li::before { content: '✦'; color: var(--purple); font-size: 8px; flex-shrink: 0; }
-.pricing-features li.disabled { color: rgba(234,230,255,0.35); text-decoration: line-through; text-decoration-color: rgba(234,230,255,0.2); }
-.pricing-features li.disabled::before { color: var(--dim); }
 
-/* ── EMAIL SIGNUP ── */
-#signup { padding: 140px 0; background: rgba(7,6,15,0.7); }
-.signup-inner {
-  text-align: center;
-  border: 0.5px solid var(--border);
-  border-radius: 3px; padding: 80px 48px;
-  background: rgba(14,12,28,0.97);
-  position: relative; overflow: hidden;
-}
-.signup-inner::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(155,143,232,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-.signup-moon { font-size: 48px; display: block; margin-bottom: 28px; opacity: 0.6; }
-.signup-title { font-family: var(--serif); font-size: clamp(32px, 5vw, 52px); font-weight: 400; color: #fff; margin-bottom: 14px; line-height: 1.1; }
-.signup-title em { font-style: italic; color: var(--accent); }
-.signup-sub { font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--muted); margin-bottom: 44px; }
-.signup-form { display: flex; gap: 0; max-width: 440px; margin: 0 auto; }
-.signup-input {
-  flex: 1; background: var(--bg); border: 0.5px solid var(--border-h);
-  border-right: none; border-radius: 2px 0 0 2px;
-  color: var(--text); font-family: var(--sans); font-size: 14px;
-  padding: 14px 20px; transition: border-color 0.2s;
-}
-.signup-input:focus { outline: none; border-color: rgba(155,143,232,0.45); }
-.signup-input::placeholder { color: var(--dim); }
-.signup-btn {
-  font-family: var(--sans); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--bg); background: var(--accent); border: none;
-  border-radius: 0 2px 2px 0; padding: 14px 24px; cursor: pointer; transition: all 0.2s;
-  white-space: nowrap;
-}
-.signup-btn:hover { background: #d4caff; }
-.signup-note { font-size: 11px; color: var(--dim); margin-top: 14px; letter-spacing: 0.05em; }
+p { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
 
-/* ── FOOTER ── */
+ul { list-style: none; padding: 0; margin-bottom: 14px; }
+ul li { color: var(--muted); font-size: 15px; padding: 6px 0 6px 20px; position: relative; }
+ul li::before { content: '✦'; position: absolute; left: 0; color: var(--purple); font-size: 10px; top: 9px; }
+
+a { color: var(--accent); text-decoration: none; border-bottom: 0.5px solid rgba(196,184,255,0.3); transition: border-color 0.2s; }
+a:hover { border-bottom-color: var(--accent); }
+
+.highlight-box {
+  background: rgba(155,143,232,0.06);
+  border: 0.5px solid rgba(155,143,232,0.2);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+}
+.highlight-box p { margin: 0; }
+
 footer {
   position: relative; z-index: 1;
+  text-align: center; padding: 32px;
   border-top: 0.5px solid var(--border);
-  padding: 48px;
+  color: rgba(234,230,255,0.3); font-size: 13px;
 }
-.footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-.footer-logo { display: flex; align-items: center; gap: 9px; }
-.footer-logo-text { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; }
-.footer-links { display: flex; gap: 28px; }
-.footer-links a { font-size: 12px; letter-spacing: 0.08em; color: rgba(234,230,255,0.75); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--muted); }
-.footer-copy { font-size: 11px; color: rgba(234,230,255,0.65); letter-spacing: 0.05em; }
+footer a { color: rgba(234,230,255,0.4); border-bottom-color: rgba(234,230,255,0.1); }
+footer a:hover { color: var(--muted); }
 
-/* ── SCROLL REVEAL ── */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
-@media(max-width:768px){
-  nav{padding:18px 20px;}
-  .nav-links{display:none;}
-  .section-wrap{padding:0 20px;}
-  .how-grid,.features-grid,.testimonials-grid{grid-template-columns:1fr;}
-  .pricing-grid{grid-template-columns:1fr;max-width:400px;}
-  #hero{padding:100px 20px 60px;}
-  .signup-inner{padding:48px 24px;}
-  .signup-form{flex-direction:column;}
-  .signup-input{border-right:0.5px solid var(--border-h);border-radius:2px;border-bottom:none;}
-  .signup-btn{border-radius:2px;padding:14px;}
-  footer{padding:32px 20px;}
-  .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;}
+@media (max-width: 600px) {
+  nav { padding: 16px 20px; }
+  .page-wrap { padding: 100px 20px 60px; }
 }
 </style>
 </head>
 <body>
 
 <div id="stars"></div>
-<canvas id="wavyCanvas"></canvas>
-<div style="position:fixed;inset:0;z-index:0;pointer-events:none;background:rgba(7,6,15,0.52);"></div>
 
-<!-- NAV -->
-<nav id="nav">
-  <a class="nav-logo" href="#">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+<nav>
+  <a class="nav-logo" href="index.html">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
       <circle cx="9" cy="12" r="6.5" stroke="#9B8FE8" stroke-width="1" fill="none"/>
       <circle cx="15" cy="12" r="6.5" stroke="#C4B8FF" stroke-width="1" fill="none" opacity="0.6"/>
       <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.28"/>
     </svg>
     <span class="nav-logo-text">Noctaras</span>
   </a>
-  <div class="nav-links">
-    <a href="#how">How it works</a>
-    <a href="#features">Features</a>
-    <a href="#pricing">Pricing</a>
-  </div>
-  <a class="nav-cta" href="app.html">Enter the dream</a>
+  <a class="nav-back" href="index.html">← Back to site</a>
 </nav>
 
-<!-- HERO -->
-<section id="hero"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%, rgba(7,6,15,0.88) 0%, rgba(7,6,15,0.65) 60%, transparent 90%);pointer-events:none;z-index:1;"></div>
-  <div class="hero-eyebrow" style="position:relative;z-index:2;">AI Dream Interpretation</div>
-  <h1 class="hero-title" style="position:relative;z-index:2;">Your dreams<br>hold <em>meaning</em></h1>
-  <p class="hero-sub" style="position:relative;z-index:2;">Noctaras decodes the hidden language of your subconscious — every symbol, every feeling, every forgotten detail.</p>
-  <div class="hero-actions" style="position:relative;z-index:2;">
-    <a class="btn-primary" href="app.html">Interpret a dream</a>
-    <a class="btn-ghost" href="#how">See how it works</a>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    Scroll
-  </div>
-</section>
+<div class="page-wrap">
+  <div class="page-label">Legal</div>
+  <h1>Privacy Policy</h1>
+  <p class="last-updated">Last updated: March 15, 2026 &nbsp;·&nbsp; Effective: March 15, 2026</p>
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="section-wrap">
-    <div class="how-header reveal">
-      <div class="section-label" style="justify-content:center">How it works</div>
-      <h2 class="section-title">Three steps to<br><em>understanding</em></h2>
-    </div>
-    <div class="how-grid">
-      <div class="how-step reveal">
-        <div class="step-num">01</div>
-        <span class="step-icon">✍︎</span>
-        <h3 class="step-title">Describe your dream</h3>
-        <p class="step-desc">Write what you remember — the places, the people, the feelings. No detail is too small or too strange.</p>
-      </div>
-      <div class="how-step reveal reveal-delay-1">
-        <div class="step-num">02</div>
-        <span class="step-icon">✦</span>
-        <h3 class="step-title">AI reads the symbols</h3>
-        <p class="step-desc">Noctaras draws from Jungian psychology, ancient symbolism, and mystical traditions to find meaning in your dream.</p>
-      </div>
-      <div class="how-step reveal reveal-delay-2">
-        <div class="step-num">03</div>
-        <span class="step-icon">☽</span>
-        <h3 class="step-title">Save to your journal</h3>
-        <p class="step-desc">Every interpretation is saved to your personal dream journal, building a map of your inner world over time.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <p class="intro">Noctaras is built on the belief that your inner world is yours alone. This policy explains clearly and honestly how we collect, use, and protect your information.</p>
 
-<!-- FEATURES -->
-<section id="features">
-  <div class="section-wrap">
-    <div class="features-header reveal">
-      <div class="section-label">Features</div>
-      <h2 class="section-title">Everything you need<br>to <em>explore within</em></h2>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon">◈</div>
-        <h3 class="feature-title">Deep interpretation</h3>
-        <p class="feature-desc">Not just surface analysis — Noctaras explores the essence, the symbols, the subconscious message, and the guiding wisdom in each dream.</p>
-      </div>
-      <div class="feature-card reveal reveal-delay-1">
-        <div class="feature-icon">☽</div>
-        <h3 class="feature-title">Personal dream journal</h3>
-        <p class="feature-desc">Every dream you record is saved with its interpretation, mood, and date. Watch patterns emerge across your subconscious life.</p>
-      </div>
-      <div class="feature-card reveal reveal-delay-2">
-        <div class="feature-icon">✦</div>
-        <h3 class="feature-title">Any language</h3>
-        <p class="feature-desc">Write your dream in any language — Noctaras responds in kind. Your subconscious speaks your native tongue.</p>
-      </div>
-      <div class="feature-card reveal reveal-delay-3">
-        <div class="feature-icon">⋆</div>
-        <h3 class="feature-title">Mood tracking</h3>
-        <p class="feature-desc">Tag each dream with its emotional tone — mysterious, peaceful, anxious, joyful. Understand not just what you dream, but how you feel.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <section>
+    <h2>1. Who We Are</h2>
+    <p>Noctaras ("we", "us", or "our") is an AI-powered dream interpretation and journaling service accessible at noctaras.com. For any privacy-related matters, you can reach us at <a href="/cdn-cgi/l/email-protection#6a1a18031c0b09132a0405091e0b180b1944090507"><span class="__cf_email__" data-cfemail="29595b405f484a506947464a5d485b485a074a4644">[email&#160;protected]</span></a>.</p>
+  </section>
 
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="section-wrap">
-    <div class="testimonials-header reveal">
-      <div class="section-label" style="justify-content:center">Dreamers</div>
-      <h2 class="section-title">What others have <em>discovered</em></h2>
+  <section>
+    <h2>2. Information We Collect</h2>
+    <p><strong style="color:var(--text)">Information you provide directly:</strong></p>
+    <ul>
+      <li>Dream entries and journal content you write within the app</li>
+      <li>Email address (if you create an account or subscribe to our newsletter)</li>
+      <li>Payment information (processed securely by LemonSqueezy — we never see or store your card details)</li>
+    </ul>
+    <p><strong style="color:var(--text)">Information collected automatically:</strong></p>
+    <ul>
+      <li>Basic usage data (pages visited, features used) via anonymous analytics</li>
+      <li>Browser type, device type, and general location (country level only)</li>
+      <li>IP address (retained for security purposes, not used for tracking)</li>
+    </ul>
+    <div class="highlight-box">
+      <p>⚠️ <strong style="color:var(--text)">Important:</strong> Dream entries you submit are sent to OpenAI's API for interpretation. Please do not include personally identifiable information about third parties in your dream descriptions.</p>
     </div>
-    <div class="testimonials-grid">
-      <div class="testimonial reveal">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-quote">I've been journaling dreams for years but never understood them. Noctaras gave language to things I couldn't articulate myself.</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">S</div>
-          <div>
-            <div class="author-name">Sofia M.</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial reveal reveal-delay-1">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-quote">The interpretations are poetic and surprisingly insightful. I look forward to falling asleep just to see what Noctaras finds.</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">K</div>
-          <div>
-            <div class="author-name">Kenji T.</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial reveal reveal-delay-2">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-quote">I was skeptical of AI for something this personal. But the depth of each interpretation genuinely surprised me every time.</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">A</div>
-          <div>
-            <div class="author-name">Amara L.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- PRICING -->
-<section id="pricing">
-  <div class="section-wrap">
-    <div class="pricing-header reveal">
-      <div class="section-label" style="justify-content:center">Pricing</div>
-      <h2 class="section-title">Begin for <em>free</em></h2>
-      <p style="font-family:var(--serif);font-size:18px;font-style:italic;color:var(--muted);margin-top:12px;">No credit card required to start.</p>
-    </div>
-    <div class="pricing-grid" style="grid-template-columns:repeat(3,1fr);max-width:960px;">
-      <div class="pricing-card reveal">
-        <div class="pricing-plan">Free</div>
-        <div class="pricing-price"><sup>$</sup>0</div>
-        <div class="pricing-period">forever</div>
-        <div class="pricing-divider"></div>
-        <ul class="pricing-features">
-          <li>3 dream interpretations/month</li>
-          <li>Unlimited dream recording</li>
-          <li>Personal journal</li>
-          <li class="disabled">Unlimited interpretations</li>
-          <li class="disabled">Priority processing</li>
-        </ul>
-        <a class="btn-ghost" href="app.html" style="display:block;text-align:center;border-radius:980px;">Start free</a>
-      </div>
-      <div class="pricing-card featured reveal reveal-delay-1">
-        <div class="pricing-badge">Most popular</div>
-        <div class="pricing-plan">Pro · Monthly</div>
-        <div class="pricing-price"><sup>$</sup>7.99</div>
-        <div class="pricing-period">per month</div>
-        <div class="pricing-divider"></div>
-        <ul class="pricing-features">
-          <li>Unlimited interpretations</li>
-          <li>Unlimited dream recording</li>
-          <li>Personal journal</li>
-          <li>Priority processing</li>
-          <li>All future features</li>
-        </ul>
-        <a class="btn-primary" href="app.html" style="display:block;text-align:center;">Get Pro</a>
-      </div>
-      <div class="pricing-card reveal reveal-delay-2" style="border-color:rgba(155,143,232,0.2);">
-        <div class="pricing-plan">Pro · Annually</div>
-        <div class="pricing-price"><sup>$</sup>49.99</div>
-        <div class="pricing-period">per year <span style="color:#B8AEFF;font-size:11px;margin-left:6px;">Save 48%</span></div>
-        <div class="pricing-divider"></div>
-        <ul class="pricing-features">
-          <li>Unlimited interpretations</li>
-          <li>Unlimited dream recording</li>
-          <li>Personal journal</li>
-          <li>Priority processing</li>
-          <li>All future features</li>
-        </ul>
-        <a class="btn-ghost" href="app.html" style="display:block;text-align:center;border-radius:980px;">Get Pro Yearly</a>
-      </div>
-    </div>
-  </div>
-</section>
+  <section>
+    <h2>3. How We Use Your Information</h2>
+    <ul>
+      <li>To provide and improve the dream interpretation and journaling service</li>
+      <li>To process payments and manage your subscription</li>
+      <li>To send transactional emails (account confirmation, receipts)</li>
+      <li>To respond to your support requests</li>
+      <li>To detect and prevent fraud or abuse</li>
+      <li>To send product updates (only if you opt in)</li>
+    </ul>
+    <p>We do not sell your personal data. We do not use your dream content for advertising. We do not build behavioral profiles for third-party marketing.</p>
+  </section>
 
-<!-- EMAIL SIGNUP -->
-<section id="signup">
-  <div class="section-wrap">
-    <div class="signup-inner reveal">
-      <span class="signup-moon">☽</span>
-      <h2 class="signup-title">Ready to understand<br>your <em>dreams?</em></h2>
-      <p class="signup-sub">Join dreamers who've already begun the journey inward.</p>
-      <form class="signup-form" onsubmit="handleSignup(event)">
-        <input class="signup-input" type="email" placeholder="your@email.com" id="signupEmail" required>
-        <button class="signup-btn" type="submit">Begin</button>
-      </form>
-      <p class="signup-note" id="signupMsg">No spam. Just your dreams.</p>
-    </div>
-  </div>
-</section>
+  <section>
+    <h2>4. AI Processing & Third-Party Services</h2>
+    <p>When you request a dream interpretation, your dream text is sent to <strong style="color:var(--text)">OpenAI</strong> for processing. OpenAI processes this data according to their <a href="https://openai.com/policies/privacy-policy" target="_blank">Privacy Policy</a>. By using Noctaras, you acknowledge that your dream content will be processed by OpenAI's API.</p>
+    <p>We also use the following third-party services:</p>
+    <ul>
+      <li><strong style="color:var(--text)">LemonSqueezy</strong> — payment processing and subscription management</li>
+      <li><strong style="color:var(--text)">Vercel</strong> — hosting and infrastructure</li>
+    </ul>
+    <p>Each of these services has their own privacy policies and data processing terms.</p>
+  </section>
 
-<!-- FOOTER -->
+  <section>
+    <h2>5. Data Storage & Security</h2>
+    <p>Your dream journal entries are stored locally in your browser's storage (localStorage) by default. They are not uploaded to our servers unless you create an account with cloud sync enabled.</p>
+    <p>We implement industry-standard security measures including HTTPS encryption for all data in transit. No method of electronic storage or transmission is 100% secure, and we cannot guarantee absolute security.</p>
+  </section>
+
+  <section>
+    <h2>6. Data Retention</h2>
+    <p>We retain your personal data only as long as necessary to provide our services or as required by law:</p>
+    <ul>
+      <li>Account data: retained while your account is active, deleted within 30 days of account deletion request</li>
+      <li>Payment records: retained for 7 years as required by financial regulations</li>
+      <li>Support communications: retained for 2 years</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>7. Your Rights</h2>
+    <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+    <ul>
+      <li><strong style="color:var(--text)">Access</strong> — request a copy of the personal data we hold about you</li>
+      <li><strong style="color:var(--text)">Correction</strong> — request correction of inaccurate data</li>
+      <li><strong style="color:var(--text)">Deletion</strong> — request deletion of your personal data ("right to be forgotten")</li>
+      <li><strong style="color:var(--text)">Portability</strong> — receive your data in a machine-readable format</li>
+      <li><strong style="color:var(--text)">Objection</strong> — object to processing of your data for marketing purposes</li>
+      <li><strong style="color:var(--text)">Withdraw consent</strong> — withdraw any previously given consent at any time</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at <a href="/cdn-cgi/l/email-protection#18686a716e797b615876777b6c796a796b367b7775"><span class="__cf_email__" data-cfemail="89f9fbe0ffe8eaf0c9e7e6eafde8fbe8faa7eae6e4">[email&#160;protected]</span></a>. We will respond within 30 days.</p>
+  </section>
+
+  <section>
+    <h2>8. Cookies</h2>
+    <p>We use only essential cookies necessary for the service to function (such as session management and security). We do not use advertising cookies or third-party tracking cookies. You can disable cookies in your browser settings, but this may affect the functionality of the service.</p>
+  </section>
+
+  <section>
+    <h2>9. Children's Privacy</h2>
+    <p>Noctaras is not directed at children under the age of 13 (or 16 in the European Union). We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us immediately and we will delete it.</p>
+  </section>
+
+  <section>
+    <h2>10. International Data Transfers</h2>
+    <p>Noctaras is operated globally. Your information may be transferred to and processed in countries other than your own, including the United States. By using our service, you consent to this transfer. We ensure appropriate safeguards are in place for such transfers.</p>
+  </section>
+
+  <section>
+    <h2>11. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by posting the new policy on this page with an updated "Last updated" date. For material changes, we will also send an email notification if you have an account with us. Your continued use of Noctaras after changes constitutes acceptance of the updated policy.</p>
+  </section>
+
+  <section>
+    <h2>12. Contact Us</h2>
+    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+    <div class="highlight-box">
+      <p><strong style="color:var(--text)">Noctaras Privacy</strong><br>
+      Email: <a href="/cdn-cgi/l/email-protection#6717150e1106041e2709080413061506144904080a"><span class="__cf_email__" data-cfemail="e8989a819e898b91a886878b9c899a899bc68b8785">[email&#160;protected]</span></a><br>
+      Website: <a href="https://noctaras.com">noctaras.com</a></p>
+    </div>
+  </section>
+</div>
+
 <footer>
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <circle cx="9" cy="12" r="6.5" stroke="#9B8FE8" stroke-width="1" fill="none"/>
-        <circle cx="15" cy="12" r="6.5" stroke="#C4B8FF" stroke-width="1" fill="none" opacity="0.6"/>
-        <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.28"/>
-      </svg>
-      <span class="footer-logo-text">Noctaras</span>
-    </div>
-    <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-      <a href="app.html">App</a>
-    </div>
-    <div class="footer-copy">© 2026 Noctaras. All rights reserved.</div>
-  </div>
+  <p>© 2026 Noctaras · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="index.html">Back to App</a></p>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
-<script>
-// Stars
-(function(){
-  const c=document.getElementById('stars');
-  for(let i=0;i<120;i++){
-    const s=document.createElement('div');s.className='star';
-    const sz=Math.random()*1.8+0.3;
-    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--dur:${Math.random()*4+2}s;--delay:${Math.random()*6}s;--min-op:${(Math.random()*0.08+0.03).toFixed(2)};--max-op:${(Math.random()*0.4+0.2).toFixed(2)};`;
-    c.appendChild(s);
-  }
-})();
-
-// Wavy BG
-(function(){
-  const canvas=document.getElementById('wavyCanvas'),ctx=canvas.getContext('2d');
-  const colors=["#38bdf8","#818cf8","#c084fc","#e879f9","#22d3ee"];
-  let w,h,nt=0,n3;
-  function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;ctx.filter='blur(10px)';}
-  function draw(){
-    nt+=0.002;ctx.fillStyle='#07060F';ctx.globalAlpha=0.5;ctx.fillRect(0,0,w,h);
-    for(let i=0;i<5;i++){
-      ctx.beginPath();ctx.lineWidth=50;ctx.strokeStyle=colors[i%colors.length];
-      for(let x=0;x<w;x+=5)ctx.lineTo(x,n3(x/800,0.3*i,nt)*100+h*0.5);
-      ctx.stroke();ctx.closePath();
-    }
-    requestAnimationFrame(draw);
-  }
-  window.addEventListener('resize',resize);
-  window.addEventListener('load',()=>{
-    if(window.SimplexNoise){const s=new window.SimplexNoise();n3=(x,y,z)=>s.noise3D(x,y,z);}
-    else{n3=(x,y,z)=>Math.sin(x*0.5+z*10+y*3)*0.5;}
-    resize();draw();
-  });
-})();
-
-// Nav scroll
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
-});
-
-// Scroll reveal
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
-},{threshold:0.15});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-// Email signup
-function handleSignup(e){
-  e.preventDefault();
-  const msg=document.getElementById('signupMsg');
-  msg.textContent='✦ You\'re on the list. Sweet dreams.';
-  msg.style.color='var(--accent)';
-  document.getElementById('signupEmail').value='';
-}
-</script>
-</body>
-</html>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
