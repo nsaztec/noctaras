@@ -264,35 +264,35 @@ textarea { line-height: 1.75; min-height: 160px; }
 
 .tree-months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
 .tree-month-card {
-  background: var(--surface); border: 0.5px solid var(--border);
+  background: rgba(22,20,40,0.9); border: 0.5px solid rgba(160,140,255,0.15);
   border-radius: 8px; padding: 20px; cursor: pointer;
   transition: all 0.2s; position: relative;
 }
-.tree-month-card:hover { border-color: rgba(155,143,232,0.35); background: var(--surface2); }
-.tree-month-card.has-dreams { border-color: rgba(155,143,232,0.25); }
-.tree-month-card.empty { opacity: 0.4; cursor: default; }
-.tree-month-card.future { opacity: 0.25; cursor: default; }
-.month-card-name { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple); margin-bottom: 8px; }
-.month-card-count { font-family: var(--serif); font-size: 28px; color: #fff; font-weight: 300; }
-.month-card-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.tree-month-card:hover { border-color: rgba(155,143,232,0.5); background: rgba(30,26,58,0.95); }
+.tree-month-card.has-dreams { border-color: rgba(155,143,232,0.4); background: rgba(25,20,50,0.95); }
+.tree-month-card.empty { opacity: 0.5; cursor: default; }
+.tree-month-card.future { opacity: 0.3; cursor: default; }
+.month-card-name { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #b0a0ff; margin-bottom: 8px; font-weight: 600; }
+.month-card-count { font-family: var(--serif); font-size: 32px; color: #fff; font-weight: 300; }
+.month-card-label { font-size: 12px; color: rgba(234,230,255,0.7); margin-top: 2px; }
 .month-card-dreams { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
-.month-dream-chip { font-size: 11px; color: var(--muted); padding: 4px 8px; background: rgba(155,143,232,0.06); border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.month-analyze-btn { margin-top: 12px; width: 100%; background: none; border: 0.5px solid rgba(155,143,232,0.3); color: var(--accent); font-size: 11px; letter-spacing: 0.08em; padding: 8px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
-.month-analyze-btn:hover { background: rgba(155,143,232,0.1); }
+.month-dream-chip { font-size: 11px; color: rgba(234,230,255,0.75); padding: 5px 10px; background: rgba(155,143,232,0.12); border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border: 0.5px solid rgba(155,143,232,0.15); }
+.month-analyze-btn { margin-top: 12px; width: 100%; background: rgba(155,143,232,0.12); border: 0.5px solid rgba(155,143,232,0.4); color: #C4B8FF; font-size: 11px; letter-spacing: 0.08em; padding: 10px; border-radius: 4px; cursor: pointer; transition: all 0.2s; font-weight: 500; }
+.month-analyze-btn:hover { background: rgba(155,143,232,0.22); border-color: rgba(155,143,232,0.7); }
 
 .tree-annual-btn { display: block; margin: 40px auto 0; background: none; border: 0.5px solid rgba(155,143,232,0.4); color: var(--accent); font-size: 13px; letter-spacing: 0.1em; padding: 14px 32px; border-radius: 30px; cursor: pointer; transition: all 0.2s; }
 .tree-annual-btn:hover { background: rgba(155,143,232,0.1); }
 .tree-annual-btn:disabled { opacity: 0.3; cursor: default; }
 
-.tree-analysis-panel { margin-top: 32px; background: var(--surface); border: 0.5px solid rgba(155,143,232,0.2); border-radius: 8px; padding: 32px; display: none; }
+.tree-analysis-panel { margin-top: 32px; background: rgba(22,20,40,0.95); border: 0.5px solid rgba(155,143,232,0.35); border-radius: 8px; padding: 32px; display: none; }
 .tree-analysis-panel.active { display: block; }
 .tree-analysis-title { font-family: var(--serif); font-size: 22px; color: #fff; margin-bottom: 16px; }
-.tree-analysis-text { font-family: var(--serif); font-size: 15px; color: var(--muted); line-height: 1.9; white-space: pre-wrap; }
-.tree-analysis-loading { color: var(--purple); font-size: 13px; letter-spacing: 0.1em; }
+.tree-analysis-text { font-family: var(--serif); font-size: 16px; color: rgba(234,230,255,0.85); line-height: 2; white-space: pre-wrap; }
+.tree-analysis-loading { color: #b0a0ff; font-size: 13px; letter-spacing: 0.1em; }
 
 .seedling-state { text-align: center; padding: 60px 20px; }
-.seedling-state .seedling-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.6; }
-.seedling-state p { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: 16px; }
+.seedling-state .seedling-icon { font-size: 56px; margin-bottom: 20px; }
+.seedling-state p { font-family: var(--serif); font-style: italic; color: rgba(234,230,255,0.7); font-size: 17px; }
 
 @media(max-width:600px){ .tree-months-grid{grid-template-columns:1fr 1fr;} .tree-wrap{padding:0 16px 60px;} }
 
@@ -860,6 +860,7 @@ window.analyzeMonth = async (monthIdx, year) => {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
+        isAnalysis: true,
         dream: `Monthly analysis request for ${MONTHS[monthIdx]} ${year}. The user had ${monthDreams.length} dreams this month:\n${dreamSummary}\n\nProvide a monthly psychological analysis: recurring themes, emotional patterns, what the subconscious was processing this month, and key insights.`,
         userId: currentUser?.uid,
         skipLimit: true
@@ -898,6 +899,7 @@ window.analyzeYear = async (year) => {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
+        isAnalysis: true,
         dream: `Annual dream analysis for ${year}. The user had ${yearDreams.length} dreams throughout the year:\n${dreamSummary}\n\nProvide a deep annual psychological analysis: the overarching themes of the year, emotional and subconscious evolution across months, recurring symbols and what they collectively reveal, mood patterns, and a profound reflection on what this year meant for the dreamer's inner world.`,
         userId: currentUser?.uid,
         skipLimit: true

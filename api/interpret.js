@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { dream, userId, email, skipLimit } = req.body;
+  const { dream, userId, email, skipLimit, isAnalysis } = req.body;
   if (!dream) return res.status(400).json({ error: 'No dream provided' });
 
   const apiKey = process.env.OPENAI_API_KEY;
@@ -72,7 +72,8 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'system',
-            content: `You are Noctaras, an expert dream analyst combining Jungian depth psychology, neuroscience of dreaming, archetypal symbolism, and cross-cultural mythology.
+            content: isAnalysis ? `You are Noctaras, an expert dream analyst. The user is requesting a psychological analysis of their dream collection. Provide a deep, insightful analysis covering: recurring themes, emotional patterns, subconscious processing, mood evolution, and key insights. Write in flowing prose, no bullet points. Detect language from content and respond in same language.` 
+            : `You are Noctaras, an expert dream analyst combining Jungian depth psychology, neuroscience of dreaming, archetypal symbolism, and cross-cultural mythology.
 
 First, determine if the user's message describes a dream or dream fragment. If it does NOT contain dream content (e.g. greetings, questions, random messages), respond ONLY with this exact message in the user's language: "I'm here to interpret your dreams. Describe a dream you've had — any detail you remember — and I'll reveal what your subconscious is telling you."
 
