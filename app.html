@@ -7,224 +7,151 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #07060F;
-  --surface: #0F0D1C;
-  --surface2: #161428;
-  --border: rgba(160,140,255,0.12);
-  --border-h: rgba(160,140,255,0.28);
-  --purple: #9B8FE8;
-  --purple-dim: rgba(155,143,232,0.14);
-  --purple-glow: rgba(155,143,232,0.06);
-  --text: #EAE6FF;
-  --muted: rgba(234,230,255,0.45);
-  --dim: rgba(234,230,255,0.22);
-  --accent: #C4B8FF;
-  --serif: 'Cormorant Garamond', Georgia, serif;
+  --bg: #07060F; --surface: #0F0D1C; --surface2: #161428;
+  --border: rgba(160,140,255,0.12); --border-h: rgba(160,140,255,0.28);
+  --purple: #9B8FE8; --purple-dim: rgba(155,143,232,0.14);
+  --purple-glow: rgba(155,143,232,0.06); --text: #EAE6FF;
+  --muted: rgba(234,230,255,0.45); --dim: rgba(234,230,255,0.22);
+  --accent: #C4B8FF; --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Outfit', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
 
-/* Stars */
 #stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 .star { position: absolute; border-radius: 50%; background: white; animation: twinkle var(--dur) var(--delay) infinite ease-in-out; }
 @keyframes twinkle { 0%,100% { opacity: var(--min-op); transform: scale(1); } 50% { opacity: var(--max-op); transform: scale(1.4); } }
-
-/* Wavy canvas */
 #wavyCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 
-/* Screens */
+/* ── AUTH SCREEN ── */
+#screen-auth {
+  display: none; min-height: 100vh; position: relative; z-index: 1;
+  align-items: center; justify-content: center; padding: 24px;
+}
+#screen-auth.active { display: flex; }
+.auth-card {
+  width: 100%; max-width: 420px;
+  background: rgba(15,13,28,0.92);
+  border: 0.5px solid var(--border);
+  border-radius: 8px; padding: 48px 40px;
+  backdrop-filter: blur(20px);
+  animation: fadeUp 0.5s ease;
+}
+.auth-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 32px; }
+.auth-logo-text { font-family: 'Space Grotesk', var(--sans); font-size: 18px; font-weight: 500; color: var(--accent); letter-spacing: 0.22em; text-transform: uppercase; }
+.auth-title { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--text); text-align: center; margin-bottom: 8px; }
+.auth-sub { font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--muted); text-align: center; margin-bottom: 32px; }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+.auth-divider span { font-size: 11px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+.auth-input {
+  width: 100%; background: var(--surface);
+  border: 0.5px solid var(--border); border-radius: 4px;
+  color: var(--text); font-family: var(--sans); font-size: 15px;
+  padding: 13px 16px; margin-bottom: 12px; transition: border-color 0.2s;
+}
+.auth-input:focus { outline: none; border-color: var(--border-h); }
+.auth-input::placeholder { color: var(--dim); }
+.btn-auth-primary {
+  width: 100%; padding: 13px; border-radius: 4px; cursor: pointer;
+  font-family: var(--sans); font-size: 13px; letter-spacing: 0.1em;
+  text-transform: uppercase; transition: all 0.2s; margin-bottom: 10px;
+  background: rgba(155,143,232,0.2); border: 0.5px solid rgba(155,143,232,0.35);
+  color: var(--accent);
+}
+.btn-auth-primary:hover { background: rgba(155,143,232,0.32); }
+.btn-auth-primary:disabled { opacity: 0.4; cursor: default; }
+.btn-google {
+  width: 100%; padding: 13px; border-radius: 4px; cursor: pointer;
+  font-family: var(--sans); font-size: 13px; letter-spacing: 0.08em;
+  background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.15);
+  color: rgba(234,230,255,0.8); display: flex; align-items: center; justify-content: center;
+  gap: 10px; transition: all 0.2s; margin-bottom: 10px;
+}
+.btn-google:hover { background: rgba(255,255,255,0.1); }
+.auth-switch { text-align: center; font-size: 13px; color: var(--dim); margin-top: 16px; }
+.auth-switch a { color: var(--accent); cursor: pointer; text-decoration: none; }
+.auth-switch a:hover { text-decoration: underline; }
+.auth-error { font-size: 13px; color: rgba(255,120,120,0.8); text-align: center; margin-bottom: 12px; min-height: 18px; }
+
+/* ── SCREENS ── */
 .screen { display: none; min-height: 100vh; position: relative; z-index: 1; }
 .screen.active { display: flex; flex-direction: column; }
 
-/* ─── SCREEN 1: CHAT ─── */
-#screen-chat {
-  align-items: center;
-  padding: 36px 24px 40px;
-}
-
-.chat-topbar {
-  width: 100%; padding: 0 8px 0 0;
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 0;
-}
-
+/* ── CHAT ── */
+#screen-chat { align-items: center; padding: 36px 24px 40px; }
+.chat-topbar { width: 100%; padding: 0 8px 0 0; display: flex; align-items: center; justify-content: space-between; }
 .logo { display: flex; align-items: center; gap: 10px; cursor: default; }
 .logo-text { font-family: 'Space Grotesk', var(--sans); font-size: 17px; font-weight: 500; color: var(--accent); letter-spacing: 0.22em; text-transform: uppercase; }
-
+.topbar-right { display: flex; align-items: center; gap: 10px; }
 .btn-your-dreams {
   display: flex; align-items: center; gap: 8px;
   font-family: var(--sans); font-size: 12.5px; font-weight: 400;
-  letter-spacing: 0.07em; color: var(--muted);
-  background: transparent;
-  border: 0.5px solid var(--border);
-  border-radius: 999px; padding: 8px 20px;
+  letter-spacing: 0.07em; color: var(--muted); background: transparent;
+  border: 0.5px solid var(--border); border-radius: 999px; padding: 8px 20px;
   cursor: pointer; transition: all 0.25s;
 }
 .btn-your-dreams:hover { color: var(--text); border-color: var(--border-h); background: var(--purple-glow); }
-.btn-your-dreams svg { opacity: 0.45; transition: opacity 0.2s; }
-.btn-your-dreams:hover svg { opacity: 0.9; }
-
-/* Chat main area */
-.chat-main {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  width: 100%; max-width: 700px; margin: 0 auto;
+.btn-signout {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--dim); background: transparent; border: 0.5px solid var(--border);
+  border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: all 0.2s;
 }
-
+.btn-signout:hover { color: var(--muted); border-color: var(--border-h); }
+.chat-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 700px; margin: 0 auto; }
 .chat-hero { text-align: center; margin-bottom: 44px; transition: opacity 0.4s; }
 .chat-moon { display: flex; justify-content: center; margin-bottom: 28px; animation: moonpulse 4s infinite ease-in-out; }
-@keyframes moonpulse {
-  0%,100% { filter: drop-shadow(0 0 8px rgba(155,143,232,0.35)); }
-  50% { filter: drop-shadow(0 0 22px rgba(155,143,232,0.75)) drop-shadow(0 0 40px rgba(196,184,255,0.2)); }
-}
+@keyframes moonpulse { 0%,100% { filter: drop-shadow(0 0 8px rgba(155,143,232,0.35)); } 50% { filter: drop-shadow(0 0 22px rgba(155,143,232,0.75)); } }
 .chat-title { font-family: var(--serif); font-size: clamp(30px,5vw,50px); font-weight: 400; color: #fff; letter-spacing: 0.04em; margin-bottom: 10px; line-height: 1.1; text-shadow: 0 2px 40px rgba(0,0,0,0.8); }
-.chat-sub { font-family: var(--serif); font-size: 18px; font-style: italic; color: rgba(234,230,255,0.62); letter-spacing: 0.02em; text-shadow: 0 1px 20px rgba(0,0,0,0.6); }
-
-/* Messages */
+.chat-sub { font-family: var(--serif); font-size: 18px; font-style: italic; color: rgba(234,230,255,0.62); letter-spacing: 0.02em; }
 #chatMessages { width: 100%; display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; max-height: 52vh; overflow-y: auto; padding-right: 4px; scroll-behavior: smooth; }
 #chatMessages:empty { display: none; }
 #chatMessages::-webkit-scrollbar { width: 3px; }
 #chatMessages::-webkit-scrollbar-thumb { background: rgba(155,143,232,0.18); border-radius: 2px; }
-
-.msg-user {
-  align-self: flex-end;
-  background: var(--purple-dim);
-  border: 0.5px solid rgba(155,143,232,0.22);
-  border-radius: 20px 20px 5px 20px;
-  padding: 12px 20px;
-  font-family: var(--serif); font-size: 17px; line-height: 1.65; color: var(--text);
-  max-width: 82%; animation: msgIn 0.28s ease;
-}
-.msg-ai {
-  align-self: flex-start;
-  background: rgba(15,13,28,0.9);
-  border: 0.5px solid var(--border);
-  border-radius: 20px 20px 20px 5px;
-  padding: 18px 22px;
-  font-family: var(--serif); font-size: 17.5px; line-height: 1.9; color: var(--text);
-  max-width: 90%; animation: msgIn 0.28s ease; white-space: pre-wrap;
-}
-.msg-save-btn {
-  display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
-  font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--accent); background: var(--purple-dim);
-  border: 0.5px solid rgba(155,143,232,0.28); border-radius: 2px;
-  padding: 7px 16px; cursor: pointer; transition: all 0.2s;
-}
+.msg-user { align-self: flex-end; background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.22); border-radius: 20px 20px 5px 20px; padding: 12px 20px; font-family: var(--serif); font-size: 17px; line-height: 1.65; color: var(--text); max-width: 82%; animation: msgIn 0.28s ease; }
+.msg-ai { align-self: flex-start; background: rgba(15,13,28,0.9); border: 0.5px solid var(--border); border-radius: 20px 20px 20px 5px; padding: 18px 22px; font-family: var(--serif); font-size: 17.5px; line-height: 1.9; color: var(--text); max-width: 90%; animation: msgIn 0.28s ease; white-space: pre-wrap; }
+.msg-save-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.28); border-radius: 2px; padding: 7px 16px; cursor: pointer; transition: all 0.2s; }
 .msg-save-btn:hover { background: rgba(155,143,232,0.24); }
 .msg-save-btn:disabled { opacity: 0.4; cursor: default; }
 @keyframes msgIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.msg-loading {
-  align-self: flex-start;
-  background: rgba(15,13,28,0.9); border: 0.5px solid var(--border);
-  border-radius: 20px 20px 20px 5px; padding: 16px 24px;
-  animation: msgIn 0.28s ease;
-}
-.dots span {
-  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-  background: var(--purple); margin: 0 3px; opacity: 0.3;
-  animation: dotbounce 1.3s infinite ease-in-out;
-}
+.msg-loading { align-self: flex-start; background: rgba(15,13,28,0.9); border: 0.5px solid var(--border); border-radius: 20px 20px 20px 5px; padding: 16px 24px; animation: msgIn 0.28s ease; }
+.dots span { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--purple); margin: 0 3px; opacity: 0.3; animation: dotbounce 1.3s infinite ease-in-out; }
 .dots span:nth-child(2) { animation-delay: 0.2s; }
 .dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes dotbounce { 0%,60%,100% { transform: translateY(0); opacity: 0.25; } 30% { transform: translateY(-6px); opacity: 1; } }
-
-/* Vanish input */
 .vanish-wrap { width: 100%; position: relative; }
-
-
-
-.vanish-form {
-  width: 100%; position: relative;
-  background: rgba(30,25,55,0.72);
-  border: 1px solid rgba(155,143,232,0.28);
-  border-radius: 999px; height: 58px; overflow: hidden;
-  backdrop-filter: blur(24px);
-  box-shadow: 0 0 0 1px rgba(155,143,232,0.06), 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(196,184,255,0.08);
-  transition: border-color 0.25s, box-shadow 0.25s;
-}
-.vanish-form:focus-within {
-  border-color: rgba(155,143,232,0.55);
-  box-shadow: 0 0 0 1px rgba(155,143,232,0.12), 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(155,143,232,0.12), inset 0 1px 0 rgba(196,184,255,0.1);
-}
-.vanish-canvas {
-  position: absolute; pointer-events: none;
-  transform: scale(0.5); top: 20%; left: 8px;
-  transform-origin: top left; filter: invert(1); opacity: 0; transition: opacity 0.1s;
-}
+.vanish-form { width: 100%; position: relative; background: rgba(30,25,55,0.72); border: 1px solid rgba(155,143,232,0.28); border-radius: 999px; height: 58px; overflow: hidden; backdrop-filter: blur(24px); box-shadow: 0 0 0 1px rgba(155,143,232,0.06), 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(196,184,255,0.08); transition: border-color 0.25s, box-shadow 0.25s; }
+.vanish-form:focus-within { border-color: rgba(155,143,232,0.55); box-shadow: 0 0 0 1px rgba(155,143,232,0.12), 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(155,143,232,0.12), inset 0 1px 0 rgba(196,184,255,0.1); }
+.vanish-canvas { position: absolute; pointer-events: none; transform: scale(0.5); top: 20%; left: 8px; transform-origin: top left; filter: invert(1); opacity: 0; transition: opacity 0.1s; }
 .vanish-canvas.on { opacity: 1; }
-.vanish-input {
-  width: 100%; height: 100%; background: transparent; border: none;
-  color: var(--text); font-family: var(--serif); font-size: 18px; font-weight: 300;
-  padding: 0 58px 0 30px; position: relative; z-index: 2; letter-spacing: 0.01em;
-}
+.vanish-input { width: 100%; height: 100%; background: transparent; border: none; color: var(--text); font-family: var(--serif); font-size: 18px; font-weight: 300; padding: 0 58px 0 30px; position: relative; z-index: 2; letter-spacing: 0.01em; }
 .vanish-input:focus { outline: none; }
 .vanish-input.animating { color: transparent; }
-.vanish-placeholder {
-  position: absolute; inset: 0; display: flex; align-items: center;
-  padding: 0 58px 0 30px; pointer-events: none; z-index: 1;
-  font-family: var(--serif); font-size: 18px; font-weight: 300; font-style: italic;
-  color: rgba(196,184,255,0.45); transition: opacity 0.35s, transform 0.35s;
-}
+.vanish-placeholder { position: absolute; inset: 0; display: flex; align-items: center; padding: 0 58px 0 30px; pointer-events: none; z-index: 1; font-family: var(--serif); font-size: 18px; font-weight: 300; font-style: italic; color: rgba(196,184,255,0.45); transition: opacity 0.35s, transform 0.35s; }
 .vanish-placeholder.out { opacity: 0; transform: translateY(-8px); }
-.vanish-placeholder.up { opacity: 0; transform: translateY(8px); }
-.vanish-submit {
-  position: absolute; right: 9px; top: 50%; transform: translateY(-50%);
-  width: 40px; height: 40px; border-radius: 50%; z-index: 3;
-  background: rgba(155,143,232,0.18); border: 0.5px solid rgba(155,143,232,0.3);
-  color: var(--accent); cursor: pointer; transition: all 0.2s;
-  display: flex; align-items: center; justify-content: center;
-}
+.vanish-submit { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; z-index: 3; background: rgba(155,143,232,0.18); border: 0.5px solid rgba(155,143,232,0.3); color: var(--accent); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
 .vanish-submit:hover:not(:disabled) { background: rgba(155,143,232,0.32); }
 .vanish-submit:disabled { opacity: 0.28; cursor: default; }
-
-/* Cursor */
 .cursor { display: inline-block; width: 1.5px; height: 1.05em; background: var(--purple); margin-left: 2px; vertical-align: text-bottom; animation: blink 1s infinite; }
 @keyframes blink { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
 
-/* ─── SCREEN 2: JOURNAL ─── */
+/* ── JOURNAL ── */
 #screen-journal { background: var(--bg); }
 .journal-wrap { max-width: 740px; margin: 0 auto; padding: 0 24px 80px; }
-
-.journal-topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 36px 0 48px;
-  border-bottom: 0.5px solid var(--border); margin-bottom: 48px;
-}
-.btn-back-home {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--dim); background: transparent; border: 0.5px solid var(--border);
-  border-radius: 2px; padding: 8px 16px; cursor: pointer; transition: all 0.2s;
-}
+.journal-topbar { display: flex; align-items: center; justify-content: space-between; padding: 36px 0 48px; border-bottom: 0.5px solid var(--border); margin-bottom: 48px; }
+.btn-back-home { display: flex; align-items: center; gap: 8px; font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); background: transparent; border: 0.5px solid var(--border); border-radius: 2px; padding: 8px 16px; cursor: pointer; transition: all 0.2s; }
 .btn-back-home:hover { color: var(--muted); border-color: var(--border-h); }
 .j-logo { display: flex; align-items: center; gap: 9px; }
 .j-logo-text { font-family: 'Space Grotesk', var(--sans); font-size: 15px; font-weight: 500; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; }
-.btn-new-dream {
-  font-family: var(--sans); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--muted); background: transparent; border: 0.5px solid var(--border);
-  border-radius: 2px; padding: 9px 20px; cursor: pointer; transition: all 0.2s;
-}
+.btn-new-dream { font-family: var(--sans); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: transparent; border: 0.5px solid var(--border); border-radius: 2px; padding: 9px 20px; cursor: pointer; transition: all 0.2s; }
 .btn-new-dream:hover { border-color: var(--border-h); color: var(--text); background: var(--purple-glow); }
-
-/* Journal pages */
 .jpage { display: none; }
 .jpage.active { display: block; animation: fadeUp 0.35s ease; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
 .j-title { font-family: var(--serif); font-size: 36px; font-weight: 300; color: var(--text); letter-spacing: 0.04em; margin-bottom: 6px; }
 .j-sub { font-size: 12.5px; color: var(--dim); letter-spacing: 0.07em; margin-bottom: 32px; }
-
-/* Dream cards */
-.dream-card {
-  background: var(--surface); border: 0.5px solid var(--border);
-  border-radius: 3px; padding: 22px 26px; cursor: pointer;
-  transition: all 0.22s; margin-bottom: 10px;
-  display: flex; align-items: center; gap: 18px;
-}
+.dream-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 3px; padding: 22px 26px; cursor: pointer; transition: all 0.22s; margin-bottom: 10px; display: flex; align-items: center; gap: 18px; }
 .dream-card:hover { border-color: var(--border-h); background: var(--surface2); transform: translateX(3px); }
 .card-body { flex: 1; min-width: 0; }
 .card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; margin-bottom: 5px; }
@@ -234,35 +161,25 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 .card-mood { font-size: 10.5px; letter-spacing: 0.09em; color: var(--purple); text-transform: uppercase; margin-right: 10px; flex-shrink: 0; }
 .card-preview { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .interp-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--purple); flex-shrink: 0; opacity: 0.65; }
-
 .empty-state { text-align: center; padding: 80px 0; border: 0.5px dashed var(--border); border-radius: 3px; }
 .empty-moon { font-size: 40px; display: block; margin-bottom: 18px; opacity: 0.2; }
 .empty-state p { font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--dim); margin-bottom: 26px; }
-
-/* Form */
 .jpage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
 .jpage-hdr-title { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--text); letter-spacing: 0.04em; }
 .btn-back-j { font-family: var(--sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); background: transparent; border: 0.5px solid var(--border); border-radius: 2px; padding: 7px 14px; cursor: pointer; transition: all 0.2s; }
 .btn-back-j:hover { color: var(--muted); border-color: var(--border-h); }
 .btn-danger-j { font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,100,100,0.48); background: transparent; border: 0.5px solid rgba(255,100,100,0.2); border-radius: 2px; padding: 7px 14px; cursor: pointer; transition: all 0.2s; margin-left: auto; }
 .btn-danger-j:hover { color: rgba(255,120,120,0.8); border-color: rgba(255,100,100,0.4); }
-
 .field { margin-bottom: 26px; }
 .field-label { display: block; font-size: 10px; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; margin-bottom: 10px; }
-input[type="text"], textarea {
-  width: 100%; background: var(--surface); border: 0.5px solid var(--border);
-  border-radius: 2px; color: var(--text); font-family: var(--serif);
-  font-size: 18px; font-weight: 300; padding: 14px 18px; transition: border-color 0.2s; resize: vertical;
-}
+input[type="text"], textarea { width: 100%; background: var(--surface); border: 0.5px solid var(--border); border-radius: 2px; color: var(--text); font-family: var(--serif); font-size: 18px; font-weight: 300; padding: 14px 18px; transition: border-color 0.2s; resize: vertical; }
 input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--border-h); }
 input[type="text"]::placeholder, textarea::placeholder { color: var(--dim); font-style: italic; }
 textarea { line-height: 1.75; min-height: 160px; }
-
 .mood-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
 .mood-pill { font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: transparent; border: 0.5px solid var(--border); border-radius: 999px; padding: 6px 16px; cursor: pointer; transition: all 0.2s; }
 .mood-pill:hover { border-color: var(--border-h); color: var(--text); }
 .mood-pill.active { background: var(--purple-dim); border-color: rgba(155,143,232,0.4); color: var(--accent); }
-
 .j-actions { display: flex; gap: 10px; margin-top: 8px; }
 .btn-interp { flex: 1; font-family: var(--sans); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.3); border-radius: 2px; padding: 14px; cursor: pointer; transition: all 0.2s; }
 .btn-interp:hover { background: rgba(155,143,232,0.24); }
@@ -272,20 +189,16 @@ textarea { line-height: 1.75; min-height: 160px; }
 .btn-save-plain:disabled { opacity: 0.28; cursor: default; }
 .btn-full-j { width: 100%; font-family: var(--sans); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.3); border-radius: 2px; padding: 14px; cursor: pointer; transition: all 0.2s; margin-top: 18px; }
 .btn-full-j:hover { background: rgba(155,143,232,0.24); }
-
 .j-loading { display: none; text-align: center; padding: 26px 0; }
 .j-loading.show { display: block; }
 .loading-symbols span { display: inline-block; font-size: 16px; color: var(--purple); margin: 0 4px; opacity: 0.25; animation: loadpulse 1.5s infinite ease-in-out; }
 .loading-symbols span:nth-child(1){animation-delay:0s}.loading-symbols span:nth-child(2){animation-delay:.2s}.loading-symbols span:nth-child(3){animation-delay:.4s}.loading-symbols span:nth-child(4){animation-delay:.6s}.loading-symbols span:nth-child(5){animation-delay:.8s}
 @keyframes loadpulse { 0%,100%{opacity:.18;transform:translateY(0)} 50%{opacity:1;transform:translateY(-4px)} }
 .j-loading p { font-family: var(--serif); font-size: 16px; font-style: italic; color: var(--muted); margin-top: 10px; }
-
 .interp-box { display: none; background: var(--surface); border: 0.5px solid var(--border); border-radius: 3px; padding: 28px; margin-top: 18px; }
 .interp-box.show { display: block; animation: fadeUp 0.35s ease; }
 .interp-label { font-size: 10px; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; margin-bottom: 18px; }
 .interp-text { font-family: var(--serif); font-size: 18px; font-weight: 300; line-height: 1.85; color: var(--text); white-space: pre-wrap; }
-
-/* Detail */
 .detail-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .detail-mood-badge { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.2); border-radius: 999px; padding: 4px 12px; }
 .detail-date { font-size: 12px; color: var(--dim); letter-spacing: 0.06em; }
@@ -294,14 +207,9 @@ textarea { line-height: 1.75; min-height: 160px; }
 .detail-dream-text { font-family: var(--serif); font-size: 18px; font-weight: 300; line-height: 1.85; color: var(--text); }
 .no-interp { border: 0.5px dashed var(--border); border-radius: 3px; padding: 40px; text-align: center; margin-top: 18px; }
 .no-interp p { font-family: var(--serif); font-size: 16px; font-style: italic; color: var(--dim); margin-bottom: 20px; }
-
-@media(max-width:600px){
-  #screen-chat{padding:26px 16px 32px;}
-  .journal-wrap{padding:0 16px 60px;}
-  .j-title{font-size:28px;}
-  .j-actions{flex-direction:column;}
-  #apiBanner{flex-direction:column;align-items:flex-start;border-radius:12px;}
-}
+.saving-indicator { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; text-align: center; padding: 8px; opacity: 0; transition: opacity 0.3s; }
+.saving-indicator.show { opacity: 1; }
+@media(max-width:600px){ #screen-chat{padding:26px 16px 32px;} .journal-wrap{padding:0 16px 60px;} .j-title{font-size:28px;} .j-actions{flex-direction:column;} }
 </style>
 </head>
 <body>
@@ -309,51 +217,93 @@ textarea { line-height: 1.75; min-height: 160px; }
 <div id="stars"></div>
 <canvas id="wavyCanvas"></canvas>
 
-<!-- ══════════════ SCREEN 1: CHAT ══════════════ -->
-<div id="screen-chat" class="screen active">
-
-  <div class="chat-topbar">
-    <div class="logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+<!-- ══════════════ AUTH SCREEN ══════════════ -->
+<div id="screen-auth">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <circle cx="9" cy="12" r="6.5" stroke="#9B8FE8" stroke-width="1.1" fill="none"/>
         <circle cx="15" cy="12" r="6.5" stroke="#C4B8FF" stroke-width="1.1" fill="none" opacity="0.6"/>
-        <path d="M12 6.2 C13.6 7.8 13.6 16.2 12 17.8 C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.25"/>
+        <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.25"/>
+      </svg>
+      <span class="auth-logo-text">Noctaras</span>
+    </div>
+
+    <!-- Login form -->
+    <div id="auth-login">
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-sub">Your dreams are waiting</p>
+      <div class="auth-error" id="loginError"></div>
+      <button class="btn-google" onclick="signInGoogle()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+        Continue with Google
+      </button>
+      <div class="auth-divider"><span>or</span></div>
+      <input class="auth-input" type="email" id="loginEmail" placeholder="Email address">
+      <input class="auth-input" type="password" id="loginPassword" placeholder="Password">
+      <button class="btn-auth-primary" onclick="signInEmail()">Sign in</button>
+      <div class="auth-switch">Don't have an account? <a onclick="showAuthForm('register')">Sign up</a></div>
+    </div>
+
+    <!-- Register form -->
+    <div id="auth-register" style="display:none">
+      <h2 class="auth-title">Begin the journey</h2>
+      <p class="auth-sub">Create your dream journal</p>
+      <div class="auth-error" id="registerError"></div>
+      <button class="btn-google" onclick="signInGoogle()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+        Continue with Google
+      </button>
+      <div class="auth-divider"><span>or</span></div>
+      <input class="auth-input" type="email" id="registerEmail" placeholder="Email address">
+      <input class="auth-input" type="password" id="registerPassword" placeholder="Password (min 6 characters)">
+      <button class="btn-auth-primary" onclick="registerEmail()">Create account</button>
+      <div class="auth-switch">Already have an account? <a onclick="showAuthForm('login')">Sign in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SCREEN 1: CHAT ══════════════ -->
+<div id="screen-chat" class="screen">
+  <div class="chat-topbar">
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="9" cy="12" r="6.5" stroke="#9B8FE8" stroke-width="1.1" fill="none"/>
+        <circle cx="15" cy="12" r="6.5" stroke="#C4B8FF" stroke-width="1.1" fill="none" opacity="0.6"/>
+        <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.25"/>
       </svg>
       <span class="logo-text">Noctaras</span>
     </div>
-    <button class="btn-your-dreams" onclick="goJournal()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-      </svg>
-      Your Dreams
-    </button>
+    <div class="topbar-right">
+      <button class="btn-your-dreams" onclick="goJournal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        Your Dreams
+      </button>
+      <button class="btn-signout" onclick="signOut()">Sign out</button>
+    </div>
   </div>
 
   <div class="chat-main">
-
     <div class="chat-hero" id="chatHero">
       <div class="chat-moon">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
           <circle cx="9" cy="12" r="6.5" stroke="#9B8FE8" stroke-width="0.9" fill="none"/>
           <circle cx="15" cy="12" r="6.5" stroke="#C4B8FF" stroke-width="0.9" fill="none" opacity="0.6"/>
-          <path d="M12 6.2 C13.6 7.8 13.6 16.2 12 17.8 C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.3"/>
+          <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.3"/>
         </svg>
       </div>
       <h1 class="chat-title">What did you dream?</h1>
       <p class="chat-sub">Describe your dream and receive its interpretation</p>
     </div>
-
     <div id="chatMessages"></div>
-
     <div class="vanish-wrap">
-<div class="vanish-form" id="vanishForm">
+      <div class="vanish-form" id="vanishForm">
         <canvas class="vanish-canvas" id="vanishCanvas" width="800" height="800"></canvas>
-        <input class="vanish-input" id="vanishInput" type="text" autocomplete="off"
-          oninput="onInput()" onkeydown="onKey(event)">
-        <div class="vanish-placeholder" id="vanishPH">
-          <span id="phText">I was flying over a city of clouds...</span>
-        </div>
+        <input class="vanish-input" id="vanishInput" type="text" autocomplete="off" oninput="onInput()" onkeydown="onKey(event)">
+        <div class="vanish-placeholder" id="vanishPH"><span id="phText">I was flying over a city of clouds...</span></div>
         <button class="vanish-submit" id="vanishBtn" onclick="submitChat()" disabled>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
             <path d="M5 12l14 0"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/>
@@ -361,14 +311,12 @@ textarea { line-height: 1.75; min-height: 160px; }
         </button>
       </div>
     </div>
-
   </div>
 </div>
 
 <!-- ══════════════ SCREEN 2: JOURNAL ══════════════ -->
 <div id="screen-journal" class="screen">
   <div class="journal-wrap">
-
     <div class="journal-topbar">
       <button class="btn-back-home" onclick="goChat()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -377,29 +325,27 @@ textarea { line-height: 1.75; min-height: 160px; }
         Back
       </button>
       <div class="j-logo">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
           <circle cx="9" cy="12" r="6.5" stroke="#9B8FE8" stroke-width="1.1" fill="none"/>
           <circle cx="15" cy="12" r="6.5" stroke="#C4B8FF" stroke-width="1.1" fill="none" opacity="0.6"/>
-          <path d="M12 6.2 C13.6 7.8 13.6 16.2 12 17.8 C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.25"/>
+          <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#C4B8FF" opacity="0.25"/>
         </svg>
         <span class="j-logo-text">Noctaras</span>
       </div>
       <button class="btn-new-dream" onclick="showJP('new')">+ New dream</button>
     </div>
 
-    <!-- List -->
     <div id="jp-list" class="jpage active">
       <h1 class="j-title">Your Dreams</h1>
-      <p class="j-sub" id="journalSub">Your dreams will appear here</p>
+      <p class="j-sub" id="journalSub">Loading your dreams...</p>
       <div id="dreamList"></div>
-      <div id="emptyState" class="empty-state">
+      <div id="emptyState" class="empty-state" style="display:none">
         <span class="empty-moon">☽</span>
         <p>No dreams recorded yet</p>
         <button class="btn-new-dream" onclick="showJP('new')">Record your first dream</button>
       </div>
     </div>
 
-    <!-- New dream -->
     <div id="jp-new" class="jpage">
       <div class="jpage-header">
         <button class="btn-back-j" onclick="showJP('list')">← Back</button>
@@ -439,7 +385,6 @@ textarea { line-height: 1.75; min-height: 160px; }
       </div>
     </div>
 
-    <!-- Detail -->
     <div id="jp-detail" class="jpage">
       <div class="jpage-header">
         <button class="btn-back-j" onclick="showJP('list')">← Journal</button>
@@ -447,242 +392,341 @@ textarea { line-height: 1.75; min-height: 160px; }
       </div>
       <div id="detailContent"></div>
     </div>
-
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
-<script>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDtLITcSC2vN_dSCvgG5Jz0TQ8AaU5Z0VM",
+  authDomain: "noctaras.firebaseapp.com",
+  projectId: "noctaras",
+  storageBucket: "noctaras.firebasestorage.app",
+  messagingSenderId: "414698039475",
+  appId: "1:414698039475:web:958d09a4a63421815ba8c6",
+  measurementId: "G-LDCJVN9DPP"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+
+let currentUser = null;
+let dreams = [];
+let currentMood = 'mysterious';
+let currentAnalysis = '';
+let selectedId = null;
+let typingIv = null;
+let vanishData = [], vanishBusy = false;
+
+// ── Auth state ──
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    showScreen('chat');
+    await loadDreams();
+  } else {
+    currentUser = null;
+    showAuthScreen('login');
+  }
+});
+
+// ── Auth functions ──
+window.showAuthForm = (form) => {
+  document.getElementById('auth-login').style.display = form === 'login' ? 'block' : 'none';
+  document.getElementById('auth-register').style.display = form === 'register' ? 'block' : 'none';
+};
+
+window.signInGoogle = async () => {
+  try {
+    await signInWithPopup(auth, googleProvider);
+  } catch (e) {
+    document.getElementById('loginError').textContent = e.message;
+  }
+};
+
+window.signInEmail = async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (e) {
+    document.getElementById('loginError').textContent = friendlyError(e.code);
+  }
+};
+
+window.registerEmail = async () => {
+  const email = document.getElementById('registerEmail').value.trim();
+  const password = document.getElementById('registerPassword').value;
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (e) {
+    document.getElementById('registerError').textContent = friendlyError(e.code);
+  }
+};
+
+window.signOut = async () => {
+  await fbSignOut(auth);
+};
+
+function friendlyError(code) {
+  const map = {
+    'auth/invalid-email': 'Invalid email address.',
+    'auth/user-not-found': 'No account found with this email.',
+    'auth/wrong-password': 'Incorrect password.',
+    'auth/email-already-in-use': 'An account with this email already exists.',
+    'auth/weak-password': 'Password must be at least 6 characters.',
+    'auth/invalid-credential': 'Invalid email or password.',
+  };
+  return map[code] || 'Something went wrong. Please try again.';
+}
+
+// ── Screen management ──
+function showScreen(name) {
+  document.getElementById('screen-auth').classList.remove('active');
+  document.getElementById('screen-chat').classList.remove('active');
+  document.getElementById('screen-journal').classList.remove('active');
+  if (name === 'auth') {
+    document.getElementById('screen-auth').classList.add('active');
+  } else {
+    document.getElementById('screen-' + name).classList.add('active');
+  }
+}
+
+function showAuthScreen(form) {
+  document.getElementById('screen-auth').classList.add('active');
+  document.getElementById('screen-chat').classList.remove('active');
+  document.getElementById('screen-journal').classList.remove('active');
+  window.showAuthForm(form);
+}
+
+window.goJournal = () => { showScreen('journal'); renderJournal(); };
+window.goChat = () => showScreen('chat');
+
+// ── Firestore ──
+async function loadDreams() {
+  if (!currentUser) return;
+  try {
+    const q = query(collection(db, 'users', currentUser.uid, 'dreams'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    dreams = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderJournal();
+  } catch (e) {
+    console.error('Load error:', e);
+  }
+}
+
+async function saveDreamToDB(dreamData) {
+  if (!currentUser) return null;
+  const ref = await addDoc(collection(db, 'users', currentUser.uid, 'dreams'), {
+    ...dreamData,
+    createdAt: serverTimestamp()
+  });
+  return ref.id;
+}
+
+async function updateDreamInDB(id, data) {
+  if (!currentUser) return;
+  await updateDoc(doc(db, 'users', currentUser.uid, 'dreams', id), data);
+}
+
+async function deleteDreamFromDB(id) {
+  if (!currentUser) return;
+  await deleteDoc(doc(db, 'users', currentUser.uid, 'dreams', id));
+}
+
 // ── Stars ──
 (function(){
-  const c=document.getElementById('stars');
-  for(let i=0;i<100;i++){
-    const s=document.createElement('div');s.className='star';
-    const sz=Math.random()*1.8+0.4;
-    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--dur:${Math.random()*4+2}s;--delay:${Math.random()*6}s;--min-op:${(Math.random()*0.1+0.05).toFixed(2)};--max-op:${(Math.random()*0.5+0.3).toFixed(2)};`;
+  const c = document.getElementById('stars');
+  for (let i = 0; i < 100; i++) {
+    const s = document.createElement('div'); s.className = 'star';
+    const sz = Math.random() * 1.8 + 0.4;
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--dur:${Math.random()*4+2}s;--delay:${Math.random()*6}s;--min-op:${(Math.random()*0.1+0.05).toFixed(2)};--max-op:${(Math.random()*0.5+0.3).toFixed(2)};`;
     c.appendChild(s);
   }
 })();
 
 // ── Wavy BG ──
 (function(){
-  const canvas=document.getElementById('wavyCanvas'),ctx=canvas.getContext('2d');
-  const colors=["#38bdf8","#818cf8","#c084fc","#e879f9","#22d3ee"];
-  let w,h,nt=0,n3;
-  function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;ctx.filter='blur(10px)';}
-  function draw(){
-    nt+=0.002;
-    ctx.fillStyle='#07060F';ctx.globalAlpha=0.5;ctx.fillRect(0,0,w,h);
-    for(let i=0;i<5;i++){
-      ctx.beginPath();ctx.lineWidth=50;ctx.strokeStyle=colors[i%colors.length];
-      for(let x=0;x<w;x+=5){ctx.lineTo(x,n3(x/800,0.3*i,nt)*100+h*0.5);}
-      ctx.stroke();ctx.closePath();
+  const canvas = document.getElementById('wavyCanvas'), ctx = canvas.getContext('2d');
+  const colors = ["#38bdf8","#818cf8","#c084fc","#e879f9","#22d3ee"];
+  let w, h, nt = 0, n3;
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; ctx.filter = 'blur(10px)'; }
+  function draw() {
+    nt += 0.002;
+    ctx.fillStyle = '#07060F'; ctx.globalAlpha = 0.5; ctx.fillRect(0, 0, w, h);
+    for (let i = 0; i < 5; i++) {
+      ctx.beginPath(); ctx.lineWidth = 50; ctx.strokeStyle = colors[i % colors.length];
+      for (let x = 0; x < w; x += 5) ctx.lineTo(x, n3(x/800, 0.3*i, nt)*100 + h*0.5);
+      ctx.stroke(); ctx.closePath();
     }
     requestAnimationFrame(draw);
   }
-  window.addEventListener('resize',resize);
-  window.addEventListener('load',()=>{
-    if(window.SimplexNoise){const s=new window.SimplexNoise();n3=(x,y,z)=>s.noise3D(x,y,z);}
-    else{n3=(x,y,z)=>Math.sin(x*0.5+z*10+y*3)*0.5;}
-    resize();draw();
+  window.addEventListener('resize', resize);
+  window.addEventListener('load', () => {
+    if (window.SimplexNoise) { const s = new window.SimplexNoise(); n3 = (x,y,z) => s.noise3D(x,y,z); }
+    else { n3 = (x,y,z) => Math.sin(x*0.5+z*10+y*3)*0.5; }
+    resize(); draw();
   });
 })();
 
 // ── Placeholder rotation ──
-const PHS=['Describe your dream in detail...','I was flying over a city of clouds...','There was a door that kept moving away...','The ocean turned into black glass...','A forest that whispered my name...','Someone I knew but couldn\'t recognize...'];
-let phIdx=0;
-setInterval(()=>{
-  const input=document.getElementById('vanishInput');
-  if(input.value) return;
-  const ph=document.getElementById('vanishPH'),txt=document.getElementById('phText');
-  ph.style.transition='opacity 0.35s, transform 0.35s';
-  ph.style.opacity='0';ph.style.transform='translateY(-8px)';
-  setTimeout(()=>{
-    phIdx=(phIdx+1)%PHS.length;txt.textContent=PHS[phIdx];
-    ph.style.transform='translateY(8px)';
-    requestAnimationFrame(()=>{ph.style.opacity='1';ph.style.transform='translateY(0)';});
-  },360);
-},3500);
+const PHS = ['Describe your dream in detail...','I was flying over a city of clouds...','There was a door that kept moving away...','The ocean turned into black glass...','A forest that whispered my name...','Someone I knew but couldn\'t recognize...'];
+let phIdx = 0;
+setInterval(() => {
+  const input = document.getElementById('vanishInput');
+  if (input.value) return;
+  const ph = document.getElementById('vanishPH'), txt = document.getElementById('phText');
+  ph.style.opacity = '0'; ph.style.transform = 'translateY(-8px)';
+  setTimeout(() => {
+    phIdx = (phIdx + 1) % PHS.length; txt.textContent = PHS[phIdx];
+    ph.style.transform = 'translateY(8px)';
+    requestAnimationFrame(() => { ph.style.opacity = '1'; ph.style.transform = 'translateY(0)'; });
+  }, 360);
+}, 3500);
 
 // ── Vanish input ──
-let vanishData=[],vanishBusy=false;
-
-function onInput(){
-  const v=document.getElementById('vanishInput').value;
-  const ph=document.getElementById('vanishPH');
-  ph.style.opacity=v.length>0?'0':'1';
-  ph.style.transform=v.length>0?'translateY(-8px)':'translateY(0)';
-  document.getElementById('vanishBtn').disabled=v.trim().length===0;
+window.onInput = () => {
+  const v = document.getElementById('vanishInput').value;
+  const ph = document.getElementById('vanishPH');
+  ph.style.opacity = v.length > 0 ? '0' : '1';
+  ph.style.transform = v.length > 0 ? 'translateY(-8px)' : 'translateY(0)';
+  document.getElementById('vanishBtn').disabled = v.trim().length === 0;
   capturePixels();
-}
-function onKey(e){if(e.key==='Enter'&&!vanishBusy)submitChat();}
+};
+window.onKey = (e) => { if (e.key === 'Enter' && !vanishBusy) submitChat(); };
 
-function capturePixels(){
-  const inp=document.getElementById('vanishInput');
-  const cv=document.getElementById('vanishCanvas');
-  const ctx=cv.getContext('2d');
-  cv.width=800;cv.height=800;ctx.clearRect(0,0,800,800);
-  const fs=parseFloat(getComputedStyle(inp).fontSize);
-  ctx.font=`${fs*2}px ${getComputedStyle(inp).fontFamily}`;
-  ctx.fillStyle='#FFF';ctx.fillText(inp.value,16,40);
-  const img=ctx.getImageData(0,0,800,800).data;
-  vanishData=[];
-  for(let t=0;t<800;t++)for(let n=0;n<800;n++){
-    const e=(t*800+n)*4;
-    if(img[e]||img[e+1]||img[e+2])
-      vanishData.push({x:n,y:t,r:1,color:`rgba(${img[e]},${img[e+1]},${img[e+2]},${img[e+3]})`});
+function capturePixels() {
+  const inp = document.getElementById('vanishInput');
+  const cv = document.getElementById('vanishCanvas');
+  const ctx = cv.getContext('2d');
+  cv.width = 800; cv.height = 800; ctx.clearRect(0, 0, 800, 800);
+  const fs = parseFloat(getComputedStyle(inp).fontSize);
+  ctx.font = `${fs*2}px ${getComputedStyle(inp).fontFamily}`;
+  ctx.fillStyle = '#FFF'; ctx.fillText(inp.value, 16, 40);
+  const img = ctx.getImageData(0, 0, 800, 800).data;
+  vanishData = [];
+  for (let t = 0; t < 800; t++) for (let n = 0; n < 800; n++) {
+    const e = (t*800+n)*4;
+    if (img[e]||img[e+1]||img[e+2]) vanishData.push({x:n,y:t,r:1,color:`rgba(${img[e]},${img[e+1]},${img[e+2]},${img[e+3]})`});
   }
 }
 
-function runVanish(onDone){
-  const cv=document.getElementById('vanishCanvas'),ctx=cv.getContext('2d');
+function runVanish(onDone) {
+  const cv = document.getElementById('vanishCanvas'), ctx = cv.getContext('2d');
   cv.classList.add('on');
   document.getElementById('vanishInput').classList.add('animating');
-  const maxX=vanishData.reduce((p,c)=>c.x>p?c.x:p,0);
-  let pos=maxX;
-  (function frame(){
-    const next=[];
-    for(const p of vanishData){
-      if(p.x<pos){next.push(p);continue;}
-      if(p.r<=0)continue;
-      p.x+=Math.random()>.5?1:-1;p.y+=Math.random()>.5?1:-1;p.r-=0.05*Math.random();next.push(p);
+  const maxX = vanishData.reduce((p,c) => c.x > p ? c.x : p, 0);
+  let pos = maxX;
+  (function frame() {
+    const next = [];
+    for (const p of vanishData) {
+      if (p.x < pos) { next.push(p); continue; }
+      if (p.r <= 0) continue;
+      p.x += Math.random() > .5 ? 1 : -1; p.y += Math.random() > .5 ? 1 : -1; p.r -= 0.05*Math.random(); next.push(p);
     }
-    vanishData=next;
-    ctx.clearRect(pos,0,800,800);
-    for(const p of vanishData)if(p.x>pos){ctx.beginPath();ctx.rect(p.x,p.y,p.r,p.r);ctx.fillStyle=p.color;ctx.fill();}
-    pos-=8;
-    if(vanishData.length>0){requestAnimationFrame(frame);}
-    else{
+    vanishData = next;
+    ctx.clearRect(pos, 0, 800, 800);
+    for (const p of vanishData) if (p.x > pos) { ctx.beginPath(); ctx.rect(p.x,p.y,p.r,p.r); ctx.fillStyle=p.color; ctx.fill(); }
+    pos -= 8;
+    if (vanishData.length > 0) { requestAnimationFrame(frame); }
+    else {
       cv.classList.remove('on');
       document.getElementById('vanishInput').classList.remove('animating');
-      document.getElementById('vanishInput').value='';
-      document.getElementById('vanishPH').style.opacity='1';
-      document.getElementById('vanishPH').style.transform='translateY(0)';
-      document.getElementById('vanishBtn').disabled=true;
-      vanishBusy=false;
-      if(onDone)onDone();
+      document.getElementById('vanishInput').value = '';
+      document.getElementById('vanishPH').style.opacity = '1';
+      document.getElementById('vanishPH').style.transform = 'translateY(0)';
+      document.getElementById('vanishBtn').disabled = true;
+      vanishBusy = false;
+      if (onDone) onDone();
     }
   })();
 }
 
-// ── State ──
-let dreams=[],currentMood='mysterious',currentAnalysis='',selectedId=null,typingIv=null;
-
-function init(){
-  try{
-    const s=localStorage.getItem('noctarias_dreams');if(s)dreams=JSON.parse(s);
-  }catch(e){}
-  renderJournal();
-}
-function persist(){localStorage.setItem('noctarias_dreams',JSON.stringify(dreams));}
-function fmtDate(iso){return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
-function moodLbl(m){return{mysterious:'Mysterious',peaceful:'Peaceful',anxious:'Anxious',joyful:'Joyful',dark:'Dark',neutral:'Neutral'}[m]||m;}
-
-// ── Navigation ──
-function goJournal(){
-  document.getElementById('screen-chat').classList.remove('active');
-  document.getElementById('screen-journal').classList.add('active');
-  renderJournal();
-}
-function goChat(){
-  document.getElementById('screen-journal').classList.remove('active');
-  document.getElementById('screen-chat').classList.add('active');
-}
-function showJP(name){
-  document.querySelectorAll('.jpage').forEach(p=>p.classList.remove('active'));
-  document.getElementById('jp-'+name).classList.add('active');
-  if(name==='new')resetForm();
-}
-function resetForm(){
-  document.getElementById('titleInput').value='';
-  document.getElementById('dreamInput').value='';
-  document.getElementById('interpBox').classList.remove('show');
-  document.getElementById('jLoading').classList.remove('show');
-  currentAnalysis='';currentMood='mysterious';
-  document.querySelectorAll('.mood-pill').forEach(b=>b.classList.toggle('active',b.dataset.mood==='mysterious'));
-}
-function setMood(el){document.querySelectorAll('.mood-pill').forEach(b=>b.classList.remove('active'));el.classList.add('active');currentMood=el.dataset.mood;}
-
-// ── Chat submit ──
-async function submitChat(){
-  const inp=document.getElementById('vanishInput');
-  const text=inp.value.trim();
-  if(!text||vanishBusy)return;
-  vanishBusy=true;
+// ── Chat ──
+window.submitChat = async () => {
+  const inp = document.getElementById('vanishInput');
+  const text = inp.value.trim();
+  if (!text || vanishBusy) return;
+  vanishBusy = true;
   capturePixels();
-
-  // Fade out hero
-  const hero=document.getElementById('chatHero');
-  if(hero&&hero.style.display!=='none'){hero.style.opacity='0';setTimeout(()=>hero.style.display='none',400);}
-
-  runVanish(async()=>{
+  const hero = document.getElementById('chatHero');
+  if (hero && hero.style.display !== 'none') { hero.style.opacity = '0'; setTimeout(() => hero.style.display = 'none', 400); }
+  runVanish(async () => {
     addUserMsg(text);
-    const load=addLoadingMsg();
-    try{
-      const analysis=await callAI(text);
+    const load = addLoadingMsg();
+    try {
+      const analysis = await callAI(text);
       load.remove();
-      addAIMsg(analysis,text);
-    }catch(e){
+      addAIMsg(analysis, text);
+    } catch(e) {
       load.remove();
-      addAIMsg('The stars grew silent... '+e.message,'');
+      addAIMsg('The stars grew silent... ' + e.message, '');
     }
   });
-}
+};
 
-function addUserMsg(t){
-  const el=document.createElement('div');el.className='msg-user';el.textContent=t;
-  const c=document.getElementById('chatMessages');c.appendChild(el);c.scrollTop=c.scrollHeight;
+function addUserMsg(t) {
+  const el = document.createElement('div'); el.className = 'msg-user'; el.textContent = t;
+  const c = document.getElementById('chatMessages'); c.appendChild(el); c.scrollTop = c.scrollHeight;
 }
-function addLoadingMsg(){
-  const el=document.createElement('div');el.className='msg-loading';
-  el.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-  const c=document.getElementById('chatMessages');c.appendChild(el);c.scrollTop=c.scrollHeight;
+function addLoadingMsg() {
+  const el = document.createElement('div'); el.className = 'msg-loading';
+  el.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
+  const c = document.getElementById('chatMessages'); c.appendChild(el); c.scrollTop = c.scrollHeight;
   return el;
 }
-function addAIMsg(text,dreamText){
-  const el=document.createElement('div');el.className='msg-ai';
-  const c=document.getElementById('chatMessages');c.appendChild(el);
-  let i=0;
-  const iv=setInterval(()=>{
-    if(i<text.length){el.innerHTML=text.slice(0,i+1).replace(/\n/g,'<br>')+'<span class="cursor"></span>';i++;}
-    else{
-      el.innerHTML=text.replace(/\n/g,'<br>');
-      if(dreamText){
-        const btn=document.createElement('button');btn.className='msg-save-btn';
-        btn.innerHTML='✦ Save to journal';
-        btn.onclick=()=>{
-          dreams.unshift({id:Date.now(),title:dreamText.substring(0,42)+(dreamText.length>42?'...':''),text:dreamText,mood:'mysterious',date:new Date().toISOString(),analysis:text});
-          persist();btn.textContent='✓ Saved';btn.disabled=true;
+function addAIMsg(text, dreamText) {
+  const el = document.createElement('div'); el.className = 'msg-ai';
+  const c = document.getElementById('chatMessages'); c.appendChild(el);
+  let i = 0;
+  const iv = setInterval(() => {
+    if (i < text.length) { el.innerHTML = text.slice(0,i+1).replace(/\n/g,'<br>') + '<span class="cursor"></span>'; i++; }
+    else {
+      el.innerHTML = text.replace(/\n/g,'<br>');
+      if (dreamText) {
+        const btn = document.createElement('button'); btn.className = 'msg-save-btn';
+        btn.innerHTML = '✦ Save to journal';
+        btn.onclick = async () => {
+          btn.textContent = 'Saving...'; btn.disabled = true;
+          const dreamData = { title: dreamText.substring(0,42)+(dreamText.length>42?'...':''), text: dreamText, mood: 'mysterious', date: new Date().toISOString(), analysis: text };
+          const id = await saveDreamToDB(dreamData);
+          if (id) { dreams.unshift({id, ...dreamData}); btn.textContent = '✓ Saved'; }
+          else { btn.textContent = 'Error'; btn.disabled = false; }
         };
-        el.appendChild(document.createElement('br'));el.appendChild(btn);
+        el.appendChild(document.createElement('br')); el.appendChild(btn);
       }
       clearInterval(iv);
     }
-    c.scrollTop=c.scrollHeight;
-  },14);
+    c.scrollTop = c.scrollHeight;
+  }, 14);
 }
 
-// ── OpenAI ──
-async function callAI(dreamText){
-  const res=await fetch('/api/interpret',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({dream:dreamText})
-  });
-  if(!res.ok){const e=await res.json();throw new Error(e.error||'API error');}
-  const d=await res.json();
-  return d.result||'The stars kept their secrets tonight...';
+// ── AI ──
+async function callAI(dreamText) {
+  const res = await fetch('/api/interpret', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({dream: dreamText}) });
+  if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'API error'); }
+  const d = await res.json();
+  return d.result || 'The stars kept their secrets tonight...';
 }
 
 // ── Journal ──
-function renderJournal(){
-  const list=document.getElementById('dreamList'),empty=document.getElementById('emptyState'),sub=document.getElementById('journalSub');
-  const n=dreams.length;
-  sub.textContent=n===0?'Your dreams will appear here':`${n} dream${n!==1?'s':''} recorded`;
-  if(n===0){empty.style.display='';list.innerHTML='';return;}
-  empty.style.display='none';
-  list.innerHTML=dreams.map(d=>`
-    <div class="dream-card" onclick="openDream(${d.id})">
+function renderJournal() {
+  const list = document.getElementById('dreamList');
+  const empty = document.getElementById('emptyState');
+  const sub = document.getElementById('journalSub');
+  if (!list) return;
+  const n = dreams.length;
+  sub.textContent = n === 0 ? 'Your dreams will appear here' : `${n} dream${n!==1?'s':''} recorded`;
+  if (n === 0) { empty.style.display = ''; list.innerHTML = ''; return; }
+  empty.style.display = 'none';
+  list.innerHTML = dreams.map(d => `
+    <div class="dream-card" onclick="openDream('${d.id}')">
       <div class="card-body">
         <div class="card-top"><span class="card-title">${d.title}</span><span class="card-date">${fmtDate(d.date)}</span></div>
         <div class="card-row"><span class="card-mood">${moodLbl(d.mood)}</span><span class="card-preview">${d.text.substring(0,90)}${d.text.length>90?'...':''}</span></div>
@@ -691,81 +735,113 @@ function renderJournal(){
     </div>`).join('');
 }
 
-function openDream(id){
-  selectedId=id;const d=dreams.find(x=>x.id===id);if(!d)return;
-  document.getElementById('detailContent').innerHTML=`
+window.openDream = (id) => {
+  selectedId = id;
+  const d = dreams.find(x => x.id === id); if (!d) return;
+  document.getElementById('detailContent').innerHTML = `
     <div class="detail-meta"><span class="detail-mood-badge">${moodLbl(d.mood)}</span><span class="detail-date">${fmtDate(d.date)}</span></div>
     <h1 class="detail-title">${d.title}</h1>
     <div class="detail-dream-box"><p class="detail-dream-text">${d.text}</p></div>
     ${d.analysis
-      ?`<div class="interp-box show"><div class="interp-label">✦ Interpretation</div><p class="interp-text">${d.analysis}</p></div>`
-      :`<div class="no-interp"><p>No interpretation recorded</p>
-        <button class="btn-full-j" style="margin-top:0;" onclick="interpretExisting(${d.id})">Interpret this dream</button>
-        <div class="j-loading" id="detailLoading" style="margin-top:16px;"></div>
-        <div class="interp-box" id="detailInterp" style="margin-top:16px;">
-          <div class="interp-label">✦ Interpretation</div>
-          <p class="interp-text" id="detailInterpText"></p>
-          <button class="btn-full-j" onclick="saveDetailInterp(${d.id})">Save interpretation</button>
-        </div></div>`}`;
+      ? `<div class="interp-box show"><div class="interp-label">✦ Interpretation</div><p class="interp-text">${d.analysis}</p></div>`
+      : `<div class="no-interp"><p>No interpretation recorded</p>
+          <button class="btn-full-j" style="margin-top:0;" onclick="interpretExisting('${d.id}')">Interpret this dream</button>
+          <div class="j-loading" id="detailLoading" style="margin-top:16px;"></div>
+          <div class="interp-box" id="detailInterp" style="margin-top:16px;">
+            <div class="interp-label">✦ Interpretation</div>
+            <p class="interp-text" id="detailInterpText"></p>
+            <button class="btn-full-j" onclick="saveDetailInterp('${d.id}')">Save interpretation</button>
+          </div></div>`}`;
   showJP('detail');
+};
+
+function typeText(text, el, cb) {
+  if (typingIv) clearInterval(typingIv); el.innerHTML = ''; let i = 0;
+  typingIv = setInterval(() => {
+    if (i < text.length) { el.innerHTML = text.slice(0,i+1) + '<span class="cursor"></span>'; i++; }
+    else { el.innerHTML = text; clearInterval(typingIv); if (cb) cb(); }
+  }, 15);
 }
 
-function typeText(text,el,cb){
-  if(typingIv)clearInterval(typingIv);el.innerHTML='';let i=0;
-  typingIv=setInterval(()=>{
-    if(i<text.length){el.innerHTML=text.slice(0,i+1)+'<span class="cursor"></span>';i++;}
-    else{el.innerHTML=text;clearInterval(typingIv);if(cb)cb();}
-  },15);
+window.showJP = (name) => {
+  document.querySelectorAll('.jpage').forEach(p => p.classList.remove('active'));
+  document.getElementById('jp-'+name).classList.add('active');
+  if (name === 'new') resetForm();
+};
+
+function resetForm() {
+  document.getElementById('titleInput').value = '';
+  document.getElementById('dreamInput').value = '';
+  document.getElementById('interpBox').classList.remove('show');
+  document.getElementById('jLoading').classList.remove('show');
+  currentAnalysis = ''; currentMood = 'mysterious';
+  document.querySelectorAll('.mood-pill').forEach(b => b.classList.toggle('active', b.dataset.mood === 'mysterious'));
 }
 
-async function interpretForm(){
-  const text=document.getElementById('dreamInput').value.trim();if(!text)return;
+window.setMood = (el) => { document.querySelectorAll('.mood-pill').forEach(b => b.classList.remove('active')); el.classList.add('active'); currentMood = el.dataset.mood; };
+
+window.interpretForm = async () => {
+  const text = document.getElementById('dreamInput').value.trim(); if (!text) return;
   document.getElementById('jLoading').classList.add('show');
   document.getElementById('interpBox').classList.remove('show');
-  document.getElementById('interpretBtn').disabled=true;
-  document.getElementById('savePlainBtn').disabled=true;
-  currentAnalysis='';
-  try{
-    const a=await callAI(text);currentAnalysis=a;
+  document.getElementById('interpretBtn').disabled = true;
+  document.getElementById('savePlainBtn').disabled = true;
+  currentAnalysis = '';
+  try {
+    const a = await callAI(text); currentAnalysis = a;
     document.getElementById('jLoading').classList.remove('show');
     document.getElementById('interpBox').classList.add('show');
-    typeText(a,document.getElementById('interpText'),null);
-  }catch(e){document.getElementById('jLoading').classList.remove('show');alert('Error: '+e.message);}
-  finally{document.getElementById('interpretBtn').disabled=false;document.getElementById('savePlainBtn').disabled=false;}
-}
+    typeText(a, document.getElementById('interpText'), null);
+  } catch(e) { document.getElementById('jLoading').classList.remove('show'); alert('Error: ' + e.message); }
+  finally { document.getElementById('interpretBtn').disabled = false; document.getElementById('savePlainBtn').disabled = false; }
+};
 
-function saveDream(){
-  const text=document.getElementById('dreamInput').value.trim();if(!text)return;
-  const title=document.getElementById('titleInput').value.trim()||'Untitled dream';
-  dreams.unshift({id:Date.now(),title,text,mood:currentMood,date:new Date().toISOString(),analysis:''});
-  persist();renderJournal();showJP('list');
-}
-function saveDreamInterp(){
-  const text=document.getElementById('dreamInput').value.trim();if(!text)return;
-  const title=document.getElementById('titleInput').value.trim()||'Untitled dream';
-  dreams.unshift({id:Date.now(),title,text,mood:currentMood,date:new Date().toISOString(),analysis:currentAnalysis});
-  persist();renderJournal();showJP('list');
-}
-async function interpretExisting(id){
-  const d=dreams.find(x=>x.id===id);if(!d)return;
-  const ld=document.getElementById('detailLoading'),ie=document.getElementById('detailInterp');
-  ld.innerHTML='<div class="loading-symbols"><span>⋆</span><span>◈</span><span>☽</span><span>◈</span><span>⋆</span></div><p>Reading the stars...</p>';
+window.saveDream = async () => {
+  const text = document.getElementById('dreamInput').value.trim(); if (!text) return;
+  const title = document.getElementById('titleInput').value.trim() || 'Untitled dream';
+  const dreamData = { title, text, mood: currentMood, date: new Date().toISOString(), analysis: '' };
+  const id = await saveDreamToDB(dreamData);
+  if (id) { dreams.unshift({id, ...dreamData}); renderJournal(); showJP('list'); }
+};
+
+window.saveDreamInterp = async () => {
+  const text = document.getElementById('dreamInput').value.trim(); if (!text) return;
+  const title = document.getElementById('titleInput').value.trim() || 'Untitled dream';
+  const dreamData = { title, text, mood: currentMood, date: new Date().toISOString(), analysis: currentAnalysis };
+  const id = await saveDreamToDB(dreamData);
+  if (id) { dreams.unshift({id, ...dreamData}); renderJournal(); showJP('list'); }
+};
+
+window.interpretExisting = async (id) => {
+  const d = dreams.find(x => x.id === id); if (!d) return;
+  const ld = document.getElementById('detailLoading'), ie = document.getElementById('detailInterp');
+  ld.innerHTML = '<div class="loading-symbols"><span>⋆</span><span>◈</span><span>☽</span><span>◈</span><span>⋆</span></div><p>Reading the stars...</p>';
   ld.classList.add('show');
-  try{
-    const a=await callAI(d.text);window._pa=a;ld.classList.remove('show');ie.classList.add('show');
-    typeText(a,document.getElementById('detailInterpText'),null);
-  }catch(e){ld.classList.remove('show');alert('Error: '+e.message);}
-}
-function saveDetailInterp(id){
-  const idx=dreams.findIndex(x=>x.id===id);if(idx===-1)return;
-  dreams[idx].analysis=window._pa||'';persist();openDream(id);
-}
-function deleteDream(){
-  if(!selectedId)return;if(!confirm('Delete this dream?'))return;
-  dreams=dreams.filter(d=>d.id!==selectedId);persist();renderJournal();showJP('list');
-}
+  try {
+    const a = await callAI(d.text);
+    window._pa = a; ld.classList.remove('show'); ie.classList.add('show');
+    typeText(a, document.getElementById('detailInterpText'), null);
+  } catch(e) { ld.classList.remove('show'); alert('Error: ' + e.message); }
+};
 
-init();
+window.saveDetailInterp = async (id) => {
+  const idx = dreams.findIndex(x => x.id === id); if (idx === -1) return;
+  await updateDreamInDB(id, { analysis: window._pa || '' });
+  dreams[idx].analysis = window._pa || '';
+  openDream(id);
+};
+
+window.deleteDream = async () => {
+  if (!selectedId) return;
+  if (!confirm('Delete this dream?')) return;
+  await deleteDreamFromDB(selectedId);
+  dreams = dreams.filter(d => d.id !== selectedId);
+  renderJournal(); showJP('list');
+};
+
+function fmtDate(iso) { return new Date(iso).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}); }
+function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxious:'Anxious',joyful:'Joyful',dark:'Dark',neutral:'Neutral'}[m] || m; }
+
 </script>
 </body>
 </html>
