@@ -46,16 +46,17 @@ footer a:hover{color:var(--muted)}
 .infographic-wrap{margin:0 auto 48px;max-width:100%;}
 .infographic-header{text-align:center;margin-bottom:8px;}
 .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.info-card{background:rgba(155,143,232,0.06);border:0.5px solid rgba(155,143,232,0.15);border-radius:12px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;}
-.info-card-cta{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-style:dashed;}
-.info-rank{width:44px;height:44px;min-width:44px;border-radius:12px;background:rgba(155,143,232,0.1);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:22px;color:var(--purple);}
-.info-content{flex:1;min-width:0;}
-.info-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:4px;}
-.info-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px;}
-.info-bar{height:4px;border-radius:2px;background:rgba(155,143,232,0.12);overflow:hidden;}
-.info-fill{height:100%;border-radius:2px;background:var(--purple);}
+.info-card{background:rgba(15,13,28,0.6);border:0.5px solid rgba(155,143,232,0.12);border-radius:12px;overflow:hidden;text-decoration:none;transition:all 0.25s;cursor:pointer;display:block;}
+.info-card:hover{border-color:rgba(155,143,232,0.35);background:rgba(15,13,28,0.9);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.info-img{width:100%;height:140px;object-fit:cover;display:block;filter:brightness(0.7) saturate(0.8);transition:filter 0.3s;}
+.info-card:hover .info-img{filter:brightness(0.85) saturate(1);}
+.info-body{padding:18px 20px 20px;}
+.info-rank-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.info-num{width:32px;height:32px;min-width:32px;border-radius:8px;background:rgba(155,143,232,0.12);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;color:var(--purple);}
+.info-title{font-size:17px;font-weight:600;color:#fff;}
+.info-desc{font-size:14px;color:var(--muted);line-height:1.55;}
 @media(max-width:900px){.info-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){nav{padding:16px 20px}.page-wrap{padding:100px 20px 60px}.article-card{padding:20px 24px}.info-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){nav{padding:16px 20px}.page-wrap{padding:100px 20px 60px}.article-card{padding:20px 24px}.info-grid{grid-template-columns:1fr;}.info-img{height:120px;}}
 </style>
 </head>
 <body>
@@ -80,50 +81,48 @@ footer a:hover{color:var(--muted)}
 <p style="font-size:14px;color:var(--muted);margin-bottom:32px;">Based on global monthly search volume</p>
 </div>
 <div class="info-grid">
-<div class="info-card">
-<div class="info-rank">1</div>
-<div class="info-content">
-<div class="info-title">Teeth falling out</div>
+<a class="info-card" href="teeth-falling-out-dream.html">
+<img class="info-img" src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=400&h=200&fit=crop&q=80" alt="Teeth dream">
+<div class="info-body">
+<div class="info-rank-row"><span class="info-num">1</span><span class="info-title">Teeth falling out</span></div>
 <div class="info-desc">Often reflects anxiety, loss of confidence, or fear of a major life change.</div>
-<div class="info-bar"><div class="info-fill" style="width:100%"></div></div>
 </div>
-</div>
-<div class="info-card">
-<div class="info-rank">2</div>
-<div class="info-content">
-<div class="info-title">Snakes</div>
+</a>
+<a class="info-card" href="dreaming-about-snakes.html">
+<img class="info-img" src="https://images.unsplash.com/photo-1531386151447-fd76ad50012f?w=400&h=200&fit=crop&q=80" alt="Snake dream">
+<div class="info-body">
+<div class="info-rank-row"><span class="info-num">2</span><span class="info-title">Snakes</span></div>
 <div class="info-desc">Symbolizes hidden fears, transformation, healing, or a subconscious warning.</div>
-<div class="info-bar"><div class="info-fill" style="width:84%"></div></div>
 </div>
+</a>
+<a class="info-card" href="dreaming-about-being-chased.html">
+<img class="info-img" src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=400&h=200&fit=crop&q=80" alt="Being chased dream">
+<div class="info-body">
+<div class="info-rank-row"><span class="info-num">3</span><span class="info-title">Being chased</span></div>
+<div class="info-desc">You're running from something — a conversation, a truth, or a decision.</div>
 </div>
-<div class="info-card">
-<div class="info-rank">3</div>
-<div class="info-content">
-<div class="info-title">Being chased</div>
-<div class="info-desc">You're running from something — a conversation, a truth, or a feeling.</div>
-<div class="info-bar"><div class="info-fill" style="width:64%"></div></div>
-</div>
-</div>
-<div class="info-card">
-<div class="info-rank">4</div>
-<div class="info-content">
-<div class="info-title">Falling</div>
+</a>
+<a class="info-card" href="dreaming-about-falling.html">
+<img class="info-img" src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400&h=200&fit=crop&q=80" alt="Falling dream">
+<div class="info-body">
+<div class="info-rank-row"><span class="info-num">4</span><span class="info-title">Falling</span></div>
 <div class="info-desc">Loss of control, insecurity, or fear of failure. 75% of adults have had this dream.</div>
-<div class="info-bar"><div class="info-fill" style="width:55%"></div></div>
 </div>
+</a>
+<a class="info-card" href="dreaming-about-water.html">
+<img class="info-img" src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&h=200&fit=crop&q=80" alt="Water dream">
+<div class="info-body">
+<div class="info-rank-row"><span class="info-num">5</span><span class="info-title">Water</span></div>
+<div class="info-desc">Water is your emotional state. Clear water = peace. Floods = overwhelm.</div>
 </div>
-<div class="info-card">
-<div class="info-rank">5</div>
-<div class="info-content">
-<div class="info-title">Water</div>
-<div class="info-desc">Water is your emotional state. Clear = peace. Floods = overwhelm.</div>
-<div class="info-bar"><div class="info-fill" style="width:42%"></div></div>
+</a>
+<a class="info-card" href="dreaming-about-death.html">
+<img class="info-img" src="https://images.unsplash.com/photo-1444080748397-f442aa95c3e5?w=400&h=200&fit=crop&q=80" alt="Death dream">
+<div class="info-body">
+<div class="info-rank-row"><span class="info-num">6</span><span class="info-title">Death</span></div>
+<div class="info-desc">Almost never literal. Represents transformation, endings, and new beginnings.</div>
 </div>
-</div>
-<div class="info-card info-card-cta">
-<div style="font-family:var(--serif);font-size:17px;font-style:italic;color:rgba(234,230,255,0.6);margin-bottom:12px;">What did your subconscious say last night?</div>
-<a class="cta-btn" href="../app.html" style="font-size:13px;padding:10px 24px;">Try Noctaras free →</a>
-</div>
+</a>
 </div>
 </div>
 
