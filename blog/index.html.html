@@ -43,8 +43,19 @@ h1{font-family:var(--serif);font-size:clamp(32px,5vw,48px);font-weight:400;color
 footer{position:relative;z-index:1;text-align:center;padding:32px;border-top:0.5px solid var(--border);color:rgba(234,230,255,0.3);font-size:13px;margin-top:60px}
 footer a{color:rgba(234,230,255,0.4);border-bottom:0.5px solid rgba(234,230,255,0.1);text-decoration:none}
 footer a:hover{color:var(--muted)}
-.infographic-wrap{margin:0 auto 48px;max-width:560px}
-@media(max-width:600px){nav{padding:16px 20px}.page-wrap{padding:100px 20px 60px}.article-card{padding:20px 24px}}
+.infographic-wrap{margin:0 auto 48px;max-width:100%;}
+.infographic-header{text-align:center;margin-bottom:8px;}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.info-card{background:rgba(155,143,232,0.06);border:0.5px solid rgba(155,143,232,0.15);border-radius:12px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;}
+.info-card-cta{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-style:dashed;}
+.info-rank{width:44px;height:44px;min-width:44px;border-radius:12px;background:rgba(155,143,232,0.1);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:22px;color:var(--purple);}
+.info-content{flex:1;min-width:0;}
+.info-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:4px;}
+.info-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px;}
+.info-bar{height:4px;border-radius:2px;background:rgba(155,143,232,0.12);overflow:hidden;}
+.info-fill{height:100%;border-radius:2px;background:var(--purple);}
+@media(max-width:900px){.info-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){nav{padding:16px 20px}.page-wrap{padding:100px 20px 60px}.article-card{padding:20px 24px}.info-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -63,70 +74,57 @@ footer a:hover{color:var(--muted)}
 <p class="subtitle">In-depth articles on the most common dream symbols — what they mean, why they appear, and what your subconscious is trying to tell you.</p>
 
 <div class="infographic-wrap">
-<svg width="100%" viewBox="0 0 680 940">
-<defs>
-<linearGradient id="ibg" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0%" stop-color="#F4F2FF"/>
-<stop offset="100%" stop-color="#EBE8F8"/>
-</linearGradient>
-</defs>
-<rect width="680" height="940" rx="20" fill="url(#ibg)"/>
-<circle cx="620" cy="60" r="40" fill="#C4B8FF" opacity="0.08"/>
-<circle cx="640" cy="100" r="25" fill="#9B8FE8" opacity="0.06"/>
-<circle cx="50" cy="900" r="30" fill="#C4B8FF" opacity="0.06"/>
-<text x="340" y="62" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="400" fill="#1E1838">What do people dream</text>
-<text x="340" y="98" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="400" fill="#1E1838">about the <tspan font-style="italic" fill="#7B6FD4">most?</tspan></text>
-<text x="340" y="128" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698" letter-spacing="0.02em">Based on global monthly search volume</text>
-<line x1="260" y1="152" x2="420" y2="152" stroke="#C4B8FF" stroke-width="0.5" opacity="0.6"/>
-<rect x="50" y="176" width="580" height="118" rx="16" fill="#FFFFFF" opacity="0.7"/>
-<rect x="50" y="176" width="580" height="118" rx="16" fill="none" stroke="#D6D0F0" stroke-width="0.5"/>
-<rect x="74" y="198" width="56" height="56" rx="14" fill="#F0EDFF"/>
-<text x="102" y="233" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#7B6FD4">1</text>
-<text x="152" y="218" font-family="Segoe UI, sans-serif" font-size="17" font-weight="600" fill="#2D2545">Teeth falling out</text>
-<text x="152" y="240" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">Often reflects anxiety, loss of confidence,</text>
-<text x="152" y="258" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">or fear of a major life change.</text>
-<rect x="152" y="272" width="440" height="5" rx="2.5" fill="#ECEAF5"/>
-<rect x="152" y="272" width="440" height="5" rx="2.5" fill="#9B8FE8"/>
-<rect x="50" y="314" width="580" height="118" rx="16" fill="#FFFFFF" opacity="0.7"/>
-<rect x="50" y="314" width="580" height="118" rx="16" fill="none" stroke="#D6D0F0" stroke-width="0.5"/>
-<rect x="74" y="336" width="56" height="56" rx="14" fill="#F0EDFF"/>
-<text x="102" y="371" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#7B6FD4">2</text>
-<text x="152" y="356" font-family="Segoe UI, sans-serif" font-size="17" font-weight="600" fill="#2D2545">Snakes</text>
-<text x="152" y="378" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">Symbolizes hidden fears, transformation,</text>
-<text x="152" y="396" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">healing, or a warning from your subconscious.</text>
-<rect x="152" y="410" width="440" height="5" rx="2.5" fill="#ECEAF5"/>
-<rect x="152" y="410" width="370" height="5" rx="2.5" fill="#9B8FE8" opacity="0.82"/>
-<rect x="50" y="452" width="580" height="118" rx="16" fill="#FFFFFF" opacity="0.7"/>
-<rect x="50" y="452" width="580" height="118" rx="16" fill="none" stroke="#D6D0F0" stroke-width="0.5"/>
-<rect x="74" y="474" width="56" height="56" rx="14" fill="#F0EDFF"/>
-<text x="102" y="509" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#7B6FD4">3</text>
-<text x="152" y="494" font-family="Segoe UI, sans-serif" font-size="17" font-weight="600" fill="#2D2545">Being chased</text>
-<text x="152" y="516" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">You're running from something in waking life —</text>
-<text x="152" y="534" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">a conversation, a truth, or a feeling.</text>
-<rect x="152" y="548" width="440" height="5" rx="2.5" fill="#ECEAF5"/>
-<rect x="152" y="548" width="300" height="5" rx="2.5" fill="#9B8FE8" opacity="0.65"/>
-<rect x="50" y="590" width="580" height="118" rx="16" fill="#FFFFFF" opacity="0.7"/>
-<rect x="50" y="590" width="580" height="118" rx="16" fill="none" stroke="#D6D0F0" stroke-width="0.5"/>
-<rect x="74" y="612" width="56" height="56" rx="14" fill="#F0EDFF"/>
-<text x="102" y="647" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#7B6FD4">4</text>
-<text x="152" y="632" font-family="Segoe UI, sans-serif" font-size="17" font-weight="600" fill="#2D2545">Falling</text>
-<text x="152" y="654" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">Loss of control, insecurity, or fear of failure.</text>
-<text x="152" y="672" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">75% of adults have had this dream at least once.</text>
-<rect x="152" y="686" width="440" height="5" rx="2.5" fill="#ECEAF5"/>
-<rect x="152" y="686" width="240" height="5" rx="2.5" fill="#9B8FE8" opacity="0.52"/>
-<rect x="50" y="728" width="580" height="118" rx="16" fill="#FFFFFF" opacity="0.7"/>
-<rect x="50" y="728" width="580" height="118" rx="16" fill="none" stroke="#D6D0F0" stroke-width="0.5"/>
-<rect x="74" y="750" width="56" height="56" rx="14" fill="#F0EDFF"/>
-<text x="102" y="785" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#7B6FD4">5</text>
-<text x="152" y="770" font-family="Segoe UI, sans-serif" font-size="17" font-weight="600" fill="#2D2545">Water</text>
-<text x="152" y="792" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">Water is your emotional state. Clear = peace.</text>
-<text x="152" y="810" font-family="Segoe UI, sans-serif" font-size="13" fill="#8A8698">Floods = overwhelm. Drowning = in over your head.</text>
-<rect x="152" y="824" width="440" height="5" rx="2.5" fill="#ECEAF5"/>
-<rect x="152" y="824" width="180" height="5" rx="2.5" fill="#9B8FE8" opacity="0.4"/>
-<line x1="220" y1="870" x2="460" y2="870" stroke="#C4B8FF" stroke-width="0.5" opacity="0.4"/>
-<text x="340" y="898" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-style="italic" fill="#8A8698">What did your subconscious say last night?</text>
-<text x="340" y="920" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="11" fill="#9B8FE8" letter-spacing="0.08em">NOCTARAS.COM</text>
-</svg>
+<div class="infographic-header">
+<div style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--purple);margin-bottom:12px;">Most searched dreams</div>
+<h2 style="font-family:var(--serif);font-size:clamp(24px,3.5vw,34px);font-weight:400;color:#fff;line-height:1.2;margin-bottom:6px;">What do people dream about the <em>most?</em></h2>
+<p style="font-size:14px;color:var(--muted);margin-bottom:32px;">Based on global monthly search volume</p>
+</div>
+<div class="info-grid">
+<div class="info-card">
+<div class="info-rank">1</div>
+<div class="info-content">
+<div class="info-title">Teeth falling out</div>
+<div class="info-desc">Often reflects anxiety, loss of confidence, or fear of a major life change.</div>
+<div class="info-bar"><div class="info-fill" style="width:100%"></div></div>
+</div>
+</div>
+<div class="info-card">
+<div class="info-rank">2</div>
+<div class="info-content">
+<div class="info-title">Snakes</div>
+<div class="info-desc">Symbolizes hidden fears, transformation, healing, or a subconscious warning.</div>
+<div class="info-bar"><div class="info-fill" style="width:84%"></div></div>
+</div>
+</div>
+<div class="info-card">
+<div class="info-rank">3</div>
+<div class="info-content">
+<div class="info-title">Being chased</div>
+<div class="info-desc">You're running from something — a conversation, a truth, or a feeling.</div>
+<div class="info-bar"><div class="info-fill" style="width:64%"></div></div>
+</div>
+</div>
+<div class="info-card">
+<div class="info-rank">4</div>
+<div class="info-content">
+<div class="info-title">Falling</div>
+<div class="info-desc">Loss of control, insecurity, or fear of failure. 75% of adults have had this dream.</div>
+<div class="info-bar"><div class="info-fill" style="width:55%"></div></div>
+</div>
+</div>
+<div class="info-card">
+<div class="info-rank">5</div>
+<div class="info-content">
+<div class="info-title">Water</div>
+<div class="info-desc">Water is your emotional state. Clear = peace. Floods = overwhelm.</div>
+<div class="info-bar"><div class="info-fill" style="width:42%"></div></div>
+</div>
+</div>
+<div class="info-card info-card-cta">
+<div style="font-family:var(--serif);font-size:17px;font-style:italic;color:rgba(234,230,255,0.6);margin-bottom:12px;">What did your subconscious say last night?</div>
+<a class="cta-btn" href="../app.html" style="font-size:13px;padding:10px 24px;">Try Noctaras free →</a>
+</div>
+</div>
 </div>
 
 <div class="articles">
