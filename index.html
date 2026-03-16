@@ -7,9 +7,9 @@
 
 <style>
 :root {
-  --bg: #1a1830;
-  --surface: #232045;
-  --surface2: #2b2855;
+  --bg: #1e1d24;
+  --surface: #26252d;
+  --surface2: #2e2d36;
   --border: rgba(160,140,255,0.14);
   --border-h: rgba(160,140,255,0.32);
   --purple: #9B8FE8;
@@ -23,7 +23,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; -webkit-font-smoothing: antialiased;  }
 
 /* Stars */
 #stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
@@ -38,7 +38,7 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 22px 48px;
-  background: rgba(26,24,48,0.7);
+  background: rgba(30,29,36,0.7);
   backdrop-filter: blur(20px);
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.3s;
@@ -52,7 +52,7 @@ nav.scrolled { border-bottom-color: var(--border); }
 .nav-links a:hover { color: var(--text); }
 .nav-cta {
   font-size: 13px; font-weight: 500; letter-spacing: 0.01em;
-  color: #1a1830; background: #fff;
+  color: #1e1d24; background: #fff;
   border: none; border-radius: 980px;
   padding: 9px 22px; text-decoration: none; transition: all 0.22s;
   box-shadow: 0 1px 8px rgba(0,0,0,0.3);
@@ -99,7 +99,7 @@ nav.scrolled { border-bottom-color: var(--border); }
 }
 .btn-primary {
   font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
-  color: #1a1830; background: #fff;
+  color: #1e1d24; background: #fff;
   border: none; border-radius: 980px; padding: 15px 32px;
   text-decoration: none; cursor: pointer; transition: all 0.22s;
   box-shadow: 0 2px 20px rgba(0,0,0,0.3);
@@ -135,7 +135,7 @@ section { position: relative; z-index: 1; }
 .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); max-width: 60px; }
 
 /* ── HOW IT WORKS ── */
-#how { padding: 140px 0; background: rgba(26,24,48,0.5); }
+#how { padding: 140px 0; background: rgba(30,29,36,0.5); }
 .how-header { text-align: center; margin-bottom: 80px; }
 .section-title {
   font-family: var(--serif); font-size: clamp(36px, 5vw, 58px);
@@ -144,7 +144,7 @@ section { position: relative; z-index: 1; }
 .section-title em { font-style: italic; color: var(--accent); }
 .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
 .how-step {
-  background: rgba(35,32,69,0.85); padding: 48px 40px;
+  background: rgba(40,38,46,0.85); padding: 48px 40px;
   border: 0.5px solid rgba(160,140,255,0.18);
   position: relative; overflow: hidden;
   transition: all 0.35s ease;
@@ -166,11 +166,11 @@ section { position: relative; z-index: 1; }
 .step-desc { font-size: 15px; line-height: 1.75; color: rgba(234,230,255,0.8); }
 
 /* ── FEATURES ── */
-#features { padding: 140px 0; background: rgba(26,24,48,0.5); }
+#features { padding: 140px 0; background: rgba(30,29,36,0.5); }
 .features-header { margin-bottom: 80px; }
 .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
 .feature-card {
-  background: rgba(35,32,69,0.85); padding: 44px 40px;
+  background: rgba(40,38,46,0.85); padding: 44px 40px;
   border: 0.5px solid var(--border); transition: all 0.35s ease;
 }
 .feature-card:hover { border-color: var(--border-h); background: var(--surface2); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(155,143,232,0.12); }
@@ -184,11 +184,11 @@ section { position: relative; z-index: 1; }
 .feature-desc { font-size: 15px; line-height: 1.75; color: rgba(234,230,255,0.8); }
 
 /* ── TESTIMONIALS ── */
-#testimonials { padding: 140px 0; background: rgba(26,24,48,0.5); }
+#testimonials { padding: 140px 0; background: rgba(30,29,36,0.5); }
 .testimonials-header { text-align: center; margin-bottom: 80px; }
 .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
 .testimonial {
-  background: rgba(35,32,69,0.85); padding: 40px;
+  background: rgba(40,38,46,0.85); padding: 40px;
   border: 0.5px solid var(--border); transition: all 0.35s ease;
 }
 .testimonial-quote {
@@ -209,11 +209,11 @@ section { position: relative; z-index: 1; }
 .stars { color: var(--accent); font-size: 11px; letter-spacing: 2px; margin-bottom: 20px; }
 
 /* ── PRICING ── */
-#pricing { padding: 140px 0; background: rgba(26,24,48,0.5); }
+#pricing { padding: 140px 0; background: rgba(30,29,36,0.5); }
 .pricing-header { text-align: center; margin-bottom: 80px; }
 .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; max-width: 720px; margin: 0 auto; }
 .pricing-card {
-  background: rgba(35,32,69,0.85); padding: 48px 44px;
+  background: rgba(40,38,46,0.85); padding: 48px 44px;
   border: 0.5px solid var(--border); position: relative;
 }
 .pricing-card.featured {
@@ -241,12 +241,12 @@ section { position: relative; z-index: 1; }
 .pricing-features li.disabled::before { color: var(--dim); }
 
 /* ── EMAIL SIGNUP ── */
-#signup { padding: 140px 0; background: rgba(26,24,48,0.5); }
+#signup { padding: 140px 0; background: rgba(30,29,36,0.5); }
 .signup-inner {
   text-align: center;
   border: 0.5px solid var(--border);
   border-radius: 3px; padding: 80px 48px;
-  background: rgba(35,32,69,0.9);
+  background: rgba(40,38,46,0.9);
   position: relative; overflow: hidden;
 }
 .signup-inner::before {
@@ -338,7 +338,7 @@ footer {
 
 <div id="stars"></div>
 <canvas id="wavyCanvas"></canvas>
-<div style="position:fixed;inset:0;z-index:0;pointer-events:none;background:rgba(26,24,48,0.4);"></div>
+
 
 <!-- NAV -->
 <nav id="nav">
@@ -360,7 +360,7 @@ footer {
 </nav>
 
 <!-- HERO -->
-<section id="hero"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%, rgba(26,24,48,0.75) 0%, rgba(26,24,48,0.45) 60%, transparent 90%);pointer-events:none;z-index:1;"></div>
+<section id="hero"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%, rgba(30,29,36,0.75) 0%, rgba(30,29,36,0.45) 60%, transparent 90%);pointer-events:none;z-index:1;"></div>
   <div class="hero-eyebrow" style="position:relative;z-index:2;">AI Dream Interpretation</div>
   <h1 class="hero-title" style="position:relative;z-index:2;">Your dreams<br>hold <em>meaning</em></h1>
   <p class="hero-sub" style="position:relative;z-index:2;">Noctaras decodes the hidden language of your subconscious — every symbol, every feeling, every forgotten detail.</p>
@@ -594,7 +594,7 @@ footer {
   let w,h,nt=0,n3;
   function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;ctx.filter='blur(10px)';}
   function draw(){
-    nt+=0.002;ctx.fillStyle='#1a1830';ctx.globalAlpha=0.5;ctx.fillRect(0,0,w,h);
+    nt+=0.002;ctx.fillStyle='#1e1d24';ctx.globalAlpha=0.5;ctx.fillRect(0,0,w,h);
     for(let i=0;i<5;i++){
       ctx.beginPath();ctx.lineWidth=50;ctx.strokeStyle=colors[i%colors.length];
       for(let x=0;x<w;x+=5)ctx.lineTo(x,n3(x/800,0.3*i,nt)*100+h*0.5);

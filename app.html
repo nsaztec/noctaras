@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #1a1830; --surface: #232045; --surface2: #2b2855;
+  --bg: #1e1d24; --surface: #26252d; --surface2: #2e2d36;
   --border: rgba(160,140,255,0.26); --border-h: rgba(160,140,255,0.5);
   --purple: #9B8FE8; --purple-dim: rgba(155,143,232,0.18);
   --purple-glow: rgba(155,143,232,0.08); --text: #EAE6FF;
@@ -17,7 +17,7 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
-body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; -webkit-font-smoothing: antialiased;  }
 
 #stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 .star { position: absolute; border-radius: 50%; background: white; animation: twinkle var(--dur) var(--delay) infinite ease-in-out; }
@@ -32,7 +32,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 #screen-auth.active { display: flex; }
 .auth-card {
   width: 100%; max-width: 420px;
-  background: rgba(26,24,48,0.92);
+  background: rgba(30,29,36,0.92);
   border: 0.5px solid var(--border);
   border-radius: 8px; padding: 48px 40px;
   backdrop-filter: blur(20px);
@@ -110,18 +110,18 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 #chatMessages::-webkit-scrollbar { width: 3px; }
 #chatMessages::-webkit-scrollbar-thumb { background: rgba(155,143,232,0.18); border-radius: 2px; }
 .msg-user { align-self: flex-end; background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.22); border-radius: 20px 20px 5px 20px; padding: 12px 20px; font-family: var(--serif); font-size: 17px; line-height: 1.65; color: var(--text); max-width: 82%; animation: msgIn 0.28s ease; }
-.msg-ai { align-self: flex-start; background: rgba(35,32,69,0.9); border: 0.5px solid var(--border); border-radius: 20px 20px 20px 5px; padding: 18px 22px; font-family: var(--serif); font-size: 17.5px; line-height: 1.9; color: var(--text); max-width: 90%; animation: msgIn 0.28s ease; white-space: pre-wrap; }
+.msg-ai { align-self: flex-start; background: rgba(40,38,46,0.9); border: 0.5px solid var(--border); border-radius: 20px 20px 20px 5px; padding: 18px 22px; font-family: var(--serif); font-size: 17.5px; line-height: 1.9; color: var(--text); max-width: 90%; animation: msgIn 0.28s ease; white-space: pre-wrap; }
 .msg-save-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); background: var(--purple-dim); border: 0.5px solid rgba(155,143,232,0.28); border-radius: 2px; padding: 7px 16px; cursor: pointer; transition: all 0.2s; }
 .msg-save-btn:hover { background: rgba(155,143,232,0.24); }
 .msg-save-btn:disabled { opacity: 0.4; cursor: pointer; }
 @keyframes msgIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.msg-loading { align-self: flex-start; background: rgba(35,32,69,0.9); border: 0.5px solid var(--border); border-radius: 20px 20px 20px 5px; padding: 16px 24px; animation: msgIn 0.28s ease; }
+.msg-loading { align-self: flex-start; background: rgba(40,38,46,0.9); border: 0.5px solid var(--border); border-radius: 20px 20px 20px 5px; padding: 16px 24px; animation: msgIn 0.28s ease; }
 .dots span { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--purple); margin: 0 3px; opacity: 0.3; animation: dotbounce 1.3s infinite ease-in-out; }
 .dots span:nth-child(2) { animation-delay: 0.2s; }
 .dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes dotbounce { 0%,60%,100% { transform: translateY(0); opacity: 0.25; } 30% { transform: translateY(-6px); opacity: 1; } }
 .vanish-wrap { width: 100%; position: relative; }
-.vanish-form { width: 100%; position: relative; background: rgba(43,40,85,0.72); border: 1px solid rgba(155,143,232,0.32); border-radius: 999px; height: 58px; overflow: hidden; backdrop-filter: blur(24px); box-shadow: 0 0 0 1px rgba(155,143,232,0.08), 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(196,184,255,0.1); transition: border-color 0.25s, box-shadow 0.25s; }
+.vanish-form { width: 100%; position: relative; background: rgba(45,43,53,0.72); border: 1px solid rgba(155,143,232,0.32); border-radius: 999px; height: 58px; overflow: hidden; backdrop-filter: blur(24px); box-shadow: 0 0 0 1px rgba(155,143,232,0.08), 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(196,184,255,0.1); transition: border-color 0.25s, box-shadow 0.25s; }
 .vanish-form:focus-within { border-color: rgba(155,143,232,0.55); box-shadow: 0 0 0 1px rgba(155,143,232,0.12), 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(155,143,232,0.12), inset 0 1px 0 rgba(196,184,255,0.1); }
 .vanish-canvas { position: absolute; pointer-events: none; transform: scale(0.5); top: 20%; left: 8px; transform-origin: top left; filter: invert(1); opacity: 0; transition: opacity 0.1s; }
 .vanish-canvas.on { opacity: 1; }
@@ -219,7 +219,7 @@ textarea { line-height: 1.75; min-height: 160px; }
 .paywall-overlay.active { display: flex; animation: fadeUp 0.35s ease; }
 .paywall-card {
   width: 100%; max-width: 520px;
-  background: rgba(35,32,69,0.98);
+  background: rgba(40,38,46,0.98);
   border: 0.5px solid rgba(155,143,232,0.25);
   border-radius: 8px; padding: 48px 40px; text-align: center;
   box-shadow: 0 0 60px rgba(155,143,232,0.1);
@@ -264,12 +264,12 @@ textarea { line-height: 1.75; min-height: 160px; }
 
 .tree-months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
 .tree-month-card {
-  background: rgba(43,40,85,0.8); border: 0.5px solid rgba(160,140,255,0.25);
+  background: rgba(45,43,53,0.8); border: 0.5px solid rgba(160,140,255,0.25);
   border-radius: 8px; padding: 20px; cursor: pointer;
   transition: all 0.2s; position: relative;
 }
-.tree-month-card:hover { border-color: rgba(155,143,232,0.6); background: rgba(55,48,100,0.9); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(155,143,232,0.15); }
-.tree-month-card.has-dreams { border-color: rgba(155,143,232,0.45); background: rgba(50,44,95,0.9); }
+.tree-month-card:hover { border-color: rgba(155,143,232,0.6); background: rgba(55,53,65,0.9); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(155,143,232,0.15); }
+.tree-month-card.has-dreams { border-color: rgba(155,143,232,0.45); background: rgba(48,46,56,0.9); }
 .tree-month-card.empty { opacity: 0.5; cursor: default; }
 .tree-month-card.future { opacity: 0.3; cursor: default; }
 .month-card-name { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #c4b8ff; margin-bottom: 8px; font-weight: 600; }
@@ -284,7 +284,7 @@ textarea { line-height: 1.75; min-height: 160px; }
 .tree-annual-btn:hover { background: rgba(155,143,232,0.1); }
 .tree-annual-btn:disabled { opacity: 0.3; cursor: default; }
 
-.tree-analysis-panel { margin-top: 32px; background: rgba(43,40,85,0.95); border: 0.5px solid rgba(155,143,232,0.4); border-radius: 8px; padding: 32px; display: none; }
+.tree-analysis-panel { margin-top: 32px; background: rgba(45,43,53,0.95); border: 0.5px solid rgba(155,143,232,0.4); border-radius: 8px; padding: 32px; display: none; }
 .tree-analysis-panel.active { display: block; }
 .tree-analysis-title { font-family: var(--serif); font-size: 22px; color: #fff; margin-bottom: 16px; }
 .tree-analysis-text { font-family: var(--serif); font-size: 16px; color: rgba(234,230,255,0.92); line-height: 2; white-space: pre-wrap; }
@@ -1052,7 +1052,7 @@ async function deleteDreamFromDB(id) {
   function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; ctx.filter = 'blur(10px)'; }
   function draw() {
     nt += 0.002;
-    ctx.fillStyle = '#1a1830'; ctx.globalAlpha = 0.5; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = '#1e1d24'; ctx.globalAlpha = 0.5; ctx.fillRect(0, 0, w, h);
     for (let i = 0; i < 5; i++) {
       ctx.beginPath(); ctx.lineWidth = 50; ctx.strokeStyle = colors[i % colors.length];
       for (let x = 0; x < w; x += 5) ctx.lineTo(x, n3(x/800, 0.3*i, nt)*100 + h*0.5);
