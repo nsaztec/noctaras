@@ -322,102 +322,78 @@
         #top-btn.show { opacity: 1; transform: translateY(0); }
         #top-btn:hover { transform: translateY(-3px) scale(1.1); box-shadow: 0 8px 25px rgba(90,123,107,0.4); }
 
-        /* === SHIMMER TEXT === */
-        .shimmer-text {
-            background: linear-gradient(
-                120deg,
-                var(--accent) 0%,
-                var(--accent) 40%,
-                #7a9e8b 48%,
-                #8fb5a3 50%,
-                #7a9e8b 52%,
-                var(--accent) 60%,
-                var(--accent) 100%
-            );
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 6s ease-in-out infinite;
-        }
-        @keyframes shimmer {
-            0%, 100% { background-position: 200% center; }
-            50% { background-position: -200% center; }
-        }
-
-        /* === CURSOR GLOW === */
-        #cursor-glow {
-            position: fixed;
-            width: 350px; height: 350px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(90,123,107,0.06) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.4s ease;
-            will-change: left, top;
-        }
-
         /* === MAGNETIC CARD TILT === */
         .card {
             transform-style: preserve-3d;
             perspective: 800px;
         }
 
-        /* === NEWSLETTER CTA === */
-        .newsletter-section {
+        /* === NAV CTA BUTTON === */
+        .nav-cta {
+            padding: 0.5rem 1.2rem;
+            border: 1.5px solid var(--accent);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            background: transparent;
+            transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: var(--accent);
+            transition: left 0.35s cubic-bezier(0.22,1,0.36,1);
+            z-index: -1;
+        }
+        .nav-cta:hover {
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .nav-cta:hover::before {
+            left: 0;
+        }
+        .nav-cta:hover::after { width: 0; }
+
+        /* === APP CTA SECTION === */
+        .cta-section {
             padding: 5rem 0 4rem;
             display: flex;
             justify-content: center;
         }
-        .newsletter-card {
+        .cta-card {
             position: relative;
             max-width: 580px;
             width: 100%;
             padding: 3rem 2.5rem;
             border-radius: 16px;
-            background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: var(--surface);
             text-align: center;
-            overflow: hidden;
-            border: 1px solid rgba(90,123,107,0.15);
+            border: 1px solid var(--border);
+            transition: all 0.5s cubic-bezier(0.22,1,0.36,1);
         }
-        /* Animated gradient border glow */
-        .newsletter-card::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 18px;
-            background: conic-gradient(
-                from var(--glow-angle, 0deg),
-                transparent 0%,
-                rgba(90,123,107,0.18) 10%,
-                transparent 20%,
-                transparent 100%
-            );
-            z-index: -1;
-            animation: border-glow 5s linear infinite;
+        .cta-card:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            transform: translateY(-4px);
+            border-color: rgba(90,123,107,0.25);
         }
-        @property --glow-angle {
-            syntax: '<angle>';
-            initial-value: 0deg;
-            inherits: false;
-        }
-        @keyframes border-glow {
-            to { --glow-angle: 360deg; }
-        }
-        .newsletter-card h3 {
+        .cta-card h3 {
             font-size: 1.6rem;
             margin-bottom: 0.5rem;
             color: var(--text);
         }
-        .newsletter-card p {
+        .cta-card h3 i { color: var(--accent); }
+        .cta-card p {
             color: var(--muted);
             font-size: 0.92rem;
             margin-bottom: 1.8rem;
             line-height: 1.6;
         }
+        /* Interactive CTA button with ripple */
         .cta-btn {
             display: inline-block;
             padding: 0.85rem 2rem;
@@ -435,23 +411,28 @@
             overflow: hidden;
             margin-bottom: 0.5rem;
         }
-        .cta-btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.15), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s;
-        }
         .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(90,123,107,0.3);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(90,123,107,0.25);
             color: #fff;
         }
-        .cta-btn:hover::after {
-            transform: translateX(100%);
+        .cta-btn:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 2px 8px rgba(90,123,107,0.2);
         }
-        .newsletter-note {
+        /* Ripple effect via JS */
+        .cta-btn .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            transform: scale(0);
+            animation: ripple-anim 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+        .cta-note {
             font-size: 0.72rem;
             color: var(--muted);
             opacity: 0.6;
@@ -480,8 +461,7 @@
             .scroll-hint { display: none; }
             .topic-grid, .article-grid { grid-template-columns: 1fr; }
             .parallax-banner { height: 200px; }
-            .newsletter-form { flex-direction: column; }
-            .newsletter-card { padding: 2.5rem 1.5rem; }
+            .cta-card { padding: 2.5rem 1.5rem; }
         }
     </style>
 </head>
@@ -492,7 +472,6 @@
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
-    <div id="cursor-glow"></div>
 
     <!-- Nav -->
     <nav id="navbar">
@@ -504,6 +483,7 @@
             <a href="../index.html">Home</a>
             <a href="../app.html">App</a>
             <a href="#" class="active">Blog</a>
+            <a href="../index.html" class="nav-cta">Try Noctaras</a>
         </div>
     </nav>
 
@@ -511,7 +491,7 @@
 
         <!-- Hero -->
         <section class="hero">
-            <h1 class="anim-up">Guide to your <i class="shimmer-text">inner landscape.</i></h1>
+            <h1 class="anim-up">Guide to your <i>inner landscape.</i></h1>
             <p class="anim-up stagger-1">Explore articles on dream science, psychological theories, and symbolism to understand what your mind communicates while you sleep.</p>
             <div class="scroll-hint anim-up stagger-2">Scroll</div>
         </section>
@@ -522,7 +502,7 @@
             <div class="section-line"></div>
         </div>
 
-        <a href="lucid-dreaming.html" class="featured-card anim-scale">
+        <a href="lucid-dreaming-beginners.html" class="featured-card anim-scale">
             <div class="feat-img">
                 <img src="https://picsum.photos/seed/luciddream/1200/800" alt="Dreamy cloudscape">
             </div>
@@ -553,7 +533,7 @@
         </div>
 
         <div class="article-grid">
-            <a href="jung-shadow-self.html" class="card anim-left stagger-1">
+            <a href="jung-shadow-self-dreams.html" class="card anim-left stagger-1">
                 <div class="card-img"><img src="https://picsum.photos/seed/jungshadow/800/600" alt="Shadow and light"></div>
                 <div class="card-body">
                     <span class="card-meta">Psychology</span>
@@ -580,7 +560,7 @@
                     <div class="read-btn">Read <span></span></div>
                 </div>
             </a>
-            <a href="sleep-paralysis.html" class="card anim-left stagger-1">
+            <a href="sleep-paralysis-explained.html" class="card anim-left stagger-1">
                 <div class="card-img"><img src="https://picsum.photos/seed/sleepparalysis/800/600" alt="Dark corridor"></div>
                 <div class="card-body">
                     <span class="card-meta">Dream Science</span>
@@ -589,7 +569,7 @@
                     <div class="read-btn">Read <span></span></div>
                 </div>
             </a>
-            <a href="dreaming-about-teeth.html" class="card anim-rotate stagger-2">
+            <a href="teeth-falling-out-dream.html" class="card anim-rotate stagger-2">
                 <div class="card-img"><img src="https://picsum.photos/seed/teethdream/800/600" alt="Abstract reflection"></div>
                 <div class="card-body">
                     <span class="card-meta">Dream Symbols</span>
@@ -638,7 +618,7 @@
                     <h4>Dream Symbols</h4>
                     <div class="topic-links">
                         <a href="dreaming-about-snakes.html">Snakes</a>
-                        <a href="dreaming-about-teeth.html">Teeth Falling Out</a>
+                        <a href="teeth-falling-out-dream.html">Teeth Falling Out</a>
                         <a href="dreaming-about-falling.html">Falling</a>
                         <a href="dreaming-about-being-chased.html">Being Chased</a>
                         <a href="dreaming-about-water.html">Water</a>
@@ -653,36 +633,36 @@
                     <h4>Dream Science</h4>
                     <div class="topic-links">
                         <a href="why-dreams-feel-real.html">Why Dreams Feel Real</a>
-                        <a href="recurring-dreams.html">Recurring Dreams</a>
-                        <a href="nightmares.html">Nightmares</a>
-                        <a href="sleep-paralysis.html">Sleep Paralysis</a>
-                        <a href="anxiety-dreams.html">Anxiety Dreams</a>
+                        <a href="recurring-dreams-meaning.html">Recurring Dreams</a>
+                        <a href="what-do-nightmares-mean.html">Nightmares</a>
+                        <a href="sleep-paralysis-explained.html">Sleep Paralysis</a>
+                        <a href="anxiety-dreams-meaning.html">Anxiety Dreams</a>
                     </div>
                 </div>
                 <div class="topic-group anim-up stagger-3">
                     <h4>Psychology</h4>
                     <div class="topic-links">
-                        <a href="jung-shadow-self.html">Jung & The Shadow Self</a>
-                        <a href="freud-vs-jung.html">Freud vs. Jung</a>
+                        <a href="jung-shadow-self-dreams.html">Jung & The Shadow Self</a>
+                        <a href="freud-vs-jung-dreams.html">Freud vs. Jung</a>
                     </div>
                 </div>
                 <div class="topic-group anim-up stagger-4">
                     <h4>Guides</h4>
                     <div class="topic-links">
                         <a href="how-to-remember-dreams.html">How to Remember Dreams</a>
-                        <a href="lucid-dreaming.html">Lucid Dreaming</a>
+                        <a href="lucid-dreaming-beginners.html">Lucid Dreaming</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- App CTA -->
-        <section class="newsletter-section anim-up">
-            <div class="newsletter-card">
-                <h3>Decode Your <i class="shimmer-text">Dreams</i></h3>
+        <section class="cta-section anim-up">
+            <div class="cta-card">
+                <h3>Decode Your <i>Dreams</i></h3>
                 <p>Curious what your dreams mean? Try our AI-powered dream interpreter and uncover the hidden messages of your subconscious.</p>
-                <a href="../app.html" class="cta-btn">Try Noctaras App →</a>
-                <p class="newsletter-note">Free to use. No sign-up required.</p>
+                <a href="../index.html" class="cta-btn" id="cta-main">Try Noctaras App →</a>
+                <p class="cta-note">Free plan available.</p>
             </div>
         </section>
     </div>
@@ -824,17 +804,6 @@
         addEventListener('mouseout', ()=>{ mx.x=null; mx.y=null; });
         sz(); frame();
 
-        // === CURSOR GLOW FOLLOWER ===
-        const glow = document.getElementById('cursor-glow');
-        document.addEventListener('mousemove', e => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-            glow.style.opacity = '1';
-        });
-        document.addEventListener('mouseleave', () => {
-            glow.style.opacity = '0';
-        });
-
         // === MAGNETIC CARD TILT ===
         document.querySelectorAll('.card, .featured-card').forEach(card => {
             card.addEventListener('mousemove', e => {
@@ -843,12 +812,27 @@
                 const y = e.clientY - rect.top;
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -4; // max ±4°
+                const rotateX = ((y - centerY) / centerY) * -4;
                 const rotateY = ((x - centerX) / centerX) * 4;
                 card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = '';
+            });
+        });
+
+        // === CTA BUTTON RIPPLE ===
+        document.querySelectorAll('.cta-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
             });
         });
     </script>
