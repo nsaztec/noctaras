@@ -297,6 +297,60 @@ footer {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 
+/* ── DREAM HOVER GALLERY ── */
+#dream-gallery { padding: 100px 0; }
+.dream-hover-gallery {
+  position: relative;
+  width: 550px; height: 550px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 80px rgba(155,143,232,0.08);
+  cursor: none;
+  border: 0.5px solid var(--border);
+}
+.dhg-images { position: relative; width: 100%; height: 100%; }
+.dhg-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+.dhg-img.active { opacity: 1; }
+.dhg-cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center; gap: 2px;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.dream-hover-gallery:hover .dhg-cursor { opacity: 1; }
+.dhg-counter {
+  position: absolute;
+  bottom: 12px; right: 16px;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media(max-width:768px){
+  .dream-hover-gallery { width: 100%; max-width: 400px; height: 400px; }
+}
+
 @media(max-width:768px){
   nav{padding:18px 20px;}
   .nav-links{display:none;}
@@ -457,6 +511,38 @@ footer {
   </div>
 </section>
 
+<!-- DREAM GALLERY -->
+<section id="dream-gallery">
+  <div class="section-wrap" style="display:flex;flex-direction:column;align-items:center;">
+    <div class="dream-gallery-header reveal" style="text-align:center;margin-bottom:40px;">
+      <div class="section-label" style="justify-content:center">Don't forget your dreams</div>
+      <h2 class="section-title">99% of dreams are <em>forgotten</em><br>by the next morning</h2>
+      <p style="font-family:var(--serif);font-size:17px;font-style:italic;color:var(--muted);margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;">Your subconscious speaks to you every night. Most of it vanishes before your first cup of coffee. Noctaras makes sure the message survives.</p>
+    </div>
+    <div class="dream-hover-gallery reveal" id="dreamGallery">
+      <div class="dhg-images" id="dhgImages">
+        <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=550&h=550&fit=crop" alt="Dream landscape" class="dhg-img active">
+        <img src="https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=550&h=550&fit=crop" alt="Night sky" class="dhg-img">
+        <img src="https://images.unsplash.com/photo-1444080748397-f442aa95c3e5?w=550&h=550&fit=crop" alt="Cosmic dream" class="dhg-img">
+        <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659?w=550&h=550&fit=crop" alt="Nebula" class="dhg-img">
+        <img src="https://images.unsplash.com/photo-1505506874110-6a7a69069a08?w=550&h=550&fit=crop" alt="Stars" class="dhg-img">
+        <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=550&h=550&fit=crop" alt="Aurora" class="dhg-img">
+        <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=550&h=550&fit=crop" alt="Milky way" class="dhg-img">
+        <img src="https://images.unsplash.com/photo-1536523030500-e09c6e25f680?w=550&h=550&fit=crop" alt="Moon" class="dhg-img">
+        <img src="https://images.unsplash.com/photo-1475274047050-1d0c55b91a5b?w=550&h=550&fit=crop" alt="Ocean night" class="dhg-img">
+        <img src="https://images.unsplash.com/photo-1489549132488-d00b7eee80f1?w=550&h=550&fit=crop" alt="Dream clouds" class="dhg-img">
+      </div>
+      <div class="dhg-cursor" id="dhgCursor">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M15 19l-7-7 7-7"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+      </div>
+      <div class="dhg-counter" id="dhgCounter">1 / 10</div>
+    </div>
+    <p style="color:var(--muted);font-size:13px;margin-top:12px;letter-spacing:0.05em;">Hover to explore · Each image is a dream waiting to be remembered</p>
+    <a class="btn-primary reveal" href="app.html" style="margin-top:24px;">Start remembering →</a>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section id="pricing">
   <div class="section-wrap">
@@ -530,6 +616,7 @@ footer {
     <div class="footer-links">
       <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
+      <a href="blog/index.html">Blog</a>
       <a href="app.html">App</a>
     </div>
     <div class="footer-copy">© 2026 Noctaras. All rights reserved.</div>
@@ -591,6 +678,25 @@ function handleSignup(e){
   msg.style.color='var(--accent)';
   document.getElementById('signupEmail').value='';
 }
+// Dream Hover Gallery
+(function(){
+  const gallery = document.getElementById('dreamGallery');
+  const cursor = document.getElementById('dhgCursor');
+  const counter = document.getElementById('dhgCounter');
+  const imgs = document.querySelectorAll('.dhg-img');
+  if(!gallery || !imgs.length) return;
+  
+  gallery.addEventListener('mousemove', function(e){
+    const rect = gallery.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cursor.style.left = x + 'px';
+    cursor.style.top = y + 'px';
+    const idx = Math.min(imgs.length - 1, Math.max(0, Math.floor((x / rect.width) * imgs.length)));
+    imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
+    counter.textContent = (idx + 1) + ' / ' + imgs.length;
+  });
+})();
 </script>
 </body>
 </html>
