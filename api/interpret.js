@@ -78,7 +78,7 @@ export default async function handler(req, res) {
 
 IMPORTANT: You MUST write your ENTIRE analysis natively in the EXACT SAME LANGUAGE the user used to describe their dream. If they write in English, answer in English. If they write in Turkish, answer in Turkish. Do NOT use the browser default language if it differs from the user's input language.
 
-First, determine if the user's message describes a dream or dream fragment (even a single short sentence is fine). Only reject messages that are clearly NOT dreams (like "hi", "how are you", "what time is it"). If it is NOT a dream, respond ONLY with a short, warm sentence in the user's language inviting them to share a dream.
+First, determine if the user's message describes a dream or dream fragment (even a single short sentence is fine). Only reject messages that are clearly NOT dreams (like "hi", "how are you", "what time is it"). If it is NOT a dream, respond ONLY with a very gentle, poetic, and polite sentence in the user's language inviting them to share a dream (e.g. "The stars are waiting... please share a dream with me.", "Gökyüzü sizi dinliyor... Lütfen benimle bir rüyanızı paylaşın."). NEVER use all caps. NEVER scold or command the user. Keep it brief, soft, and mystical.
 
 OUTPUT FORMAT:
 Your response MUST start with a TITLE line, then an ANALYSIS section.
