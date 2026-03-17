@@ -88,10 +88,9 @@ a { text-decoration: none; color: inherit; }
 #chatMessages { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; overflow-y: auto; max-height: 55vh; scroll-behavior: smooth; }
 .msg-user { align-self: flex-end; background: var(--surface); border: 1px solid var(--border); padding: 16px 20px; border-radius: 12px 12px 0 12px; font-size: 15px; line-height: 1.6; max-width: 80%; box-shadow: var(--shadow-sm); }
 .msg-ai { align-self: flex-start; padding: 0; font-size: 15.5px; line-height: 1.7; max-width: 90%; color: var(--text); }
-.msg-save-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-strong); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); letter-spacing: 0.01em; box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, var(--shadow-sm); backdrop-filter: blur(8px); }
-.msg-save-btn:hover { background: var(--text); color: var(--bg); border-color: transparent; transform: translateY(-2px); box-shadow: 0 8px 16px -4px rgba(0,0,0,0.1), 0 4px 8px -2px rgba(0,0,0,0.05); }
+.msg-save-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 20px; background: var(--surface); border: 1px solid var(--border-strong); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; color: var(--text); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s; letter-spacing: 0.01em; box-shadow: var(--shadow-sm); }
+.msg-save-btn:hover { background: var(--text); color: var(--bg); border-color: transparent; transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .msg-save-btn:active { transform: translateY(0); }
-[data-theme="dark"] .msg-save-btn:hover { box-shadow: 0 0 20px rgba(255,255,255,0.15); }
 .msg-save-btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; pointer-events: none; }
 
 .msg-loading { align-self: flex-start; padding: 16px 0; }
@@ -1096,35 +1095,35 @@ setInterval(() => {
   }, 360);
 }, 3500);
 
-// ── Chat input ──
-let resizeRaf = null;
+// ── Chat input ── (DOM refs cached once for zero-lag typing)
+let _inp = null, _btn = null, _ph = null, _resizeRaf = null;
 window.onInput = () => {
-  const inp = document.getElementById('vanishInput');
-  const v = inp.value;
-  const btn = document.getElementById('vanishBtn');
-  const ph = document.getElementById('vanishPH');
-  
-  if (ph) {
-    ph.style.opacity = v.length > 0 ? '0' : '1';
-    ph.style.transform = v.length > 0 ? 'translateY(-8px)' : 'translateY(0)';
+  if (!_inp) { _inp = document.getElementById('vanishInput'); _btn = document.getElementById('vanishBtn'); _ph = document.getElementById('vanishPH'); }
+  const v = _inp.value;
+  const hasText = v.trim().length > 0;
+
+  // Only update styles when state actually changes
+  if (_ph) {
+    const wantHidden = v.length > 0;
+    if (_ph._hidden !== wantHidden) {
+      _ph._hidden = wantHidden;
+      _ph.style.opacity = wantHidden ? '0' : '1';
+      _ph.style.transform = wantHidden ? 'translateY(-8px)' : 'translateY(0)';
+    }
   }
-  
-  if (v.trim().length > 0) {
-    btn.classList.add('visible');
-    btn.disabled = false;
-  } else {
-    btn.classList.remove('visible');
-    btn.disabled = true;
+  if (_btn) {
+    if (hasText && _btn.disabled) { _btn.disabled = false; _btn.classList.add('visible'); }
+    else if (!hasText && !_btn.disabled) { _btn.disabled = true; _btn.classList.remove('visible'); }
   }
-  
-  // Throttle textarea resize to fix input lag
-  if (resizeRaf) cancelAnimationFrame(resizeRaf);
-  resizeRaf = requestAnimationFrame(() => {
-    inp.style.height = '52px';
-    inp.style.height = Math.min(inp.scrollHeight, 200) + 'px';
+
+  // Resize only once per frame
+  if (_resizeRaf) cancelAnimationFrame(_resizeRaf);
+  _resizeRaf = requestAnimationFrame(() => {
+    _inp.style.height = '52px';
+    _inp.style.height = Math.min(_inp.scrollHeight, 200) + 'px';
   });
 };
-window.onKey = (e) => { if (e.key === 'Enter' && !vanishBusy) submitChat(); };
+window.onKey = (e) => { if (e.key === 'Enter' && !e.shiftKey && !vanishBusy) { e.preventDefault(); submitChat(); } };
 
 
 
