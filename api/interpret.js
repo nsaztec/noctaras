@@ -78,21 +78,15 @@ export default async function handler(req, res) {
 
 IMPORTANT: The user's browser language is ${userLang}. You MUST respond in this language natively. If the user writes in a different language, still prioritize responding in ${userLang} unless it strongly breaks the flow.
 
-First, determine if the user's message describes a dream or dream fragment (e.g. 1 short sentence is perfectly fine). Only reject messages that are clearly NOT dreams (like "hi", "how are you"). If it is NOT a dream, respond ONLY with a short, polite sentence in ${userLang} asking them to describe a dream.
+First, determine if the user's message describes a dream or dream fragment (even a single short sentence is fine). Only reject messages that are clearly NOT dreams (like "hi", "how are you", "what is 2+2"). If it is NOT a dream, respond ONLY with a short, polite sentence in ${userLang} asking them to describe a dream.
 
-IMPORTANT - OUTPUT FORMAT:
-Your response MUST be divided into exactly two sections: TITLE and ANALYSIS.
+OUTPUT FORMAT:
+Your response MUST contain exactly two sections:
 
-TITLE: [Generate a poetic, intriguing 3-5 word title for the dream in ${userLang}]
+TITLE: [A poetic, evocative 3-5 word title for the dream, written in ${userLang}]
+
 ANALYSIS:
-[Write a deep, profound psychological analysis of the dream in ${userLang}.
-DO NOT use hardcoded English headers (like "CORE THEME", etc.).
-CRITICAL: For every major symbol in the dream, you MUST use a Q&A format in ${userLang} as natural text.
-Example (if the language is Turkish and the symbol is Deniz):
-Rüyadaki Deniz'in anlamı ne?
-Deniz, bilinçdışının uçsuz bucaksız derinliklerini temsil eder. Bu dalgaların boyutu...
-
-Conclude with what this dream is trying to tell the dreamer. Use a compassionate but highly clinical and psychological tone. Avoid generic interpretations. Seek deep Jungian archetypes.]`
+[Write a rich, flowing psychological analysis in ${userLang}. Write in eloquent, continuous prose — do NOT use Q&A format, do NOT use bullet points, do NOT use any section headers or labels. Weave the analysis naturally like a skilled therapist or literary author would, covering the key symbols, emotions, and archetypes organically within the text. Ground insights in Jungian archetypes, shadow theory, and the neuroscience of dreaming. End with what the dream may be revealing to the dreamer at a deeper level. Tone: compassionate, intelligent, and clinically precise. Write at least 3 substantial paragraphs.]`
           },
           {
             role: 'user',
