@@ -88,8 +88,9 @@ a { text-decoration: none; color: inherit; }
 #chatMessages { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; overflow-y: auto; max-height: 55vh; scroll-behavior: smooth; }
 .msg-user { align-self: flex-end; background: var(--surface); border: 1px solid var(--border); padding: 16px 20px; border-radius: 12px 12px 0 12px; font-size: 15px; line-height: 1.6; max-width: 80%; box-shadow: var(--shadow-sm); }
 .msg-ai { align-self: flex-start; padding: 0; font-size: 15.5px; line-height: 1.7; max-width: 90%; color: var(--text); }
-.msg-save-btn { display: inline-block; margin-top: 16px; background: var(--surface); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; transition: 0.2s; }
-.msg-save-btn:hover { background: var(--surface-hover); border-color: var(--border-strong); }
+.msg-save-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 20px; background: transparent; border: 1.5px solid var(--text); padding: 9px 18px; border-radius: 20px; font-size: 12.5px; font-weight: 600; color: var(--text); cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em; }
+.msg-save-btn:hover { background: var(--text); color: var(--bg); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.msg-save-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
 
 .msg-loading { align-self: flex-start; padding: 16px 0; }
 .dots span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); margin: 0 4px; animation: bounce 1.4s infinite ease-in-out both; }
@@ -1172,31 +1173,32 @@ function addAIMsg(text, dreamText, titleText) {
     else userScrolled = false;
   };
   c.addEventListener('scroll', onScroll, { passive: true });
-  const iv = setInterval(() => {
-    if (i < text.length) { 
-      el.innerHTML = text.slice(0,i+1).replace(/\n/g,'<br>') + '<span class="cursor"></span>'; 
+  // Use setTimeout recursion instead of setInterval so typing continues on hidden tabs
+  function typeNext() {
+    if (i < text.length) {
+      el.innerHTML = text.slice(0, i + 1).replace(/\n/g, '<br>') + '<span class="cursor"></span>';
       i++;
       if (!userScrolled) c.scrollTop = c.scrollHeight;
-    }
-    else {
-      el.innerHTML = text.replace(/\n/g,'<br>');
+      setTimeout(typeNext, 12);
+    } else {
+      el.innerHTML = text.replace(/\n/g, '<br>');
       if (dreamText) {
         const btn = document.createElement('button'); btn.className = 'msg-save-btn';
         btn.innerHTML = '✦ Save to journal';
         btn.onclick = async () => {
-          btn.textContent = 'Saving...'; btn.disabled = true;
+          btn.innerHTML = 'Saving...'; btn.disabled = true;
           const finalTitle = titleText || 'Dream Entry';
           const dreamData = { title: finalTitle, text: dreamText, mood: 'mysterious', date: new Date().toISOString(), analysis: text };
           const id = await saveDreamToDB(dreamData);
-          if (id) { dreams.unshift({id, ...dreamData}); btn.textContent = '✓ Saved'; }
-          else { btn.textContent = 'Error'; btn.disabled = false; }
+          if (id) { dreams.unshift({id, ...dreamData}); btn.innerHTML = '✓ Saved'; }
+          else { btn.innerHTML = 'Error saving'; btn.disabled = false; }
         };
         el.appendChild(document.createElement('br')); el.appendChild(btn);
       }
       c.removeEventListener('scroll', onScroll);
-      clearInterval(iv);
     }
-  }, 14);
+  }
+  typeNext();
 }
 
 // ── Paywall ──

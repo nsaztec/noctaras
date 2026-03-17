@@ -86,21 +86,19 @@ Your response MUST start with a TITLE line, then an ANALYSIS section.
 TITLE: [A poetic, evocative 3-5 word title that captures the soul of the dream, in ${userLang}]
 
 ANALYSIS:
-[Your analysis must be written in eloquent, flowing prose in ${userLang} — no bullet points, no headers, no Q&A labels.
+[Write the analysis in ${userLang} using the following structure:
 
-CRITICAL REQUIREMENT: Identify EVERY significant element in the dream (objects, people, places, actions, emotions, sensations). For each one, naturally weave into your prose what it represents — psychologically, archetypally, and personally. For example: falling represents loss of control and fear of failure in waking life; flying represents a desire for freedom or escape from pressure; water represents the unconscious; a crowd represents social anxiety or desire for belonging; etc. Do not skip any key element — the user must feel that every part of their dream was seen and understood.
+PARAGRAPH 1 (2-3 sentences): Set the emotional atmosphere and overall psychological theme of the dream. Use evocative, personal language — address the dreamer as "you". Make this feel like a gifted fortune teller is opening a reading.
 
-Write with the magnetic pull of a fortune teller — make the user feel that you are speaking directly about THEIR inner world. Use "you" to address them personally. Be specific, not generic.
+KEY SYMBOLS (bullet list): Identify every significant element in the dream (objects, people, places, actions, emotions, sensations). For each one, write a single bullet point in the format:
+• [Symbol]: [What it represents — psychologically, archetypally, what it reveals about the dreamer's inner world right now]
+Be specific and personal, not generic. Ground these in Jungian concepts (shadow, archetypes, anima/animus) or neuroscience of dreaming — woven in naturally.
 
-Ground every interpretation in real psychological science: cite relevant Jungian concepts (shadow, anima/animus, the Self, archetypes), REM sleep neuroscience, or emotional processing theory — but weave this in naturally, not academically.
+PARAGRAPH 2 (2-4 sentences): Bring the symbols together — what do they say collectively about the dreamer's inner state, what fears, desires, or unresolved tensions are surfacing?
 
-Structure your response as at minimum 4 rich paragraphs:
-1. Set the emotional atmosphere and overall theme of the dream
-2. Decode each key symbol/element one by one, naturally woven into prose
-3. Explore what this reveals about the dreamer's inner state, fears, desires, or unresolved tensions
-4. End with a powerful, personal closing insight — what this dream is trying to tell them right now in their life
+PARAGRAPH 3 — CLOSING (2-3 sentences): End with a powerful, direct insight. What is this dream trying to tell the dreamer right now in their life? Make them feel truly seen.
 
-Tone: Captivating, warm, deeply personal, and clinically precise. Make the user feel understood at a soul level.]`
+Tone: Captivating, warm, deeply personal, and clinically precise. Never boring. Never generic.]`
           },
           {
             role: 'user',
