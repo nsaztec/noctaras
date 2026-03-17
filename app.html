@@ -223,23 +223,35 @@ textarea { min-height: 160px; resize: vertical; }
 .tree-analysis-loading { color: var(--muted); font-size: 14px; }
 .seedling-state { text-align: center; padding: 60px 0; }
 
-/* PAYWALL */
-.paywall-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
+/* PRICING MODAL REDESIGN */
+.paywall-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
 .paywall-overlay.active { display: flex; animation: fadeUp 0.3s ease; }
-.paywall-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 40px; text-align: center; max-width: 480px; width: 100%; box-shadow: var(--shadow-lg); }
-.paywall-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.02em; }
-.paywall-sub { font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
-.paywall-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-.paywall-plan { border: 1px solid var(--border); border-radius: 8px; padding: 20px 16px; text-align: left; cursor: pointer; text-decoration: none; color: inherit; transition: 0.2s; background: var(--bg); }
-.paywall-plan:hover { border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
-.paywall-plan.featured { border-color: var(--text); box-shadow: var(--shadow-md); }
-.plan-badge { font-size: 11px; font-weight: 600; background: var(--surface-hover); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 16px; text-transform: uppercase; }
-.paywall-plan.featured .plan-badge { background: var(--text); color: var(--bg); border-color: var(--text); }
-.plan-price { font-size: 28px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 4px; }
-.plan-period { font-size: 13px; color: var(--muted); }
-.plan-save { font-size: 12px; color: #16a34a; font-weight: 600; margin-top: 8px; }
-.paywall-close { font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border: none; background: none; transition: 0.2s; }
-.paywall-close:hover { color: var(--text); text-decoration: underline; }
+.paywall-card-new { width: 100%; max-width: 800px; padding: 40px 20px; text-align: center; }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: left; }
+.pricing-card { position: relative; height: 100%; width: 100%; overflow: hidden; border-radius: 12px; border: 1px solid #e4e4e7; background: linear-gradient(to bottom right, rgba(250,250,250,0.5), rgba(244,244,245,0.8)); padding: 24px; display: flex; flex-direction: column; }
+[data-theme="dark"] .pricing-card { border-color: #3f3f46; background: linear-gradient(to bottom right, rgba(9,9,11,0.5), rgba(24,24,27,0.8)); }
+.pricing-header { display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #e4e4e7; padding-bottom: 24px; }
+[data-theme="dark"] .pricing-header { border-bottom-color: #3f3f46; }
+.pricing-tier { margin-bottom: 24px; display: inline-block; color: #18181b; font-size: 14px; font-weight: 500; }
+[data-theme="dark"] .pricing-tier { color: #fafafa; }
+.pricing-price { margin-bottom: 12px; display: inline-block; font-size: 36px; font-weight: 500; line-height: 1; color: var(--text); }
+.pricing-period { background: linear-gradient(to bottom right, #3f3f46, #18181b); -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; font-size: 15px; }
+[data-theme="dark"] .pricing-period { background: linear-gradient(to bottom right, #e4e4e7, #71717a); -webkit-background-clip: text; background-clip: text; }
+.pricing-save { color: #10b981; font-size: 13px; font-weight: 600; margin-top: 4px; display: block; }
+.pricing-benefits { padding: 36px 0; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.pricing-benefit { display: flex; align-items: center; gap: 12px; }
+.benefit-icon { display: grid; place-content: center; width: 16px; height: 16px; border-radius: 50%; color: var(--bg); background: var(--text); flex-shrink: 0; }
+.benefit-icon svg { width: 12px; height: 12px; pointer-events: none; }
+.benefit-text { font-size: 14px; color: #52525b; }
+[data-theme="dark"] .benefit-text { color: #d4d4d8; }
+.btn-pricing { width: 100%; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; border-radius: 6px; font-size: 14px; font-weight: 500; height: 40px; padding: 8px 16px; transition: 0.2s; cursor: pointer; border: 1px solid transparent; text-decoration: none; }
+.btn-pricing.default { background: var(--text); color: var(--bg); }
+.btn-pricing.default:hover { opacity: 0.9; }
+.btn-pricing.ghost { background: transparent; color: var(--text); }
+.btn-pricing.ghost:hover { background: var(--surface-hover); }
+.paywall-close-new { font-size: 14px; font-weight: 500; color: #a1a1aa; cursor: pointer; border: none; background: none; transition: 0.2s; padding: 8px 16px; margin-top: 32px; }
+.paywall-close-new:hover { color: #fff; text-decoration: underline; }
+@media(max-width: 768px){ .pricing-grid{grid-template-columns:1fr;} .paywall-card-new{padding:24px 16px;} }
 
 /* Toast */
 .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
@@ -305,23 +317,63 @@ textarea { min-height: 160px; resize: vertical; }
 
 <!-- ══════════════ PAYWALL MODAL ══════════════ -->
 <div class="paywall-overlay" id="paywallOverlay">
-  <div class="paywall-card">
-    <h2 class="paywall-title">Unlock unlimited dreams</h2>
-    <p class="paywall-sub" id="paywallMsg">Unlock unlimited dream interpretations, priority processing, and all future features.</p>
-    <div class="paywall-plans">
-      <a class="paywall-plan featured" id="planMonthly" href="#" target="_blank">
-        <div class="plan-badge">Monthly</div>
-        <div class="plan-price">$7.99</div>
-        <div class="plan-period">per month</div>
-      </a>
-      <a class="paywall-plan" id="planAnnual" href="#" target="_blank">
-        <div class="plan-badge">Annual</div>
-        <div class="plan-price">$49.99</div>
-        <div class="plan-period">per year</div>
-        <div class="plan-save">Save 48%</div>
-      </a>
+  <div class="paywall-card-new">
+    <div style="margin-bottom: 48px; display: flex; flex-direction: column; gap: 12px;">
+      <h2 style="font-size: 36px; line-height: 1.2; font-weight: 600; color: #fff; letter-spacing: -0.02em;">Pricing</h2>
+      <p id="paywallMsg" style="font-size: 16px; color: #a1a1aa; max-width: 600px; margin: 0 auto; line-height: 1.5;">Unlock unlimited dream interpretations, priority processing, and all future features.</p>
     </div>
-    <button class="paywall-close" onclick="closePaywall()">Maybe later</button>
+    
+    <div class="pricing-grid">
+      <!-- Monthly Card -->
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <span class="pricing-tier">Starter</span>
+          <span class="pricing-price">$7.99<span style="font-size: 15px; color: var(--muted); font-weight: 400;">/mo</span></span>
+          <span class="pricing-period">Billed monthly</span>
+        </div>
+        <div class="pricing-benefits">
+          <div class="pricing-benefit">
+            <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span class="benefit-text">Unlimited interpretations</span>
+          </div>
+          <div class="pricing-benefit">
+            <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span class="benefit-text">Priority processing</span>
+          </div>
+          <div class="pricing-benefit">
+            <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span class="benefit-text">All future features</span>
+          </div>
+        </div>
+        <a id="planMonthly" href="#" target="_blank" class="btn-pricing ghost">Get started with Starter</a>
+      </div>
+
+      <!-- Annual Card -->
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <span class="pricing-tier">Annual</span>
+          <span class="pricing-price">$49.99<span style="font-size: 15px; color: var(--muted); font-weight: 400;">/yr</span></span>
+          <span class="pricing-period">Billed annually <br><span class="pricing-save">Save 48%</span></span>
+        </div>
+        <div class="pricing-benefits">
+          <div class="pricing-benefit">
+             <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+             <span class="benefit-text">Unlimited interpretations</span>
+          </div>
+          <div class="pricing-benefit">
+             <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+             <span class="benefit-text">Priority processing</span>
+          </div>
+          <div class="pricing-benefit">
+             <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+             <span class="benefit-text">All future features</span>
+          </div>
+        </div>
+        <a id="planAnnual" href="#" target="_blank" class="btn-pricing default">Get Annual Pro</a>
+      </div>
+    </div>
+    
+    <button class="paywall-close-new" onclick="closePaywall()">Maybe later</button>
   </div>
 </div>
 
@@ -1203,11 +1255,11 @@ window.submitChat = async () => {
       const analysis = aMatch ? aMatch[1].trim() : rawAi;
 
       load.remove();
-      addAIMsg(analysis, text, title);
+      addAIMsg(analysis, text, title, !!aMatch);
     } catch(e) {
       load.remove();
       if (e.message !== 'upgrade_required') {
-        addAIMsg('The stars grew silent... ' + e.message, '');
+        addAIMsg('The stars grew silent... ' + e.message, '', '', false);
       }
     }
 };
@@ -1222,7 +1274,7 @@ function addLoadingMsg() {
   const c = document.getElementById('chatMessages'); c.appendChild(el); c.scrollTop = c.scrollHeight;
   return el;
 }
-function addAIMsg(text, dreamText, titleText) {
+function addAIMsg(text, dreamText, titleText, isValidAnalysis) {
   const el = document.createElement('div'); el.className = 'msg-ai';
   const c = document.getElementById('chatMessages'); c.appendChild(el);
   let i = 0;
@@ -1242,7 +1294,7 @@ function addAIMsg(text, dreamText, titleText) {
       setTimeout(typeNext, 12);
     } else {
       el.innerHTML = text.replace(/\n/g, '<br>');
-      if (dreamText) {
+      if (dreamText && isValidAnalysis) {
         const finalTitle = titleText || 'Dream Entry';
         const dreamData = { 
           title: finalTitle, 
@@ -1251,7 +1303,7 @@ function addAIMsg(text, dreamText, titleText) {
           date: new Date().toISOString(), 
           analysis: text 
         };
-        // Auto-save quietly in the background
+        // Auto-save quietly in the background only if it's a valid analysis
         saveDreamToDB(dreamData).then(id => {
           if (id) {
             dreams.unshift({id, ...dreamData});
@@ -1376,6 +1428,7 @@ window.interpretForm = async () => {
     const tMatch = rawAi.match(/^TITLE:\s*(.*)/im);
     const aMatch = rawAi.match(/ANALYSIS:\s*([\s\S]*)/im);
     window._currentAiTitle = tMatch ? tMatch[1].trim() : 'Dream Analysis';
+    window._isValidAnalysis = !!aMatch;
     currentAnalysis = aMatch ? aMatch[1].trim() : rawAi;
 
     document.getElementById('jLoading').classList.remove('show');
@@ -1395,6 +1448,10 @@ window.saveDream = async () => {
 
 window.saveDreamInterp = async () => {
   const text = document.getElementById('dreamInput').value.trim(); if (!text) return;
+  if (!currentAnalysis || !window._isValidAnalysis) {
+    alert("This input was not recognized as a valid dream and cannot be saved with an analysis.");
+    return;
+  }
   const title = window._currentAiTitle || 'Dream Analysis';
   const dreamData = { title, text, mood: currentMood, date: new Date().toISOString(), analysis: currentAnalysis };
   const id = await saveDreamToDB(dreamData);
@@ -1407,13 +1464,21 @@ window.interpretExisting = async (id) => {
   ld.innerHTML = '<div class="loading-symbols"><span>⋆</span><span>◈</span><span>☽</span><span>◈</span><span>⋆</span></div><p>Reading the stars...</p>';
   ld.classList.add('show');
   try {
-    const a = await callAI(d.text);
-    window._pa = a; ld.classList.remove('show'); ie.classList.add('show');
+    const rawAi = await callAI(d.text);
+    const aMatch = rawAi.match(/ANALYSIS:\s*([\s\S]*)/im);
+    const a = aMatch ? aMatch[1].trim() : rawAi;
+    window._pa = a;
+    window._isDetailValid = !!aMatch;
+    ld.classList.remove('show'); ie.classList.add('show');
     typeText(a, document.getElementById('detailInterpText'), null);
   } catch(e) { ld.classList.remove('show'); alert('Error: ' + e.message); }
 };
 
 window.saveDetailInterp = async (id) => {
+  if (!window._isDetailValid) {
+    alert("This input was not recognized as a valid dream and cannot be saved with an analysis.");
+    return;
+  }
   const idx = dreams.findIndex(x => x.id === id); if (idx === -1) return;
   await updateDreamInDB(id, { analysis: window._pa || '' });
   dreams[idx].analysis = window._pa || '';
