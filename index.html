@@ -7,746 +7,570 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ── THEME VARIABLES ── */
+/* ── THEME VARIABLES (Vercel / Linear Aesthetic) ── */
 :root {
-  /* Vanilla Light Theme (Default) */
-  --bg: #f7f5f0;
-  --surface: #ffffff;
-  --surface-alt: #f0eee9;
-  --text: #1a202c;
-  --muted: #5a657a;
-  --accent: #4a6b5b;
-  --accent-light: #e0e8e4;
+  --bg: #FDFCFB;
+  --surface: #FFFFFF;
+  --surface-hover: #FAFAFA;
   --border: rgba(0,0,0,0.08);
-  --shadow-sm: 0 4px 12px rgba(0,0,0,0.04);
-  --shadow-md: 0 10px 40px rgba(0,0,0,0.04);
-  --shadow-lg: 0 20px 60px rgba(0,0,0,0.06);
-  --blob-opa: 0.15;
-  
-  --serif: 'Playfair Display', Georgia, serif;
-  --sans: 'Inter', 'Segoe UI', sans-serif;
+  --border-strong: rgba(0,0,0,0.15);
+  --text: #171717;
+  --muted: #666666;
+  --subtle: #A3A3A3;
+  --accent: #111111;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.03);
+  --shadow-float: 0 20px 40px -10px rgba(0,0,0,0.08);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.05); /* very soft spring */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="dark"] {
-  /* Vanilla Dark Theme */
-  --bg: #1e1d24;
-  --surface: #26252d;
-  --surface-alt: #2e2d36;
-  --text: #eae6ff;
-  --muted: rgba(234,230,255,0.7);
-  --accent: #9B8FE8;
-  --accent-light: rgba(155,143,232,0.15);
-  --border: rgba(160,140,255,0.14);
-  --shadow-sm: 0 4px 12px rgba(0,0,0,0.2);
-  --shadow-md: 0 10px 40px rgba(0,0,0,0.3);
-  --shadow-lg: 0 20px 60px rgba(0,0,0,0.4);
-  --blob-opa: 0.05;
+  --bg: #0A0A0A;
+  --surface: #121212;
+  --surface-hover: #1A1A1A;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+  --text: #EDEDED;
+  --muted: #A1A1AA;
+  --subtle: #52525B;
+  --accent: #FFFFFF;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5);
+  --shadow-float: 0 20px 40px -10px rgba(0,0,0,0.6);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { 
-  background: var(--bg); 
-  color: var(--text); 
-  font-family: var(--sans); 
-  font-weight: 300; 
-  line-height: 1.6;
-  overflow-x: hidden; 
-  -webkit-font-smoothing: antialiased; 
-  transition: background 0.4s ease, color 0.4s ease;
+  background: var(--bg); color: var(--text); font-family: var(--font-sans); 
+  font-weight: 400; line-height: 1.5; overflow-x: hidden; 
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
+  transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);
 }
-
-/* ── BACKGROUND BLOBS ── */
-.blob {
-  position: absolute; border-radius: 50%;
-  filter: blur(100px);
-  pointer-events: none; z-index: 0;
-  transition: opacity 0.5s ease;
-  opacity: var(--blob-opa);
-}
-.blob-1 { width: 50vw; height: 50vw; max-width: 600px; background: var(--accent); top: -10vh; right: -10vw; }
-.blob-2 { width: 40vw; height: 40vw; max-width: 500px; background: rgba(143,181,163,0.8); bottom: 10vh; left: -10vw; }
-[data-theme="dark"] .blob-2 { background: rgba(110,95,185,0.8); }
-
-nav, section, footer { position: relative; z-index: 1; }
-
-h1,h2,h3,h4 { font-family: var(--serif); font-weight: 500; }
 a { text-decoration: none; color: inherit; }
+
+/* ── SUBTLE GRAIN ── */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04; mix-blend-mode: multiply;
+}
+[data-theme="dark"] body::before { mix-blend-mode: overlay; opacity: 0.06; }
 
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 5%;
-  background: transparent;
-  transition: all 0.4s ease;
+  padding: 20px 5%; background: transparent; transition: all 0.3s var(--ease-out);
   border-bottom: 1px solid transparent;
 }
 nav.scrolled {
-  padding: 16px 5%;
-  background: var(--bg);
-  backdrop-filter: blur(12px);
-  border-bottom-color: var(--border);
+  background: rgba(var(--bg), 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  padding: 14px 5%; border-bottom-color: var(--border);
 }
-
 .nav-left { display: flex; align-items: center; gap: 40px; }
-.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); }
-.nav-logo svg { transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1); }
-.nav-logo:hover svg { transform: rotate(180deg) scale(1.1); }
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--text); transition: opacity 0.2s; }
+.logo:hover { opacity: 0.7; }
+.logo svg { width: 18px; height: 18px; }
 
-.nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.3s; position: relative; }
-.nav-links a:hover { color: var(--accent); }
-.nav-links a::after {
-  content:''; position: absolute; width: 0; height: 1.5px;
-  bottom: -4px; left: 50%; transform: translateX(-50%);
-  background: var(--accent); transition: width 0.3s;
+.nav-links { display: flex; align-items: center; gap: 24px; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+.btn-icon {
+  background: transparent; border: 1px solid transparent; color: var(--muted);
+  width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s var(--ease-out);
 }
-.nav-links a:hover::after { width: 100%; }
+.btn-icon:hover { background: var(--border); color: var(--text); }
+.btn-icon svg { width: 15px; height: 15px; fill: currentColor; }
 
-.nav-right { display: flex; align-items: center; gap: 16px; }
-
-.theme-toggle {
-  background: var(--surface); border: 1px solid var(--border);
-  width: 38px; height: 38px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--text); transition: all 0.3s ease;
+.btn {
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 0 16px; height: 36px; border-radius: 6px;
+  cursor: pointer; transition: all 0.2s var(--ease-out); border: 1px solid transparent; text-decoration: none;
 }
-.theme-toggle:hover { background: var(--surface-alt); transform: scale(1.05); }
-
-.nav-cta {
-  font-size: 13px; font-weight: 600;
-  color: var(--bg); background: var(--text);
-  border: 1px solid transparent; border-radius: 980px;
-  padding: 10px 24px; transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
-}
-.nav-cta:hover { opacity: 0.85; transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-[data-theme="dark"] .nav-cta { color: var(--surface); background: var(--accent); }
-[data-theme="dark"] .nav-cta:hover { opacity: 0.9; }
+.btn-primary { background: var(--accent); color: var(--bg); box-shadow: var(--shadow-sm); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); opacity: 0.9; }
+.btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); box-shadow: var(--shadow-sm); }
+.btn-secondary:hover { background: var(--surface-hover); border-color: var(--border-strong); }
 
 /* ── HERO ── */
 #hero {
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 140px 24px 100px;
-  position: relative;
+  min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 120px 24px 60px; position: relative;
 }
-.hero-eyebrow {
-  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 24px; font-weight: 600;
+.badge {
+  font-size: 12px; font-weight: 500; letter-spacing: -0.01em; color: var(--text);
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 6px 12px; border-radius: 99px; margin-bottom: 24px;
+  box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; gap: 8px;
 }
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 8px #22C55E; }
 .hero-title {
-  font-size: clamp(40px, 8vw, 90px);
-  line-height: 1.05; letter-spacing: -0.02em;
-  color: var(--text); margin-bottom: 24px;
-  max-width: 900px;
+  font-size: clamp(40px, 7vw, 76px); font-weight: 600; letter-spacing: -0.04em;
+  color: var(--text); margin-bottom: 20px; line-height: 1.05; max-width: 800px;
 }
-.hero-title em { font-style: italic; color: var(--accent); font-weight: 400; }
 .hero-sub {
-  font-size: clamp(16px, 2vw, 20px);
-  color: var(--muted); margin-bottom: 48px;
-  max-width: 600px; line-height: 1.7; font-weight: 400;
+  font-size: clamp(16px, 2vw, 20px); color: var(--muted); margin-bottom: 40px;
+  max-width: 540px; line-height: 1.6; font-weight: 400; letter-spacing: -0.01em;
 }
-.hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 10; }
+.hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
-.btn-primary {
-  font-family: var(--sans); font-size: 14px; font-weight: 600;
-  color: var(--bg); background: var(--text);
-  border: none; border-radius: 980px; padding: 16px 36px;
-  cursor: pointer; transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
-  box-shadow: var(--shadow-sm);
+/* ── UI PREVIEW (Interactive) ── */
+.ui-preview-wrap {
+  width: 100%; max-width: 1000px; margin: 60px auto 0;
+  perspective: 2000px; position: relative;
 }
-.btn-primary:hover { opacity: 0.85; transform: translateY(-2px); box-shadow: var(--shadow-md); }
-[data-theme="dark"] .btn-primary { background: var(--accent); color: var(--surface); }
+.ui-preview {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; box-shadow: var(--shadow-float);
+  overflow: hidden; display: flex; flex-direction: column;
+  transform: rotateX(8deg) scale(0.95); transform-origin: top center;
+  transition: transform 0.6s var(--ease-out);
+}
+.ui-preview-wrap:hover .ui-preview { transform: rotateX(0) scale(1); box-shadow: var(--shadow-lg); }
 
-.btn-ghost {
-  font-family: var(--sans); font-size: 14px; font-weight: 500;
-  color: var(--text); background: var(--surface);
-  border: 1px solid var(--border); border-radius: 980px; padding: 16px 36px;
-  cursor: pointer; transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+.ui-header {
+  height: 48px; border-bottom: 1px solid var(--border); background: var(--surface-hover);
+  display: flex; align-items: center; padding: 0 16px; gap: 8px;
 }
-.btn-ghost:hover { background: var(--surface-alt); border-color: rgba(0,0,0,0.15); transform: translateY(-2px); }
-[data-theme="dark"] .btn-ghost:hover { border-color: rgba(255,255,255,0.2); }
+.ui-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border-strong); }
+.ui-dot:nth-child(1) { background: #FF5F56; }
+.ui-dot:nth-child(2) { background: #FFBD2E; }
+.ui-dot:nth-child(3) { background: #27C93F; }
 
-.scroll-indicator {
-  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+.ui-body { padding: 40px; text-align: left; display: flex; gap: 40px; align-items: center; }
+.ui-chat { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+.ui-bubble {
+  background: var(--surface-hover); border: 1px solid var(--border); padding: 16px; border-radius: 8px;
+  font-size: 14px; color: var(--text); width: 80%; line-height: 1.6;
 }
-.scroll-indicator::after {
-  content: ''; width: 1px; height: 35px;
-  background: var(--muted); animation: pulse 2s infinite; opacity: 0.5;
-}
-@keyframes pulse { 0%,100%{opacity:0.2;transform:scaleY(0.5);transform-origin:top;} 50%{opacity:0.8;transform:scaleY(1);transform-origin:top;} }
+.ui-bubble.right { align-self: flex-end; background: var(--accent); color: var(--bg); border: none; }
+.ui-sidebar { flex: 0 0 240px; border-left: 1px solid var(--border); padding-left: 32px; }
+.ui-card-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--subtle); margin-bottom: 16px; }
+.ui-tag { font-size: 12px; background: var(--surface-hover); border: 1px solid var(--border); padding: 4px 10px; border-radius: 99px; display: inline-block; margin-bottom: 8px; }
 
 /* ── SECTION CONFIG ── */
-.section-wrap { max-width: 1200px; margin: 0 auto; padding: 100px 5%; }
-.section-label {
-  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 16px; font-weight: 600;
-}
-.section-title { font-size: clamp(28px, 4.5vw, 44px); line-height: 1.15; color: var(--text); margin-bottom: 24px; }
-.section-title em { font-style: italic; color: var(--accent); }
-.section-desc { font-size: 17px; color: var(--muted); max-width: 600px; line-height: 1.7; margin-bottom: 64px; }
+.section-wrap { max-width: 1100px; margin: 0 auto; padding: 120px 5%; }
+.section-header { text-align: left; margin-bottom: 60px; max-width: 600px; }
+.section-title { font-size: 32px; font-weight: 600; letter-spacing: -0.03em; color: var(--text); margin-bottom: 16px; }
+.section-desc { font-size: 16px; color: var(--muted); line-height: 1.6; }
 
-/* ── HOW IT WORKS (TIMELINE REFINED) ── */
-.timeline { position: relative; max-width: 700px; margin: 0 auto; padding-left: 20px; }
-.timeline::before {
-  content: ''; position: absolute; left: 0; top: 10px; bottom: 30px; width: 1.5px;
-  background: linear-gradient(to bottom, var(--accent) 0%, transparent 100%);
-  border-radius: 2px;
+/* ── BENTO GRID (Linear Style) ── */
+.bento {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  grid-auto-rows: 240px;
 }
-.timeline-item { position: relative; padding-left: 48px; margin-bottom: 54px; }
-.timeline-item:last-child { margin-bottom: 0; }
-.timeline-dot {
-  position: absolute; left: -19px; top: -4px;
-  width: 38px; height: 38px; border-radius: 50%;
-  background: var(--surface); border: 2px solid var(--accent);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--sans); color: var(--accent); font-size: 15px; font-weight: 600;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05); z-index: 2;
+.b-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 32px; display: flex; flex-direction: column;
+  transition: all 0.3s var(--ease-out); position: relative; overflow: hidden;
 }
-[data-theme="dark"] .timeline-dot { box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-.timeline-content h3 { font-family: var(--sans); font-size: 22px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
-.timeline-content p { font-size: 16px; color: var(--muted); line-height: 1.7; }
+.b-card:hover { border-color: var(--border-strong); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.b-large { grid-column: span 2; }
+.b-tall { grid-row: span 2; }
 
-/* ── FEATURES (BENTO GRID) ── */
-#features { padding-top: 40px; }
-.bento-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 250px; gap: 20px;
-}
-.bento-card {
-  background: var(--surface);
-  border-radius: 20px; padding: 40px;
-  position: relative; overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-  display: flex; flex-direction: column;
-}
-.bento-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(90,123,107,0.2); }
-[data-theme="dark"] .bento-card:hover { border-color: rgba(155,143,232,0.3); }
+.b-icon { width: 32px; height: 32px; margin-bottom: auto; color: var(--text); }
+.b-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); margin-bottom: 8px; }
+.b-desc { font-size: 14px; color: var(--muted); line-height: 1.5; }
 
-.bento-card.large { grid-column: span 2; }
-.bento-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  background: var(--accent-light); color: var(--accent);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; margin-bottom: auto;
+/* ── HOW IT WORKS (Minimal Path) ── */
+.path-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.path-step {
+  padding-top: 24px; border-top: 1px solid var(--border); transition: border-color 0.3s;
 }
-.bento-title { font-family: var(--sans); font-size: 19px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
-.bento-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.path-step:hover { border-top-color: var(--text); }
+.path-num { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 12px; letter-spacing: 0.05em; }
+.path-title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); margin-bottom: 12px; }
+.path-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
-/* ── TESTIMONIALS CAROUSEL ── */
-#testimonials { padding-top: 40px; }
-.carousel-wrapper { position: relative; max-width: 900px; margin: 0 auto; overflow: hidden; padding: 20px 0; }
-.carousel-track {
-  display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+/* ── TESTIMONIALS (Clean Ribbon) ── */
+.test-wrap { position: relative; overflow: hidden; padding: 20px 0; }
+.test-track { display: flex; gap: 24px; transition: transform 0.5s var(--ease-out); }
+.test-card {
+  min-width: 340px; flex: 0 0 340px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 32px; box-shadow: var(--shadow-sm);
 }
-.testimonial-slide {
-  min-width: 100%; flex: 0 0 100%;
-  padding: 40px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 20px;
-  box-shadow: var(--shadow-sm); box-sizing: border-box;
-}
-.testimonial-quote {
-  font-family: var(--serif); font-size: 20px; font-style: italic;
-  color: var(--text); line-height: 1.6; margin-bottom: 32px;
-  position: relative; z-index: 1; min-height: 100px;
-}
-.testimonial-quote::before {
-  content: '"'; position: absolute; top: -30px; left: -15px;
-  font-size: 60px; color: var(--accent-light); z-index: -1; line-height: 1; font-family: var(--sans);
-}
-.testimonial-author { display: flex; align-items: center; gap: 16px; }
-.author-avatar {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: var(--accent-light); color: var(--accent);
-  display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px;
-}
-.author-info h4 { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--text); }
+.test-quote { font-size: 15px; color: var(--text); line-height: 1.6; margin-bottom: 24px; min-height: 96px; }
+.test-author { display: flex; align-items: center; gap: 12px; }
+.test-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--surface-hover); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+.test-info h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.test-info p { font-size: 12px; color: var(--muted); }
 
-.carousel-nav { display: flex; gap: 12px; justify-content: center; margin-top: 30px; }
-.carousel-btn {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: var(--surface); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--text); transition: all 0.2s;
-  box-shadow: var(--shadow-sm);
+.test-nav { display: flex; gap: 8px; margin-top: 32px; justify-content: flex-end; }
+.nav-btn {
+  width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--muted); transition: all 0.2s;
 }
-.carousel-btn:hover { background: var(--surface-alt); transform: scale(1.05); }
+.nav-btn:hover { background: var(--surface-hover); color: var(--text); }
 
-/* ── INTERACTIVE CARD (REPLACES BAD WEBGL) ── */
-#interactive { padding-top: 20px; padding-bottom: 80px; }
-.tilt-card-wrapper {
-  perspective: 1000px; max-width: 800px; margin: 0 auto;
+/* ── PRICING (SaaS Clean) ── */
+.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.price-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 40px 32px; display: flex; flex-direction: column; transition: all 0.3s;
 }
-.tilt-card {
-  width: 100%; border-radius: 24px; padding: 60px 8%;
-  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-lg);
-  transform-style: preserve-3d; transition: transform 0.1s;
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-}
-.tilt-card::before {
-  content: ''; position: absolute; inset: 0;
-  background: url('data:image/svg+xml;utf8,<svg opacity="0.05" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="%23000" stroke-width="2"/></svg>') center/150px;
-  transform: translateZ(-20px); pointer-events: none;
-}
-[data-theme="dark"] .tilt-card::before { opacity: 0.02; filter: invert(1); }
-.tilt-icon { font-size: 48px; margin-bottom: 24px; transform: translateZ(50px); filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
-.tilt-title { font-family: var(--serif); font-size: 32px; color: var(--text); margin-bottom: 16px; transform: translateZ(30px); }
-.tilt-desc { font-size: 16px; color: var(--muted); max-width: 480px; transform: translateZ(20px); margin-bottom: 32px; }
+.price-card:hover { border-color: var(--border-strong); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.price-card.featured { border-color: var(--text); box-shadow: var(--shadow-md); }
 
-/* ── PRICING ── */
-#pricing { padding-top: 40px; }
-.pricing-grid { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
-.pricing-card {
-  flex: 1; min-width: 280px; background: var(--surface); border: 1px solid var(--border);
-  border-radius: 24px; padding: 40px 32px;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.4s ease; display: flex; flex-direction: column; position: relative;
-}
-.pricing-card.featured {
-  border: 1.5px solid var(--accent);
-  box-shadow: var(--shadow-md);
-  transform: scale(1.02); z-index: 2;
-}
-.pricing-badge {
-  background: var(--accent); color: var(--surface);
-  font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 6px 14px; border-radius: 99px; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-}
-.pricing-plan { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
-.pricing-price { font-size: 52px; font-weight: 300; line-height: 1; color: var(--text); margin-bottom: 8px; }
-.pricing-price sup { font-size: 22px; vertical-align: super; }
-.pricing-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
-.pricing-features { list-style: none; margin-bottom: 32px; flex-grow: 1; text-align: left; }
-.pricing-features li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; font-size: 14px; color: var(--text); }
-.pricing-features li::before { content: '✓'; color: var(--accent); font-weight: 600; }
-.pricing-features li.disabled { color: var(--muted); opacity: 0.5; text-decoration: line-through; }
-.pricing-features li.disabled::before { color: var(--muted); content: '✕'; font-weight: 400; font-size: 11px; margin-top: 2px;}
+.p-name { font-size: 14px; font-weight: 600; color: var(--muted); margin-bottom: 12px; }
+.p-price { font-size: 40px; font-weight: 700; letter-spacing: -0.04em; color: var(--text); margin-bottom: 8px; line-height: 1; }
+.p-price sup { font-size: 20px; font-weight: 500; top: -12px; position: relative; }
+.p-term { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+.p-list { list-style: none; margin-bottom: 40px; flex-grow: 1; }
+.p-list li { font-size: 14px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+.p-list li svg { width: 14px; height: 14px; color: var(--text); flex-shrink: 0; }
+.p-list li.off { opacity: 0.4; text-decoration: line-through; }
+.p-btn { width: 100%; height: 40px; }
 
-/* ── COMPACT FOOTER ── */
+/* ── FOOTER ── */
 footer {
-  border-top: 1px solid var(--border); padding: 40px 5% 30px;
-  background: var(--surface); 
+  border-top: 1px solid var(--border); background: var(--surface); padding: 60px 5% 40px;
 }
-.footer-inner {
-  max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto auto auto; gap: 40px;
-}
-.footer-logo { font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); display: flex; align-items: center; gap: 10px; margin-bottom: 16px;}
-.footer-desc { font-size: 13px; color: var(--muted); max-width: 250px; line-height: 1.6; }
-.footer-col h4 { font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); margin-bottom: 16px; font-weight: 600; }
-.footer-links { display: flex; flex-direction: column; gap: 12px; }
-.footer-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
-.footer-links a:hover { color: var(--accent); }
-.footer-bottom { 
-  max-width: 1200px; margin: 40px auto 0; padding-top: 20px; border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted);
-}
+.f-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+.f-logo { font-weight: 600; font-size: 14px; letter-spacing: -0.01em; margin-bottom: 16px; color: var(--text); display: flex; align-items: center; gap: 8px;}
+.f-logo svg { width: 16px; height: 16px; }
+.f-desc { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 240px; }
+.f-col h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 20px; }
+.f-links { display: flex; flex-direction: column; gap: 12px; }
+.f-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
+.f-links a:hover { color: var(--text); }
+.f-bottom { max-width: 1100px; margin: 60px auto 0; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 12px; color: var(--subtle); }
 
 /* ── RESPONSIVE ── */
 @media(max-width: 900px) {
-  .bento-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
-  .bento-card.large { grid-column: span 1; }
-  .pricing-grid { flex-direction: column; }
-  .pricing-card.featured { transform: scale(1); }
-  .hero-title { font-size: clamp(40px, 10vw, 64px); }
-  .nav-links { display: none; }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .bento { grid-template-columns: 1fr; }
+  .b-large, .b-tall { grid-column: span 1; grid-row: span 1; }
+  .path-grid { grid-template-columns: 1fr; gap: 24px; }
+  .price-grid { grid-template-columns: 1fr; }
+  .f-grid { grid-template-columns: 1fr 1fr; }
+  .ui-body { flex-direction: column; padding: 24px; }
+  .ui-sidebar { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 24px; }
+  .hero-title { font-size: clamp(36px, 10vw, 48px); }
 }
 @media(max-width: 600px) {
-  .footer-inner { grid-template-columns: 1fr; }
-  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  .f-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
 }
 
-/* ── SCROLL REVEAL CLASSES ── */
-.reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.22,1,0.36,1); }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+/* ── ANIMATIONS ── */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
+.reveal.in { opacity: 1; transform: translateY(0); }
 .delay-1 { transition-delay: 0.1s; }
 .delay-2 { transition-delay: 0.2s; }
 
-/* SVG Icon Helper */
-.svg-icon { width: 1.2rem; height: 1.2rem; fill: currentColor; }
 </style>
 </head>
 <body>
 
-<div class="blob blob-1"></div>
-<div class="blob blob-2"></div>
-
-<!-- NAV -->
 <nav id="nav">
   <div class="nav-left">
-    <a class="nav-logo" href="#">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
-        <circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.6"/>
-        <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="currentColor" opacity="0.28"/>
-      </svg>
-      <span>Noctaras</span>
+    <a href="#" class="logo">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="2" opacity="0.5"/></svg>
+      Noctaras
     </a>
     <div class="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#features">Features</a>
+      <a href="#how">Methodology</a>
+      <a href="#features">Capabilities</a>
       <a href="#pricing">Pricing</a>
-      <a href="blog/index.html">Blog</a>
+      <a href="blog/index.html">Journal</a>
     </div>
   </div>
   <div class="nav-right">
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-      <svg id="themeIcon" class="svg-icon" viewBox="0 0 24 24"><path d="M12 21A9 9 0 1 0 12 3a9 9 0 0 0 0 18zm0-2a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/></svg>
+    <button class="btn-icon" id="themeToggle" aria-label="Toggle Theme">
+      <svg id="themeIcon" viewBox="0 0 24 24"><path d="M12 21A9 9 0 1 0 12 3a9 9 0 0 0 0 18zm0-2a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" fill="currentColor"/></svg>
     </button>
-    <a class="nav-cta" href="app.html">Enter the dream</a>
+    <a href="app.html" class="btn btn-secondary" style="height: 32px; padding: 0 12px; font-size: 12px;">Sign in</a>
+    <a href="app.html" class="btn btn-primary" style="height: 32px; padding: 0 12px; font-size: 12px;">Start Journaling</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
-  <div class="hero-eyebrow reveal">AI Dream Interpretation</div>
-  <h1 class="hero-title reveal delay-1">Your dreams<br>hold <em>meaning</em></h1>
-  <p class="hero-sub reveal delay-2">Noctaras decodes the hidden language of your subconscious — every symbol, every feeling, every forgotten detail.</p>
+  <div class="badge reveal"><div class="badge-dot"></div> Noctaras Engine v2.0 Live</div>
+  <h1 class="hero-title reveal delay-1">Decode the language<br>of your subconscious.</h1>
+  <p class="hero-sub reveal delay-2">A minimalist tool that uses deep psychological frameworks to interpret the fragmented metaphors of your dreams. Private, analytical, and profound.</p>
   <div class="hero-actions reveal delay-2">
-    <a class="btn-primary" href="app.html">Interpret a dream</a>
-    <a class="btn-ghost" href="#how">See how it works</a>
+    <a href="app.html" class="btn btn-primary" style="height: 44px; padding: 0 24px; font-size: 14px;">Log a dream</a>
+    <a href="#how" class="btn btn-secondary" style="height: 44px; padding: 0 24px; font-size: 14px;">Read the methodology</a>
   </div>
-  <div class="scroll-indicator reveal delay-2">Scroll</div>
-</section>
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="section-wrap" style="padding-top: 60px;">
-    <div class="reveal" style="text-align: center; margin-bottom: 60px;">
-      <div class="section-label">How it works</div>
-      <h2 class="section-title">Three steps to <em>understanding</em></h2>
-      <p class="section-desc" style="margin: 0 auto;">Noctaras makes the complex world of dream psychology accessible.</p>
-    </div>
-    
-    <div class="timeline">
-      <div class="timeline-item reveal">
-        <div class="timeline-dot">1</div>
-        <div class="timeline-content">
-          <h3>Describe your dream</h3>
-          <p>Write what you remember — the places, the people, the feelings. Do not worry about structure, simply pour out the fragmented narrative exactly as you experienced it.</p>
-        </div>
+  <div class="ui-preview-wrap reveal delay-2">
+    <div class="ui-preview">
+      <div class="ui-header">
+        <div class="ui-dot"></div><div class="ui-dot"></div><div class="ui-dot"></div>
       </div>
-      <div class="timeline-item reveal delay-1">
-        <div class="timeline-dot">2</div>
-        <div class="timeline-content">
-          <h3>AI reads the symbols</h3>
-          <p>Noctaras draws from Carl Jung's archetypes, ancient cultural symbolism, and deep psychological theories to uncover the hidden narrative beneath the surface.</p>
+      <div class="ui-body">
+        <div class="ui-chat">
+          <div class="ui-bubble right">"Last night I dreamt I was in my childhood home, but the rooms were endlessly repeating and filling with water."</div>
+          <div class="ui-bubble"><strong>Analysis:</strong> The childhood home represents foundational aspects of your psyche. The endless rooms indicate feeling trapped in a loop of past conditioning. Water often symbolizes overwhelming emotion. You are likely confronting deep-seated emotional patterns that feel inescapable at present.</div>
         </div>
-      </div>
-      <div class="timeline-item reveal delay-2">
-        <div class="timeline-dot">3</div>
-        <div class="timeline-content">
-          <h3>Save to your journal</h3>
-          <p>Every interpretation is encrypted and stored in your private journal. Watch patterns and repeating symbols emerge, learning the language your subconscious speaks in.</p>
+        <div class="ui-sidebar">
+          <div class="ui-card-title">Extracted Symbols</div>
+          <div class="ui-tag">Childhood Home</div>
+          <div class="ui-tag">Water</div>
+          <div class="ui-tag">Labyrinth</div>
+          <div class="ui-card-title" style="margin-top:24px;">Emotional Tone</div>
+          <div class="ui-tag" style="background:transparent;border-color:var(--text);">Anxiety</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section id="features">
-  <div class="section-wrap">
-    <div class="reveal">
-      <div class="section-label">Capabilities</div>
-      <h2 class="section-title">Everything you need<br>to <em>explore within</em></h2>
+<section id="how" class="section-wrap">
+  <div class="section-header reveal">
+    <h2 class="section-title">A scientific approach to the surreal.</h2>
+    <p class="section-desc">Replacing spiritual mysticism with structured psychological analysis.</p>
+  </div>
+  
+  <div class="path-grid reveal delay-1">
+    <div class="path-step">
+      <div class="path-num">01</div>
+      <h3 class="path-title">Capture</h3>
+      <p class="path-desc">Type your stream of consciousness. Noctaras understands fragmented syntax and non-linear narratives perfectly.</p>
     </div>
-    
-    <div class="bento-grid">
-      <div class="bento-card large reveal">
-        <div class="bento-icon">◈</div>
-        <h3 class="bento-title">Deep Interpretation</h3>
-        <p class="bento-desc">Not just a rigid spiritual dictionary — Noctaras explores the contextual essence, recognizing that a snake might mean healing to one person and anxiety to another depending on the dreamer's emotional state.</p>
-      </div>
-      <div class="bento-card reveal delay-1">
-        <div class="bento-icon">☽</div>
-        <h3 class="bento-title">Personal Journal</h3>
-        <p class="bento-desc">Watch patterns emerge across your subconscious life as every dream is securely stored.</p>
-      </div>
-      <div class="bento-card reveal">
-        <div class="bento-icon">✦</div>
-        <h3 class="bento-title">Universal Language</h3>
-        <p class="bento-desc">Write your dream in Turkish, English, Spanish — Noctaras understands and responds in your native tongue.</p>
-      </div>
-      <div class="bento-card large reveal delay-1">
-        <div class="bento-icon">⋆</div>
-        <h3 class="bento-title">Emotional Tracking</h3>
-        <p class="bento-desc">Tag each dream with its fundamental emotional tone. A beautiful chart tracks whether your recent nights are filled with peace, anxiety, longing, or awe, linking your waking mood to your sleeping mind.</p>
-      </div>
+    <div class="path-step">
+      <div class="path-num">02</div>
+      <h3 class="path-title">Analyze</h3>
+      <p class="path-desc">The engine identifies archetypes based on Jungian frameworks and modern cognitive psychology mechanisms.</p>
+    </div>
+    <div class="path-step">
+      <div class="path-num">03</div>
+      <h3 class="path-title">Synthesize</h3>
+      <p class="path-desc">Over time, recurring symbols and emotional trends are mapped, revealing the underlying architecture of your mind.</p>
     </div>
   </div>
 </section>
 
-<!-- INTERACTIVE GALLERY REPLACEMENT -->
-<section id="interactive">
-  <div class="section-wrap" style="text-align: center;">
-    <div class="reveal">
-      <div class="section-label">Interactive Experience</div>
-      <h2 class="section-title">A look inside the <em>journal</em></h2>
-      <p class="section-desc" style="margin: 0 auto 40px;">Hover over the card below to see a glimpse of how your subconscious is mapped.</p>
+<section id="features" class="section-wrap">
+  <div class="section-header reveal">
+    <h2 class="section-title">Built for clarity.</h2>
+    <p class="section-desc">Everything you need to untangle your thoughts, with zero friction.</p>
+  </div>
+
+  <div class="bento reveal delay-1">
+    <div class="b-card">
+      <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      <h3 class="b-title">End-to-End Encryption</h3>
+      <p class="b-desc">Your subconscious is private. All journal entries are locally encrypted before reaching our servers.</p>
     </div>
-    
-    <div class="tilt-card-wrapper reveal delay-1">
-      <div class="tilt-card" id="tiltCard">
-        <div class="tilt-icon">🗝️</div>
-        <h3 class="tilt-title">The House of Many Doors</h3>
-        <p class="tilt-desc">"I was walking through an endless hallway. Every time I opened a door, I found a room from my childhood home, but rearranged."</p>
-        <span style="font-family:var(--sans);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);font-weight:600;padding:8px 16px;border:1px solid var(--accent);border-radius:99px;transform:translateZ(40px);">Decoded Symbol: Transition</span>
-      </div>
+    <div class="b-card b-tall">
+      <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2v20M5 5l14 14M19 5L5 19"/></svg>
+      <h3 class="b-title">Symbol Mapping</h3>
+      <p class="b-desc">We build a relational graph of your personal symbols over time. When a symbol repeats, we link it to past emotional contexts to provide deeper insights.</p>
+    </div>
+    <div class="b-card">
+      <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <h3 class="b-title">Instant Recall</h3>
+      <p class="b-desc">Search your dream history by emotion, keyword, or specific symbol in milliseconds.</p>
+    </div>
+    <div class="b-card b-large">
+      <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM4 10h16M10 4v16"/></svg>
+      <h3 class="b-title">Multilingual Cognitive Processing</h3>
+      <p class="b-desc">Dreams don't always happen in one language. Enter your text in English, Spanish, Turkish, or a mix of all three. The engine parses meaning cross-lingually without degradation.</p>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS CAROUSEL -->
-<section id="testimonials">
-  <div class="section-wrap">
-    <div class="reveal" style="text-align: center; margin-bottom: 40px;">
-      <div class="section-label">Dreamers</div>
-      <h2 class="section-title">What others have <em>discovered</em></h2>
+<section id="testimonials" class="section-wrap">
+  <div class="section-header reveal">
+    <h2 class="section-title">Used by thousands.</h2>
+    <p class="section-desc">Designers, engineers, and creatives use Noctaras to access deeper insights.</p>
+  </div>
+
+  <div class="test-wrap reveal delay-1">
+    <div class="test-track" id="testTrack">
+      <div class="test-card">
+        <p class="test-quote">"It completely recontextualized a terrifying nightmare I'd been having for months. Now I see it as a sign of necessary change."</p>
+        <div class="test-author">
+          <div class="test-avatar">E</div>
+          <div class="test-info"><h4>Elena R.</h4><p>Designer at Linear</p></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p class="test-quote">"More than just an app, it feels like a very patient, very wise therapist for my sleeping mind. The UI is incredibly refined."</p>
+        <div class="test-author">
+          <div class="test-avatar">M</div>
+          <div class="test-info"><h4>Marcus J.</h4><p>Software Engineer</p></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p class="test-quote">"I was skeptical of AI doing something this intuitive. But the Jungian analysis aspect is spot on and beautifully written."</p>
+        <div class="test-author">
+          <div class="test-avatar">D</div>
+          <div class="test-info"><h4>David W.</h4><p>Product Manager</p></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p class="test-quote">"The journaling aspect alone is great, but having a deep breakdown of symbolic motifs has helped me uncover a lot of personal anxiety."</p>
+        <div class="test-author">
+          <div class="test-avatar">C</div>
+          <div class="test-info"><h4>Chloe C.</h4><p>UX Researcher</p></div>
+        </div>
+      </div>
     </div>
-    
-    <div class="carousel-wrapper reveal delay-1">
-      <div class="carousel-track" id="carouselTrack">
-        <!-- Rendered by JS -->
-      </div>
-      <div class="carousel-nav">
-        <button class="carousel-btn" id="btnPrev" aria-label="Previous">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button class="carousel-btn" id="btnNext" aria-label="Next">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-      </div>
+    <div class="test-nav">
+      <button class="nav-btn" id="t-prev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="nav-btn" id="t-next"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<section id="pricing">
-  <div class="section-wrap">
-    <div class="reveal" style="text-align: center; margin-bottom: 60px;">
-      <div class="section-label">Pricing</div>
-      <h2 class="section-title">Choose your <em>path</em></h2>
-    </div>
-    
-    <div class="pricing-grid">
-      <div class="pricing-card reveal">
-        <div class="pricing-plan">Free</div>
-        <div class="pricing-price"><sup>$</sup>0</div>
-        <div class="pricing-period">forever</div>
-        <ul class="pricing-features">
-          <li>3 interpretations per month</li>
-          <li>Unlimited dream recording</li>
-          <li>Personal journal</li>
-          <li class="disabled">Priority processing</li>
-          <li class="disabled">Advanced symbolism</li>
-        </ul>
-        <a class="btn-ghost" href="app.html" style="text-align:center;">Start Free</a>
-      </div>
-      
-      <div class="pricing-card featured reveal delay-1">
-        <div class="pricing-badge">Popular</div>
-        <div class="pricing-plan">Pro Monthly</div>
-        <div class="pricing-price"><sup>$</sup>7.99</div>
-        <div class="pricing-period">per month</div>
-        <ul class="pricing-features">
-          <li>Unlimited interpretations</li>
-          <li>Unlimited dream recording</li>
-          <li>Personal journal</li>
-          <li>Priority processing</li>
-          <li>Advanced symbolism tracking</li>
-        </ul>
-        <a class="btn-primary" href="https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a" style="text-align:center;">Go Pro</a>
-      </div>
+<section id="pricing" class="section-wrap">
+  <div class="section-header reveal" style="text-align: center; margin: 0 auto 60px;">
+    <h2 class="section-title">Simple pricing.</h2>
+    <p class="section-desc">Start for free. Upgrade when you need deeper insights.</p>
+  </div>
 
-      <div class="pricing-card reveal delay-2">
-        <div class="pricing-plan">Pro Annual</div>
-        <div class="pricing-price"><sup>$</sup>49.99</div>
-        <div class="pricing-period">per year <span style="font-weight:600;color:var(--accent);">(Save 48%)</span></div>
-        <ul class="pricing-features">
-          <li>Unlimited interpretations</li>
-          <li>Unlimited dream recording</li>
-          <li>Personal journal</li>
-          <li>Priority processing</li>
-          <li>Advanced symbolism tracking</li>
-        </ul>
-        <a class="btn-ghost" href="https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b" style="text-align:center;">Go Pro Annual</a>
-      </div>
+  <div class="price-grid reveal delay-1">
+    <div class="price-card">
+      <div class="p-name">Free</div>
+      <div class="p-price"><sup>$</sup>0</div>
+      <div class="p-term">forever</div>
+      <ul class="p-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 3 interpretations / mo</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Basic journaling</li>
+        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Emotional graph</li>
+        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Priority processing</li>
+      </ul>
+      <a href="app.html" class="btn btn-secondary p-btn">Get Started</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="p-name" style="color:var(--text);display:flex;justify-content:space-between;">Pro Monthly <span class="badge" style="margin:0;padding:2px 8px;font-size:10px;">Popular</span></div>
+      <div class="p-price"><sup>$</sup>8</div>
+      <div class="p-term">per month, billed monthly</div>
+      <ul class="p-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Unlimited interpretations</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Advanced journaling</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Emotional graph map</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Priority AI processing</li>
+      </ul>
+      <a href="https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a" class="btn btn-primary p-btn">Subscribe Monthly</a>
+    </div>
+
+    <div class="price-card">
+      <div class="p-name">Pro Annual</div>
+      <div class="p-price"><sup>$</sup>50</div>
+      <div class="p-term">per year (save 48%)</div>
+      <ul class="p-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Unlimited interpretations</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Advanced journaling</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Emotional graph map</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Priority AI processing</li>
+      </ul>
+      <a href="https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b" class="btn btn-secondary p-btn">Subscribe Annually</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
+  <div class="f-grid">
     <div>
-      <a href="#" class="footer-logo">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
-          <circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.6"/>
-          <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="currentColor" opacity="0.28"/>
-        </svg>
-        <span>Noctaras</span>
+      <a href="#" class="f-logo">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="2" opacity="0.5"/></svg>
+        Noctaras
       </a>
-      <p class="footer-desc" style="margin-top:10px;">Decode the hidden language of your subconscious mind.</p>
+      <p class="f-desc">Psychological dream analysis and journaling. Engineered for clarity and privacy.</p>
     </div>
-    
-    <div class="footer-col">
-      <h4>Company</h4>
-      <div class="footer-links">
-        <a href="#how">How it works</a>
-        <a href="#features">Features</a>
+    <div class="f-col">
+      <h4>Product</h4>
+      <div class="f-links">
+        <a href="#how">Methodology</a>
+        <a href="#features">Capabilities</a>
         <a href="#pricing">Pricing</a>
-        <a href="app.html">App</a>
       </div>
     </div>
-    
-    <div class="footer-col">
-      <h4>Dream FAQs</h4>
-      <div class="footer-links">
-        <a href="blog/article.html">Why do we dream?</a>
-        <a href="blog/article.html">What are nightmares?</a>
-        <a href="blog/article.html">Lucid dreaming guide</a>
-        <a href="blog/article.html">Common dream symbols</a>
+    <div class="f-col">
+      <h4>Resources</h4>
+      <div class="f-links">
+        <a href="blog/lucid-dreaming-beginners.html">Lucid Dreaming</a>
+        <a href="blog/recurring-dreams-meaning.html">Recurring Dreams</a>
+        <a href="blog/what-do-nightmares-mean.html">Nightmares</a>
+        <a href="blog/index.html">All Articles</a>
       </div>
     </div>
-
-    <div class="footer-col">
+    <div class="f-col">
       <h4>Legal</h4>
-      <div class="footer-links">
+      <div class="f-links">
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
-        <a href="contact.html">Contact Us</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div class="f-bottom">
     <div>© 2026 Noctaras. All rights reserved.</div>
-    <div style="display:flex;gap:16px;">
-      <a href="#" aria-label="Twitter"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-      <a href="#" aria-label="Instagram"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-    </div>
+    <div>System Online.</div>
   </div>
 </footer>
 
 <script>
-// Navbar Scroll Logic
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
-});
-
-// Intersecting Scroll Reveal
+// Scroll Reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
+    if(e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
   });
-}, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+}, { threshold: 0.1, rootMargin: "0px" });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Dark Mode Toggle Logic
+// Nav Blur
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Theme Toggle
 const html = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = document.getElementById('themeIcon');
-// Moon svg
-const moonIcon = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-// Sun svg
-const sunIcon = '<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+const sunPaths = '<circle cx="12" cy="12" r="4"/><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66l1.41-1.41M4.93 19.07l1.41-1.41m0-11.32L4.93 4.93m14.14 14.14l-1.41-1.41" stroke-linecap="round" stroke-linejoin="round"/>';
+const moonPath = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" fill="currentColor"/>';
 
 function setTheme(isDark) {
   if (isDark) {
     html.setAttribute('data-theme', 'dark');
-    themeIcon.innerHTML = sunIcon;
+    themeIcon.innerHTML = sunPaths;
+    themeIcon.setAttribute('fill', 'none');
+    themeIcon.setAttribute('stroke', 'currentColor');
+    themeIcon.setAttribute('stroke-width', '2');
     localStorage.setItem('theme', 'dark');
   } else {
     html.removeAttribute('data-theme');
-    themeIcon.innerHTML = moonIcon;
+    themeIcon.innerHTML = moonPath;
+    themeIcon.removeAttribute('stroke');
+    themeIcon.setAttribute('fill', 'none');
     localStorage.setItem('theme', 'light');
   }
 }
-// Init theme
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-  setTheme(true);
-} else {
-  setTheme(false); // Default logic
-}
-themeToggle.addEventListener('click', () => {
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  setTheme(!isDark);
-});
+const saved = localStorage.getItem('theme');
+if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) { setTheme(true); } else { setTheme(false); }
+themeToggle.addEventListener('click', () => { setTheme(html.getAttribute('data-theme') !== 'dark'); });
 
-// 3D Tilt Card Interaction
-const tiltCard = document.getElementById('tiltCard');
-tiltCard.addEventListener('mousemove', (e) => {
-  const rect = tiltCard.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-  const tiltX = ((y - centerY) / centerY) * -10; // Max tilt 10deg
-  const tiltY = ((x - centerX) / centerX) * 10;
-  tiltCard.style.transform = `scale(1.02) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+// Minimal Carousel
+const track = document.getElementById('testTrack');
+const cards = track.children;
+let idx = 0;
+document.getElementById('t-next').addEventListener('click', () => {
+  idx = Math.min(idx + 1, cards.length - 1);
+  track.style.transform = `translateX(-${idx * (340 + 24)}px)`;
 });
-tiltCard.addEventListener('mouseleave', () => {
-  tiltCard.style.transform = `scale(1) rotateX(0) rotateY(0)`;
-});
-
-// Realistic Testimonials Carousel
-const reviews = [
-  { p: "I've been journaling dreams for years but never understood them. Noctaras gave language to things I couldn't articulate myself.", n: "Sofia M.", r: "Writer", a: "S" },
-  { p: "The interpretations are poetic and surprisingly insightful. I look forward to falling asleep just to see what Noctaras finds.", n: "Kenji T.", r: "Designer", a: "K" },
-  { p: "It completely recontextualized a terrifying nightmare I'd been having for months. Now I see it as a sign of necessary change.", n: "Elena R.", r: "Teacher", a: "E" },
-  { p: "More than just an app, it feels like a very patient, very wise therapist for my sleeping mind.", n: "Marcus J.", r: "Engineer", a: "M" },
-  { p: "I was skeptical of AI doing something this intuitive. But the Jungian analysis aspect is spot on and beautifully written.", n: "David W.", r: "Psychology Student", a: "D" },
-  { p: "The journaling aspect alone is great, but having a deep breakdown of symbolic motifs has helped me uncover a lot of personal anxiety.", n: "Chloe C.", r: "Artist", a: "C" },
-  { p: "Sometimes I just type single disjointed words from a dream, and it still manages to pull out a cohesive emotional thread.", n: "Aiden F.", r: "Chef", a: "A" },
-  { p: "Noctaras feels magical. It’s like having an ancient oracle right in my pocket when I wake up at 3 AM.", n: "Isabella P.", r: "Musician", a: "I" },
-  { p: "Fascinating tool for self-discovery. I realized my recurring dreams about water were deeply tied to stress at work.", n: "Lucas V.", r: "Architect", a: "L" },
-  { p: "The multilingual support is amazing. I often dream in a mix of Spanish and English, and it understands perfectly.", n: "Mateo S.", r: "Translator", a: "M" },
-  { p: "Brilliant UI, gorgeous design, and genuinely profound insights. A rare app that improves my daily awareness.", n: "Olivia H.", r: "UX Researcher", a: "O" },
-  { p: "Helped me process the grief of losing a loved one through interpreting visits in my dreams. Incredibly gentle and insightful.", n: "Emma G.", r: "Nurse", a: "E" },
-];
-
-const track = document.getElementById('carouselTrack');
-reviews.forEach(rv => {
-  const div = document.createElement('div');
-  div.className = 'testimonial-slide';
-  div.innerHTML = `
-    <p class="testimonial-quote">${rv.p}</p>
-    <div class="testimonial-author">
-      <div class="author-avatar">${rv.a}</div>
-      <div class="author-info">
-        <h4>${rv.n}</h4>
-        <span style="color:var(--muted); font-size:13px;">${rv.r}</span>
-      </div>
-    </div>
-  `;
-  track.appendChild(div);
-});
-
-let slideIdx = 0;
-document.getElementById('btnNext').addEventListener('click', () => {
-  slideIdx = (slideIdx + 1) % reviews.length;
-  track.style.transform = `translateX(-${slideIdx * 100}%)`;
-});
-document.getElementById('btnPrev').addEventListener('click', () => {
-  slideIdx = (slideIdx - 1 + reviews.length) % reviews.length;
-  track.style.transform = `translateX(-${slideIdx * 100}%)`;
+document.getElementById('t-prev').addEventListener('click', () => {
+  idx = Math.max(idx - 1, 0);
+  track.style.transform = `translateX(-${idx * (340 + 24)}px)`;
 });
 </script>
+
 </body>
 </html>
