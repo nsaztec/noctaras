@@ -226,15 +226,15 @@ textarea { min-height: 160px; resize: vertical; }
 /* PRICING MODAL REDESIGN */
 .paywall-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
 .paywall-overlay.active { display: flex; animation: fadeUp 0.3s ease; }
-.paywall-card-new { width: 100%; max-width: 800px; padding: 40px 20px; text-align: center; }
-.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: left; }
+.paywall-card-new { width: 100%; max-width: 600px; padding: 40px 20px; text-align: center; }
+.pricing-single-card { max-width: 440px; margin: 0 auto; text-align: left; }
 .pricing-card { position: relative; height: 100%; width: 100%; overflow: hidden; border-radius: 12px; border: 1px solid #e4e4e7; background: linear-gradient(to bottom right, rgba(250,250,250,0.5), rgba(244,244,245,0.8)); padding: 24px; display: flex; flex-direction: column; }
 [data-theme="dark"] .pricing-card { border-color: #3f3f46; background: linear-gradient(to bottom right, rgba(9,9,11,0.5), rgba(24,24,27,0.8)); }
-.pricing-header { display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #e4e4e7; padding-bottom: 24px; }
+.pricing-header { display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #e4e4e7; padding-bottom: 24px; min-height: 160px; justify-content: flex-end; }
 [data-theme="dark"] .pricing-header { border-bottom-color: #3f3f46; }
-.pricing-tier { margin-bottom: 24px; display: inline-block; color: #18181b; font-size: 14px; font-weight: 500; }
+.pricing-tier { margin-bottom: 24px; display: inline-block; color: #18181b; font-size: 14px; font-weight: 500; text-transform: capitalize; }
 [data-theme="dark"] .pricing-tier { color: #fafafa; }
-.pricing-price { margin-bottom: 12px; display: inline-block; font-size: 36px; font-weight: 500; line-height: 1; color: var(--text); }
+.pricing-price { margin-bottom: 12px; display: inline-block; font-size: 42px; font-weight: 600; line-height: 1; color: var(--text); letter-spacing: -0.02em; }
 .pricing-period { background: linear-gradient(to bottom right, #3f3f46, #18181b); -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; font-size: 15px; }
 [data-theme="dark"] .pricing-period { background: linear-gradient(to bottom right, #e4e4e7, #71717a); -webkit-background-clip: text; background-clip: text; }
 .pricing-save { color: #10b981; font-size: 13px; font-weight: 600; margin-top: 4px; display: block; }
@@ -247,11 +247,22 @@ textarea { min-height: 160px; resize: vertical; }
 .btn-pricing { width: 100%; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; border-radius: 6px; font-size: 14px; font-weight: 500; height: 40px; padding: 8px 16px; transition: 0.2s; cursor: pointer; border: 1px solid transparent; text-decoration: none; }
 .btn-pricing.default { background: var(--text); color: var(--bg); }
 .btn-pricing.default:hover { opacity: 0.9; }
-.btn-pricing.ghost { background: transparent; color: var(--text); }
-.btn-pricing.ghost:hover { background: var(--surface-hover); }
 .paywall-close-new { font-size: 14px; font-weight: 500; color: #a1a1aa; cursor: pointer; border: none; background: none; transition: 0.2s; padding: 8px 16px; margin-top: 32px; }
 .paywall-close-new:hover { color: #fff; text-decoration: underline; }
-@media(max-width: 768px){ .pricing-grid{grid-template-columns:1fr;} .paywall-card-new{padding:24px 16px;} }
+
+/* Pricing Toggle */
+.pricing-toggle-wrap { display: flex; justify-content: center; margin-bottom: 40px; }
+.pricing-toggle { display: inline-flex; align-items: center; background: rgba(24,24,27,0.5); border: 1px solid #3f3f46; border-radius: 99px; padding: 4px; position: relative; }
+[data-theme="light"] .pricing-toggle { background: #f4f4f5; border-color: #e4e4e7; }
+.toggle-btn { background: transparent; border: none; color: #a1a1aa; font-size: 14px; font-weight: 500; padding: 8px 24px; border-radius: 99px; cursor: pointer; transition: 0.2s; position: relative; display: flex; align-items: center; gap: 6px; }
+[data-theme="light"] .toggle-btn { color: #52525b; }
+.toggle-btn:hover { color: #fff; }
+[data-theme="light"] .toggle-btn:hover { color: #18181b; }
+.toggle-btn.active { background: #3f3f46; color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+[data-theme="light"] .toggle-btn.active { background: #fff; color: #18181b; }
+.toggle-save { font-size: 11px; color: #10b981; font-weight: 600; background: rgba(16,185,129,0.1); padding: 2px 6px; border-radius: 99px; }
+
+@media(max-width: 768px){ .paywall-card-new{padding:24px 16px;} }
 
 /* Toast */
 .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
@@ -322,14 +333,20 @@ textarea { min-height: 160px; resize: vertical; }
       <h2 style="font-size: 36px; line-height: 1.2; font-weight: 600; color: #fff; letter-spacing: -0.02em;">Pricing</h2>
       <p id="paywallMsg" style="font-size: 16px; color: #a1a1aa; max-width: 600px; margin: 0 auto; line-height: 1.5;">Unlock unlimited dream interpretations, priority processing, and all future features.</p>
     </div>
+    <!-- Toggle -->
+    <div class="pricing-toggle-wrap">
+      <div class="pricing-toggle">
+        <button id="toggleMonthly" class="toggle-btn" onclick="setPricing('monthly')">Monthly</button>
+        <button id="toggleAnnually" class="toggle-btn active" onclick="setPricing('annually')">Annually <span class="toggle-save">Save 48%</span></button>
+      </div>
+    </div>
     
-    <div class="pricing-grid">
-      <!-- Monthly Card -->
+    <div class="pricing-single-card">
       <div class="pricing-card">
         <div class="pricing-header">
-          <span class="pricing-tier">Starter</span>
-          <span class="pricing-price">$7.99<span style="font-size: 15px; color: var(--muted); font-weight: 400;">/mo</span></span>
-          <span class="pricing-period">Billed monthly</span>
+          <span class="pricing-tier" id="priceTier">Annual</span>
+          <span class="pricing-price"><span id="priceVal">$49.99</span><span style="font-size: 15px; color: var(--muted); font-weight: 400;" id="priceSuffix">/yr</span></span>
+          <span class="pricing-period" id="pricePeriod">Billed annually <br><span class="pricing-save" id="priceSaveBadge">Save 48%</span></span>
         </div>
         <div class="pricing-benefits">
           <div class="pricing-benefit">
@@ -345,31 +362,7 @@ textarea { min-height: 160px; resize: vertical; }
             <span class="benefit-text">All future features</span>
           </div>
         </div>
-        <a id="planMonthly" href="#" target="_blank" class="btn-pricing ghost">Get started with Starter</a>
-      </div>
-
-      <!-- Annual Card -->
-      <div class="pricing-card">
-        <div class="pricing-header">
-          <span class="pricing-tier">Annual</span>
-          <span class="pricing-price">$49.99<span style="font-size: 15px; color: var(--muted); font-weight: 400;">/yr</span></span>
-          <span class="pricing-period">Billed annually <br><span class="pricing-save">Save 48%</span></span>
-        </div>
-        <div class="pricing-benefits">
-          <div class="pricing-benefit">
-             <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-             <span class="benefit-text">Unlimited interpretations</span>
-          </div>
-          <div class="pricing-benefit">
-             <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-             <span class="benefit-text">Priority processing</span>
-          </div>
-          <div class="pricing-benefit">
-             <span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-             <span class="benefit-text">All future features</span>
-          </div>
-        </div>
-        <a id="planAnnual" href="#" target="_blank" class="btn-pricing default">Get Annual Pro</a>
+        <a id="planButton" href="#" target="_blank" class="btn-pricing default">Get Annual Pro</a>
       </div>
     </div>
     
@@ -1320,12 +1313,32 @@ function addAIMsg(text, dreamText, titleText, isValidAnalysis) {
 const MONTHLY_URL = 'https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a';
 const ANNUAL_URL = 'https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b';
 
+window.setPricing = function(plan) {
+  const isAnnual = plan === 'annually';
+  document.getElementById('toggleMonthly').classList.toggle('active', !isAnnual);
+  document.getElementById('toggleAnnually').classList.toggle('active', isAnnual);
+  
+  document.getElementById('priceTier').textContent = isAnnual ? 'Annual' : 'Starter';
+  document.getElementById('priceVal').textContent = isAnnual ? '$49.99' : '$7.99';
+  document.getElementById('priceSuffix').textContent = isAnnual ? '/yr' : '/mo';
+  
+  if (isAnnual) {
+    document.getElementById('pricePeriod').innerHTML = 'Billed annually <br><span class="pricing-save" id="priceSaveBadge">Save 48%</span>';
+  } else {
+    document.getElementById('pricePeriod').innerHTML = 'Billed monthly';
+  }
+  
+  const btn = document.getElementById('planButton');
+  btn.textContent = isAnnual ? 'Get Annual Pro' : 'Get started with Starter';
+  btn.href = isAnnual ? ANNUAL_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '') : MONTHLY_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
+}
+
 window.showPaywall = function showPaywall(limitReached) {
   document.getElementById("paywallMsg").innerHTML = limitReached
     ? "You've used your 3 free interpretations this month.<br>Upgrade to Pro for unlimited access."
     : "Unlock unlimited dream interpretations, priority processing, and all future features.";
-  document.getElementById('planMonthly').href = MONTHLY_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
-  document.getElementById('planAnnual').href = ANNUAL_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
+    
+  setPricing('annually'); // Default to Annually initially
   document.getElementById('paywallOverlay').classList.add('active');
 }
 window.closePaywall = () => document.getElementById('paywallOverlay').classList.remove('active');
