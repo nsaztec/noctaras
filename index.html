@@ -168,8 +168,8 @@ nav.scrolled {
 
 /* ── BENTO GRID (Linear Style) ── */
 .bento {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-  grid-auto-rows: 240px;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  grid-auto-rows: minmax(240px, auto);
 }
 .b-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
@@ -178,7 +178,6 @@ nav.scrolled {
 }
 .b-card:hover { border-color: var(--border-strong); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .b-large { grid-column: span 2; }
-.b-tall { grid-row: span 2; }
 
 .b-icon { width: 32px; height: 32px; margin-bottom: auto; color: var(--text); }
 .b-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); margin-bottom: 8px; }
@@ -285,7 +284,7 @@ footer {
       <a href="#how">Methodology</a>
       <a href="#features">Capabilities</a>
       <a href="#pricing">Pricing</a>
-      <a href="blog/index.html">Journal</a>
+      <a href="blog/index.html">NoctarasBlog</a>
     </div>
   </div>
   <div class="nav-right">
@@ -367,20 +366,20 @@ footer {
       <h3 class="b-title">End-to-End Encryption</h3>
       <p class="b-desc">Your subconscious is private. All journal entries are locally encrypted before reaching our servers.</p>
     </div>
-    <div class="b-card b-tall">
+    <div class="b-card">
       <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
       <h3 class="b-title">Symbol Mapping</h3>
       <p class="b-desc">We build a relational graph of your personal symbols over time. When a symbol repeats, we link it to past emotional contexts to provide deeper insights.</p>
     </div>
     <div class="b-card">
-      <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-      <h3 class="b-title">Instant Recall</h3>
-      <p class="b-desc">Search your dream history by emotion, keyword, or specific symbol in milliseconds.</p>
-    </div>
-    <div class="b-card b-large">
       <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"></path><path d="M12 2v2"></path><path d="M12 22v-2"></path><path d="m17 20.66-1-1.73"></path><path d="M11 10.27 7 3.34"></path><path d="m20.66 17-1.73-1"></path><path d="m3.34 7 1.73 1"></path><path d="M14 12h8"></path><path d="M2 12h2"></path><path d="m20.66 7-1.73 1"></path><path d="m3.34 17 1.73-1"></path><path d="m17 3.34-1 1.73"></path><path d="m11 13.73-4 6.93"></path></svg>
       <h3 class="b-title">Multilingual Cognitive Processing</h3>
-      <p class="b-desc">Dreams don't always happen in one language. Enter your text in English, Spanish, Turkish, or a mix of all three. The engine parses meaning cross-lingually without degradation.</p>
+      <p class="b-desc">Dreams don't always happen in one language. Enter your text in English, Spanish, Turkish, or a mix of all three. The engine parses meaning cross-lingually seamlessly.</p>
+    </div>
+    <div class="b-card b-large">
+      <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 6v6l4 2"></path></svg>
+      <h3 class="b-title">Chronological Analysis</h3>
+      <p class="b-desc">View how your subconscious themes shift over months and years, providing a longitudinal view of your mental landscape and emotional growth.</p>
     </div>
   </div>
 </section>

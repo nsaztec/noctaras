@@ -344,7 +344,7 @@ textarea { min-height: 160px; resize: vertical; }
     <div class="vanish-wrap">
       <div class="vanish-form" id="vanishForm">
         <canvas class="vanish-canvas" id="vanishCanvas" width="800" height="800"></canvas>
-        <input class="vanish-input" id="vanishInput" type="text" autocomplete="off" oninput="onInput()" onkeydown="onKey(event)">
+        <input class="vanish-input" id="vanishInput" type="text" autocomplete="off" onkeydown="if(event.key === 'Enter') submitChat(); else document.getElementById('vanishPH').style.opacity = this.value ? '0' : '1';">
         <div class="vanish-placeholder" id="vanishPH"><span id="phText">I was flying over a city of clouds...</span></div>
         <button class="vanish-submit" id="vanishBtn" onclick="submitChat()" disabled>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12l14 0"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>
@@ -1041,13 +1041,16 @@ function runVanish(onDone) {
 window.submitChat = async () => {
   const inp = document.getElementById('vanishInput');
   const text = inp.value.trim();
-  if (!text || vanishBusy) return;
-  vanishBusy = true;
-  capturePixels();
+  if (!text) return;
+  inp.value = '';
+  document.getElementById('vanishPH').style.opacity = '1';
+  document.getElementById('vanishPH').style.transform = 'translateY(0)';
+  document.getElementById('vanishBtn').disabled = true;
+
   const hero = document.getElementById('chatHero');
   if (hero && hero.style.display !== 'none') { hero.style.opacity = '0'; setTimeout(() => hero.style.display = 'none', 400); }
-  runVanish(async () => {
-    addUserMsg(text);
+  
+  addUserMsg(text);
     const load = addLoadingMsg();
     try {
       const analysis = await callAI(text);
@@ -1059,7 +1062,6 @@ window.submitChat = async () => {
         addAIMsg('The stars grew silent... ' + e.message, '');
       }
     }
-  });
 };
 
 function addUserMsg(t) {
