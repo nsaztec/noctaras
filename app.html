@@ -217,6 +217,16 @@ textarea { min-height: 160px; resize: vertical; }
 .paywall-close { font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border: none; background: none; transition: 0.2s; }
 .paywall-close:hover { color: var(--text); text-decoration: underline; }
 
+/* Toast */
+.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+.toast { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; min-width: 300px; box-shadow: var(--shadow-lg); opacity: 0; transform: translateY(20px); transition: all 0.3s var(--ease-out); pointer-events: auto; display: flex; align-items: flex-start; justify-content: space-between; }
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast-content { flex: 1; margin-right: 12px;}
+.toast-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.toast-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.toast-close { background: none; border: none; color: var(--muted); cursor: pointer; padding: 4px; border-radius: 4px; transition: 0.2s; }
+.toast-close:hover { background: var(--surface-hover); color: var(--text); }
+
 /* Sky Theme Toggle */
 .theme-switch-wrapper { display: inline-flex; align-items: center; justify-content: center; transform: scale(0.65); transform-origin: center; margin-right: 8px; }
 .theme-switch { --toggle-size: 16px; --container-width: 5.625em; --container-height: 2.5em; --container-radius: 6.25em; --container-light-bg: #3D7EAE; --container-night-bg: #1D1F2C; --circle-container-diameter: 3.375em; --sun-moon-diameter: 2.125em; --sun-bg: #ECCA2F; --moon-bg: #C4C9D1; --spot-color: #959DB1; --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1); --stars-color: #fff; --clouds-color: #F3FDFF; --back-clouds-color: #AACADF; --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25); --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17); }
@@ -402,7 +412,29 @@ textarea { min-height: 160px; resize: vertical; }
         </svg>
         <span>Noctaras</span>
       </div>
-      <button class="btn-new-dream" onclick="showJP('new')">Record dream</button>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <label class="theme-switch-wrapper" for="themeToggleApp2" title="Toggle Theme" style="margin:0;">
+          <div class="theme-switch">
+            <input type="checkbox" id="themeToggleApp2" class="theme-switch__checkbox">
+            <div class="theme-switch__container">
+              <div class="theme-switch__clouds"></div>
+              <div class="theme-switch__stars-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="none"><path fill="currentColor" d="M29.11,3H28.5L28,3.58a13.3,13.3,0,0,1-3.66,2.83,13.3,13.3,0,0,1,3.66,2.83L28.5,9.81h.61l.52-.58a13.3,13.3,0,0,1,3.66-2.83A13.3,13.3,0,0,1,29.63,3.58Zm18.92,15H47.41L46.9,18.66a13.31,13.31,0,0,1-3.66,2.83,13.31,13.31,0,0,1,3.66,2.83l.51.58h.62l.52-.58a13.31,13.31,0,0,1,3.66-2.83,13.31,13.31,0,0,1-3.66-2.83ZM114.51,21H113.9l-.51.58a13.3,13.3,0,0,1-3.66,2.83,13.3,13.3,0,0,1,3.66,2.83l.51.58h.61l.52-.58a13.31,13.31,0,0,1,3.66-2.83,13.31,13.31,0,0,1-3.66-2.83ZM101.9,40.11H101.3l-.52.58a13.31,13.31,0,0,1-3.66,2.83,13.31,13.31,0,0,1,3.66,2.83l.52.58h.6l.52-.58a13.31,13.31,0,0,1,3.66-2.83,13.31,13.31,0,0,1-3.66-2.83ZM20,43.37H19.4L18.89,44a13.3,13.3,0,0,1-3.66,2.83,13.31,13.31,0,0,1,3.66,2.83l.51.58H20l.52-.58a13.31,13.31,0,0,1,3.66-2.83A13.31,13.31,0,0,1,20.53,44Z"/></svg>
+              </div>
+              <div class="theme-switch__circle-container">
+                <div class="theme-switch__sun-moon-container">
+                  <div class="theme-switch__moon">
+                    <div class="theme-switch__spot"></div>
+                    <div class="theme-switch__spot"></div>
+                    <div class="theme-switch__spot"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </label>
+        <button class="btn-new-dream" onclick="showJP('new')">Record dream</button>
+      </div>
     </div>
 
     <div id="jp-list" class="jpage active">
@@ -420,10 +452,6 @@ textarea { min-height: 160px; resize: vertical; }
       <div class="jpage-header">
         <button class="btn-action" onclick="showJP('list')">← Back</button>
         <span class="jpage-hdr-title">Record dream</span>
-      </div>
-      <div class="field">
-        <label class="field-label">Title</label>
-        <input type="text" id="titleInput" placeholder="Name this dream...">
       </div>
       <div class="field">
         <label class="field-label">Mood</label>
@@ -462,6 +490,44 @@ textarea { min-height: 160px; resize: vertical; }
       </div>
       <div id="detailContent"></div>
     </div>
+  </div>
+</div>
+
+<!-- ══════════════ SCREEN 3: TREE ══════════════ -->
+<div id="screen-tree" class="screen">
+  <div class="journal-wrap">
+    <div class="journal-topbar">
+      <button class="btn-action" onclick="goJournal()">← Back</button>
+      <div class="j-logo">
+        <svg viewBox="0 0 24 24" fill="none" style="width:20px;height:20px;">
+          <circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="2"/>
+          <circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+        </svg>
+        <span>Dream Tree</span>
+      </div>
+      <label class="theme-switch-wrapper" for="themeToggleTree" title="Toggle Theme">
+        <div class="theme-switch">
+          <input type="checkbox" id="themeToggleTree" class="theme-switch__checkbox">
+          <div class="theme-switch__container">
+            <div class="theme-switch__clouds"></div>
+            <div class="theme-switch__stars-container">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="none"><path fill="currentColor" d="M29.11,3H28.5L28,3.58a13.3,13.3,0,0,1-3.66,2.83,13.3,13.3,0,0,1,3.66,2.83L28.5,9.81h.61l.52-.58a13.3,13.3,0,0,1,3.66-2.83A13.3,13.3,0,0,1,29.63,3.58Zm18.92,15H47.41L46.9,18.66a13.31,13.31,0,0,1-3.66,2.83,13.31,13.31,0,0,1,3.66,2.83l.51.58h.62l.52-.58a13.31,13.31,0,0,1,3.66-2.83,13.31,13.31,0,0,1-3.66-2.83ZM114.51,21H113.9l-.51.58a13.3,13.3,0,0,1-3.66,2.83,13.3,13.3,0,0,1,3.66,2.83l.51.58h.61l.52-.58a13.31,13.31,0,0,1,3.66-2.83,13.31,13.31,0,0,1-3.66-2.83ZM101.9,40.11H101.3l-.52.58a13.31,13.31,0,0,1-3.66,2.83,13.31,13.31,0,0,1,3.66,2.83l.52.58h.6l.52-.58a13.31,13.31,0,0,1,3.66-2.83,13.31,13.31,0,0,1-3.66-2.83ZM20,43.37H19.4L18.89,44a13.3,13.3,0,0,1-3.66,2.83,13.31,13.31,0,0,1,3.66,2.83l.51.58H20l.52-.58a13.31,13.31,0,0,1,3.66-2.83A13.31,13.31,0,0,1,20.53,44Z"/></svg>
+            </div>
+            <div class="theme-switch__circle-container">
+              <div class="theme-switch__sun-moon-container">
+                <div class="theme-switch__moon">
+                  <div class="theme-switch__spot"></div>
+                  <div class="theme-switch__spot"></div>
+                  <div class="theme-switch__spot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </label>
+    </div>
+    <div class="tree-year-selector" id="treeYearSelector" style="justify-content:center;margin-bottom:24px;"></div>
+    <div id="treeContent"></div>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
@@ -530,6 +596,18 @@ window.signInEmail = async () => {
   }
 };
 
+window.showToast = (title, desc) => {
+  const container = document.getElementById('toastContainer') || (() => {
+    const c = document.createElement('div'); c.id = 'toastContainer'; c.className = 'toast-container';
+    document.body.appendChild(c); return c;
+  })();
+  const t = document.createElement('div'); t.className = 'toast';
+  t.innerHTML = `<div class="toast-content"><div class="toast-title">${title}</div><div class="toast-desc">${desc}</div></div><button class="toast-close" onclick="this.parentElement.remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`;
+  container.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 5000);
+};
+
 window.registerEmail = async () => {
   const email = document.getElementById('registerEmail').value.trim();
   const password = document.getElementById('registerPassword').value;
@@ -537,8 +615,8 @@ window.registerEmail = async () => {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     await sendEmailVerification(cred.user);
     await fbSignOut(auth);
-    document.getElementById('registerError').style.color = '#9B8FE8';
-    document.getElementById('registerError').textContent = 'Verification email sent! Please check your inbox before signing in.';
+    showAuthForm('login');
+    showToast('Welcome to Noctaras', 'Your account has been created successfully. Please check your inbox to verify your email. The universe awaits.');
   } catch (e) {
     document.getElementById('registerError').style.color = '';
     document.getElementById('registerError').textContent = friendlyError(e.code);
@@ -1088,9 +1166,15 @@ window.submitChat = async () => {
   addUserMsg(text);
     const load = addLoadingMsg();
     try {
-      const analysis = await callAI(text);
+      const rawAi = await callAI(text);
+      const tMatch = rawAi.match(/^TITLE:\s*(.*)/im);
+      const aMatch = rawAi.match(/ANALYSIS:\s*([\s\S]*)/im);
+      
+      const title = tMatch ? tMatch[1].trim() : 'Dream Analysis';
+      const analysis = aMatch ? aMatch[1].trim() : rawAi;
+
       load.remove();
-      addAIMsg(analysis, text);
+      addAIMsg(analysis, text, title);
     } catch(e) {
       load.remove();
       if (e.message !== 'upgrade_required') {
@@ -1109,7 +1193,7 @@ function addLoadingMsg() {
   const c = document.getElementById('chatMessages'); c.appendChild(el); c.scrollTop = c.scrollHeight;
   return el;
 }
-function addAIMsg(text, dreamText) {
+function addAIMsg(text, dreamText, titleText) {
   const el = document.createElement('div'); el.className = 'msg-ai';
   const c = document.getElementById('chatMessages'); c.appendChild(el);
   let i = 0;
@@ -1133,7 +1217,8 @@ function addAIMsg(text, dreamText) {
         btn.innerHTML = '✦ Save to journal';
         btn.onclick = async () => {
           btn.textContent = 'Saving...'; btn.disabled = true;
-          const dreamData = { title: dreamText.substring(0,42)+(dreamText.length>42?'...':''), text: dreamText, mood: 'mysterious', date: new Date().toISOString(), analysis: text };
+          const finalTitle = titleText || 'Dream Entry';
+          const dreamData = { title: finalTitle, text: dreamText, mood: 'mysterious', date: new Date().toISOString(), analysis: text };
           const id = await saveDreamToDB(dreamData);
           if (id) { dreams.unshift({id, ...dreamData}); btn.textContent = '✓ Saved'; }
           else { btn.textContent = 'Error'; btn.disabled = false; }
@@ -1162,7 +1247,7 @@ window.closePaywall = () => document.getElementById('paywallOverlay').classList.
 
 // ── AI ──
 async function callAI(dreamText) {
-  const body = { dream: dreamText };
+  const body = { dream: dreamText, lang: navigator.language || 'en-US' };
   if (currentUser) { body.userId = currentUser.uid; body.email = currentUser.email || ''; }
   
   const res = await fetch('/api/interpret', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
@@ -1252,18 +1337,24 @@ window.interpretForm = async () => {
   document.getElementById('interpretBtn').disabled = true;
   document.getElementById('savePlainBtn').disabled = true;
   currentAnalysis = '';
+  window._currentAiTitle = '';
   try {
-    const a = await callAI(text); currentAnalysis = a;
+    const rawAi = await callAI(text); 
+    const tMatch = rawAi.match(/^TITLE:\s*(.*)/im);
+    const aMatch = rawAi.match(/ANALYSIS:\s*([\s\S]*)/im);
+    window._currentAiTitle = tMatch ? tMatch[1].trim() : 'Dream Analysis';
+    currentAnalysis = aMatch ? aMatch[1].trim() : rawAi;
+
     document.getElementById('jLoading').classList.remove('show');
     document.getElementById('interpBox').classList.add('show');
-    typeText(a, document.getElementById('interpText'), null);
+    typeText(currentAnalysis, document.getElementById('interpText'), null);
   } catch(e) { document.getElementById('jLoading').classList.remove('show'); alert('Error: ' + e.message); }
   finally { document.getElementById('interpretBtn').disabled = false; document.getElementById('savePlainBtn').disabled = false; }
 };
 
 window.saveDream = async () => {
   const text = document.getElementById('dreamInput').value.trim(); if (!text) return;
-  const title = document.getElementById('titleInput').value.trim() || 'Untitled dream';
+  const title = window._currentAiTitle || 'Dream Entry';
   const dreamData = { title, text, mood: currentMood, date: new Date().toISOString(), analysis: '' };
   const id = await saveDreamToDB(dreamData);
   if (id) { dreams.unshift({id, ...dreamData}); renderJournal(); showJP('list'); }
@@ -1271,7 +1362,7 @@ window.saveDream = async () => {
 
 window.saveDreamInterp = async () => {
   const text = document.getElementById('dreamInput').value.trim(); if (!text) return;
-  const title = document.getElementById('titleInput').value.trim() || 'Untitled dream';
+  const title = window._currentAiTitle || 'Dream Analysis';
   const dreamData = { title, text, mood: currentMood, date: new Date().toISOString(), analysis: currentAnalysis };
   const id = await saveDreamToDB(dreamData);
   if (id) { dreams.unshift({id, ...dreamData}); renderJournal(); showJP('list'); }
@@ -1312,7 +1403,7 @@ function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxiou
 <script>
 (function() {
   const html = document.documentElement;
-  const toggles = [document.getElementById("themeToggleApp1"), document.getElementById("themeToggleApp2")];
+  const toggles = [document.getElementById("themeToggleApp1"), document.getElementById("themeToggleApp2"), document.getElementById("themeToggleTree")];
 
   function setTheme(isDark) {
     if (isDark) {

@@ -248,6 +248,40 @@ footer {
 .f-links a:hover { color: var(--text); }
 .f-bottom { max-width: 1100px; margin: 60px auto 0; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 12px; color: var(--subtle); }
 
+/* ── TRUST SECTION (Marketing) ── */
+.trust-wrap { background: var(--bg); padding: 120px 5%; overflow: hidden; position: relative;}
+.trust-container { max-width: 1100px; margin: 0 auto; text-align: center; }
+.trust-title { font-size: clamp(32px, 5vw, 48px); font-weight: 500; letter-spacing: -0.02em; color: var(--text); margin-bottom: 16px; line-height: 1.1; }
+.trust-sub { font-size: 16px; color: var(--muted); max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
+
+.trust-marquee-container { position: relative; margin: 0 calc(-5vw - 20px) 60px; display: flex; flex-direction: column; gap: 12px; }
+.trust-fade-l { position: absolute; left: 0; top: 0; bottom: 0; width: 100px; background: linear-gradient(to right, var(--bg), transparent); z-index: 10; pointer-events: none;}
+.trust-fade-r { position: absolute; right: 0; top: 0; bottom: 0; width: 100px; background: linear-gradient(to left, var(--bg), transparent); z-index: 10; pointer-events: none;}
+
+.trust-marquee { display: flex; overflow: hidden; user-select: none; width: 100%; }
+.trust-marquee-inner { display: flex; width: fit-content; gap: 12px; animation: scroll-left 45s linear infinite; }
+.trust-marquee.reverse .trust-marquee-inner { animation-direction: reverse; animation-duration: 50s; }
+.trust-marquee.slow .trust-marquee-inner { animation-duration: 42s; }
+.trust-track { display: flex; gap: 12px; flex-shrink: 0; }
+.t-badge { 
+  padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface-hover);
+  color: var(--text); font-size: 14px; font-weight: 500; white-space: nowrap;
+}
+
+@keyframes scroll-left { 100% { transform: translateX(calc(-50% - 6px)); } }
+
+.trust-features {
+  display: grid; grid-template-columns: repeat(4, 1fr); border: 1px dashed var(--border-strong);
+  margin-top: 60px;
+}
+.t-feat {
+  padding: 32px 24px; text-align: left; position: relative;
+}
+.t-feat:not(:last-child) { border-right: 1px dashed var(--border-strong); }
+.t-icon { width: 48px; height: 48px; color: var(--text); margin-bottom: 40px; opacity: 0.8; }
+.t-feat h3 { font-size: 22px; font-weight: 500; margin-bottom: 8px; color: var(--text); letter-spacing: -0.02em; line-height: 1.2; }
+.t-feat p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
 /* ── RESPONSIVE ── */
 @media(max-width: 900px) {
   .bento { grid-template-columns: 1fr; }
@@ -255,6 +289,9 @@ footer {
   .path-grid { grid-template-columns: 1fr; gap: 24px; }
   .price-grid { grid-template-columns: 1fr; }
   .f-grid { grid-template-columns: 1fr 1fr; }
+  .trust-features { grid-template-columns: repeat(2, 1fr); }
+  .t-feat:nth-child(even) { border-right: none; }
+  .t-feat:nth-child(1), .t-feat:nth-child(2) { border-bottom: 1px dashed var(--border-strong); }
   .ui-body { flex-direction: column; padding: 24px; }
   .ui-sidebar { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 24px; }
   .hero-title { font-size: clamp(36px, 10vw, 48px); }
@@ -262,6 +299,9 @@ footer {
 @media(max-width: 600px) {
   .f-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
+  .trust-features { grid-template-columns: 1fr; }
+  .t-feat { border-right: none !important; border-bottom: 1px dashed var(--border-strong); }
+  .t-feat:last-child { border-bottom: none; }
 }
 
 /* ── ANIMATIONS ── */
@@ -416,6 +456,11 @@ footer {
       <h3 class="b-title">Multilingual Cognitive Processing</h3>
       <p class="b-desc">Dreams don't always happen in one language. Enter your text in English, Spanish, Turkish, or a mix of all three. The engine parses meaning cross-lingually seamlessly.</p>
     </div>
+    <div class="b-card">
+      <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      <h3 class="b-title">Pattern Recognition</h3>
+      <p class="b-desc">Our neural engine identifies latent psychological archetypes lurking behind your everyday dream symbols, exposing themes you might have missed.</p>
+    </div>
     <div class="b-card b-large">
       <svg class="b-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 6v6l4 2"></path></svg>
       <h3 class="b-title">Chronological Analysis</h3>
@@ -512,6 +557,96 @@ footer {
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Priority AI processing</li>
       </ul>
       <a href="https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b" class="btn btn-secondary p-btn">Subscribe Annually</a>
+    </div>
+  </div>
+</section>
+
+<section id="trust" class="trust-wrap reveal">
+  <div class="trust-container">
+    <h2 class="trust-title">Removing the roadblocks to self-discovery</h2>
+    <p class="trust-sub">It's easy to get lost in a sea of spiritual mysticism, conflicting dream dictionaries, and endless symbolism. We filter out the noise, focus on what truly matters, and give you the kind of absolute clarity that lets your mind heal.</p>
+    
+    <div class="trust-marquee-container">
+      <div class="trust-fade-l"></div>
+      <div class="trust-fade-r"></div>
+      
+      <!-- Row 1 -->
+      <div class="trust-marquee">
+        <div class="trust-marquee-inner">
+          <div class="trust-track">
+             <span class="t-badge">Is my data encrypted entirely?</span>
+             <span class="t-badge">Who is my ideal self?</span>
+             <span class="t-badge">What risks should I prepare for?</span>
+             <span class="t-badge">Why do I keep dreaming of water?</span>
+          </div>
+          <div class="trust-track">
+             <span class="t-badge">Is my data encrypted entirely?</span>
+             <span class="t-badge">Who is my ideal self?</span>
+             <span class="t-badge">What risks should I prepare for?</span>
+             <span class="t-badge">Why do I keep dreaming of water?</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2 (Reverse) -->
+      <div class="trust-marquee reverse">
+        <div class="trust-marquee-inner">
+          <div class="trust-track">
+             <span class="t-badge">Are these interpretations scientifically valid?</span>
+             <span class="t-badge">What does the infinite labyrinth mean?</span>
+             <span class="t-badge">How do I face my shadow?</span>
+             <span class="t-badge">Is this based on Jungian science?</span>
+          </div>
+          <div class="trust-track">
+             <span class="t-badge">Are these interpretations scientifically valid?</span>
+             <span class="t-badge">What does the infinite labyrinth mean?</span>
+             <span class="t-badge">How do I face my shadow?</span>
+             <span class="t-badge">Is this based on Jungian science?</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="trust-marquee slow">
+        <div class="trust-marquee-inner">
+          <div class="trust-track">
+             <span class="t-badge">How do I process emotional trauma?</span>
+             <span class="t-badge">Why am I falling?</span>
+             <span class="t-badge">Does my subconscious know the answer?</span>
+             <span class="t-badge">Who is the stranger in my dreams?</span>
+          </div>
+          <div class="trust-track">
+             <span class="t-badge">How do I process emotional trauma?</span>
+             <span class="t-badge">Why am I falling?</span>
+             <span class="t-badge">Does my subconscious know the answer?</span>
+             <span class="t-badge">Who is the stranger in my dreams?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="trust-features">
+      <div class="t-feat">
+        <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        <h3>We make things simple</h3>
+        <p>No jargon, no overcomplication — just clear psychological steps you can follow to understand your subconscious confidently.</p>
+      </div>
+      <div class="t-feat">
+        <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <h3>We focus on real insights</h3>
+        <p>Every analysis we generate is designed to help you reach catharsis faster, grow smarter, and increase mental fortitude.</p>
+      </div>
+      <div class="t-feat">
+        <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
+        <h3>We know what works</h3>
+        <p>With years of data mapped across thousands of users, we bring proven archetypal frameworks and practical psychological solutions to the table.</p>
+      </div>
+      <div class="t-feat">
+        <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <h3>With you all the way</h3>
+        <p>From your first dream log to confronting your shadow, we provide ongoing architectural support for your mental landscape.</p>
+      </div>
     </div>
   </div>
 </section>
