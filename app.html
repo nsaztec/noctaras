@@ -1325,7 +1325,7 @@ window.setPricing = function(plan) {
   if (isAnnual) {
     document.getElementById('pricePeriod').innerHTML = 'Billed annually <br><span class="pricing-save" id="priceSaveBadge">Save 48%</span>';
   } else {
-    document.getElementById('pricePeriod').innerHTML = 'Billed monthly';
+    document.getElementById('pricePeriod').innerHTML = 'Billed monthly <br><span class="pricing-save" style="visibility: hidden;">Save 48%</span>';
   }
   
   const btn = document.getElementById('planButton');
