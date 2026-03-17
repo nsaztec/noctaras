@@ -1423,26 +1423,6 @@ function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxiou
   const aiInput = document.getElementById('vanishInput');
   const aiBtn = document.getElementById('vanishBtn');
   if (aiInput && aiBtn) {
-    aiInput.addEventListener('input', function() {
-      this.style.height = '52px'; // Reset to min height
-      const newHeight = Math.min(this.scrollHeight, 200);
-      this.style.height = newHeight + 'px';
-      
-      if (this.scrollHeight > 200) {
-        this.style.overflowY = 'auto';
-      } else {
-        this.style.overflowY = 'hidden';
-      }
-
-      if (this.value.trim().length > 0) {
-        aiBtn.classList.add('visible');
-        aiBtn.disabled = false;
-      } else {
-        aiBtn.classList.remove('visible');
-        aiBtn.disabled = true;
-      }
-    });
-
     aiInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();

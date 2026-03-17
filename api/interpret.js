@@ -90,7 +90,7 @@ ANALYSIS:
 
 PARAGRAPH 1 (2-3 sentences): Set the emotional atmosphere and overall psychological theme of the dream. Use evocative, personal language — address the dreamer as "you". Make this feel like a gifted fortune teller is opening a reading.
 
-[HEADING IN ${userLang} FOR "SYMBOLS"]: Identify every significant element in the dream (objects, people, places, actions, emotions, sensations). For each one, write a single bullet point in the format:
+Write a heading for the symbols list in ${userLang} (for example: "Symbols:" or "Semboller:", do NOT use brackets and do NOT use all-caps). Then identify every significant element in the dream (objects, people, places, actions, emotions, sensations). For each one, write a single bullet point in the format:
 • [Symbol]: [What it represents]
 
 IMPORTANT: You MUST leave a blank line between each bullet point for readability. Do not bunch them together. Ground these in Jungian concepts (shadow, archetypes) or neuroscience of dreaming — woven in naturally.
