@@ -73,7 +73,7 @@ a { text-decoration: none; color: inherit; }
 /* CHAT */
 .chat-topbar { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface); position: sticky; top: 0; z-index: 50; }
 .logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 16px; color: var(--text); }
-.logo svg { width: 20px; height: 20px; }
+.logo svg { width: 22px; height: 22px; vector-effect: non-scaling-stroke; }
 .topbar-right { display: flex; align-items: center; gap: 8px; }
 .btn-action { background: var(--surface); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--text); cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
 .btn-action:hover { background: var(--surface-hover); border-color: var(--border-strong); }
@@ -88,9 +88,11 @@ a { text-decoration: none; color: inherit; }
 #chatMessages { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; overflow-y: auto; max-height: 55vh; scroll-behavior: smooth; }
 .msg-user { align-self: flex-end; background: var(--surface); border: 1px solid var(--border); padding: 16px 20px; border-radius: 12px 12px 0 12px; font-size: 15px; line-height: 1.6; max-width: 80%; box-shadow: var(--shadow-sm); }
 .msg-ai { align-self: flex-start; padding: 0; font-size: 15.5px; line-height: 1.7; max-width: 90%; color: var(--text); }
-.msg-save-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 20px; background: transparent; border: 1.5px solid var(--text); padding: 9px 18px; border-radius: 20px; font-size: 12.5px; font-weight: 600; color: var(--text); cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em; }
-.msg-save-btn:hover { background: var(--text); color: var(--bg); transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.msg-save-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+.msg-save-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-strong); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); letter-spacing: 0.01em; box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, var(--shadow-sm); backdrop-filter: blur(8px); }
+.msg-save-btn:hover { background: var(--text); color: var(--bg); border-color: transparent; transform: translateY(-2px); box-shadow: 0 8px 16px -4px rgba(0,0,0,0.1), 0 4px 8px -2px rgba(0,0,0,0.05); }
+.msg-save-btn:active { transform: translateY(0); }
+[data-theme="dark"] .msg-save-btn:hover { box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+.msg-save-btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; pointer-events: none; }
 
 .msg-loading { align-self: flex-start; padding: 16px 0; }
 .dots span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); margin: 0 4px; animation: bounce 1.4s infinite ease-in-out both; }
@@ -351,9 +353,9 @@ textarea { min-height: 160px; resize: vertical; }
 <div id="screen-chat" class="screen">
   <div class="chat-topbar">
     <a href="index.html" class="logo">
-      <svg viewBox="0 0 24 24" fill="none">
-        <circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="2"/>
-        <circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="10" cy="12" r="6"/>
+        <circle cx="14" cy="12" r="6" opacity="0.6"/>
       </svg>
       <span>Noctaras</span>
     </a>
@@ -393,7 +395,7 @@ textarea { min-height: 160px; resize: vertical; }
     </div>
     <div id="chatMessages"></div>
     <div class="chat-input-wrapper">
-      <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off"></textarea>
+      <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false"></textarea>
       <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="10 9 15 4 20 9"/><path d="M4 20h7a4 4 0 0 0 4-4V4"/></svg>
       </button>
@@ -1095,15 +1097,18 @@ setInterval(() => {
 }, 3500);
 
 // ── Chat input ──
+let resizeRaf = null;
 window.onInput = () => {
   const inp = document.getElementById('vanishInput');
   const v = inp.value;
+  const btn = document.getElementById('vanishBtn');
   const ph = document.getElementById('vanishPH');
+  
   if (ph) {
     ph.style.opacity = v.length > 0 ? '0' : '1';
     ph.style.transform = v.length > 0 ? 'translateY(-8px)' : 'translateY(0)';
   }
-  const btn = document.getElementById('vanishBtn');
+  
   if (v.trim().length > 0) {
     btn.classList.add('visible');
     btn.disabled = false;
@@ -1111,9 +1116,13 @@ window.onInput = () => {
     btn.classList.remove('visible');
     btn.disabled = true;
   }
-  // Auto-resize textarea
-  inp.style.height = '52px';
-  inp.style.height = Math.min(inp.scrollHeight, 200) + 'px';
+  
+  // Throttle textarea resize to fix input lag
+  if (resizeRaf) cancelAnimationFrame(resizeRaf);
+  resizeRaf = requestAnimationFrame(() => {
+    inp.style.height = '52px';
+    inp.style.height = Math.min(inp.scrollHeight, 200) + 'px';
+  });
 };
 window.onKey = (e) => { if (e.key === 'Enter' && !vanishBusy) submitChat(); };
 
