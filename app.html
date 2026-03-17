@@ -108,9 +108,9 @@ a { text-decoration: none; color: inherit; }
 .ai-input-textarea::placeholder { color: var(--muted); }
 .ai-input-textarea::-webkit-scrollbar { width: 4px; }
 .ai-input-textarea::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
-.ai-input-submit { position: absolute; right: 8px; top: 16px; width: 36px; height: 36px; background: var(--text); border: none; border-radius: 12px; color: var(--bg); opacity: 0; pointer-events: none; cursor: pointer; transition: all 0.2s cubic-bezier(0, -0.02, 0.4, 1.25); display: flex; align-items: center; justify-content: center; transform: scale(0.95); margin-top: 8px; }
+.ai-input-submit { position: absolute; right: 8px; bottom: 24px; width: 36px; height: 36px; background: var(--text); border: none; border-radius: 12px; color: var(--bg); opacity: 0; pointer-events: none; cursor: pointer; transition: opacity 0.2s, transform 0.2s cubic-bezier(0, -0.02, 0.4, 1.25); display: flex; align-items: center; justify-content: center; transform: scale(0.9); }
 .ai-input-submit.visible { opacity: 1; transform: scale(1); pointer-events: auto; }
-.ai-input-submit:hover { opacity: 0.9; }
+.ai-input-submit:hover { transform: scale(1.05); }
 .chat-moon { display: none; }
 
 /* JOURNAL */
@@ -352,9 +352,9 @@ textarea { min-height: 160px; resize: vertical; }
 <div id="screen-chat" class="screen">
   <div class="chat-topbar">
     <a href="index.html" class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="10" cy="12" r="6"/>
-        <circle cx="14" cy="12" r="6" opacity="0.6"/>
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="2"/>
+        <circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="2" opacity="0.5"/>
       </svg>
       <span>Noctaras</span>
     </a>
