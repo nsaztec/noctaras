@@ -14,13 +14,30 @@
             --bg: #f7f5f0;
             --surface: #ffffff;
             --text: #1a202c;
-            --muted: #1a202c;
-            --accent: #5a7b6b;
+            --muted: #5a657a;
+            --accent: #4a6b5b;
             --accent-light: #e8efeb;
             --border: rgba(0,0,0,0.07);
             --serif: 'Playfair Display', serif;
             --sans: 'Inter', sans-serif;
         }
+        [data-theme="dark"] {
+            --bg: #1e1d24;
+            --surface: #26252d;
+            --text: #eae6ff;
+            --muted: rgba(234,230,255,0.7);
+            --accent: #9B8FE8;
+            --accent-light: rgba(155,143,232,0.15);
+            --border: rgba(160,140,255,0.14);
+        }
+        .theme-toggle-app {
+            background: transparent; border: 1px solid var(--border);
+            width: 34px; height: 34px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--text); transition: all 0.3s ease;
+        }
+        .theme-toggle-app:hover { background: var(--surface); transform: scale(1.05); }
+        .theme-toggle-app svg { width: 16px; height: 16px; fill: currentColor; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
@@ -78,7 +95,8 @@
         }
         nav.scrolled {
             padding: 1rem 5%;
-            background: rgba(247,245,240,0.92);
+            background: var(--bg);
+            opacity: 0.95;
             backdrop-filter: blur(12px);
             border-bottom-color: var(--border);
         }
@@ -866,5 +884,40 @@
             });
         });
     </script>
+
+<script>
+(function() {
+  const html = document.documentElement;
+  const toggle = document.getElementById("themeToggleBlog");
+  const moonIcon = "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>";
+  const sunIcon = "<circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>";
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute("data-theme", "dark");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${sunIcon}</svg>`;
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.removeAttribute("data-theme");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${moonIcon}</svg>`;
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  if(toggle) {
+    toggle.addEventListener("click", () => {
+      const currentlyDark = html.getAttribute("data-theme") === "dark";
+      setTheme(!currentlyDark);
+    });
+  }
+})();
+</script>
 </body>
 </html>

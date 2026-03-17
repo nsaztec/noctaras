@@ -4,4 +4,38 @@
 <section><h2>When the System Breaks Down</h2><p>PTSD represents a dramatic failure of the dream processing system. Trauma survivors often experience repetitive nightmares that replay the traumatic event with disturbing fidelity — the opposite of normal dream processing, which recombines and transforms memories. Rachel Yehuda's research at Mount Sinai (2015) showed that in PTSD, the emotional charge is too intense for the normal REM processing mechanism to defuse. The dream becomes stuck in a loop rather than completing its therapeutic work.</p><p>Image Rehearsal Therapy (IRT), developed by Barry Krakow, works by interrupting this loop — the patient consciously rewrites the nightmare while awake, and the new version gradually replaces the old one during subsequent REM cycles. It has been shown to reduce nightmare frequency by 70%.</p></section>
 <section><h2>Practical Implications</h2><p>If you want your emotional processing system to work optimally, protect your sleep. Seven to nine hours gives your brain enough REM time to complete its emotional work. Alcohol suppresses REM sleep, disrupting emotional processing even if total sleep time seems adequate. Consistent sleep schedules help the brain anticipate and prepare for its nightly processing work. And if you wake up feeling emotionally different from how you went to bed — lighter, clearer, more resolved — that is not coincidence. That is your dream processing system doing exactly what it was designed to do.</p></section>
 <div class="cta-box"><h3>Processing something difficult?</h3><p>Your dreams are already working on it. Tell Noctaras what you dreamed and see what your brain is trying to resolve.</p><a class="cta-btn" href="../index.html">Interpret My Dream ›</a></div>
-<div class="related"><h3>Related Articles</h3><a href="why-dreams-feel-real.html">Why Dreams Feel So Real</a><a href="what-do-nightmares-mean.html">What Do Nightmares Mean?</a><a href="recurring-dreams-meaning.html">Why You Have Recurring Dreams</a><a href="anxiety-dreams-meaning.html">Anxiety Dreams</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer></body></html>
+<div class="related"><h3>Related Articles</h3><a href="why-dreams-feel-real.html">Why Dreams Feel So Real</a><a href="what-do-nightmares-mean.html">What Do Nightmares Mean?</a><a href="recurring-dreams-meaning.html">Why You Have Recurring Dreams</a><a href="anxiety-dreams-meaning.html">Anxiety Dreams</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer><script>
+(function() {
+  const html = document.documentElement;
+  const toggle = document.getElementById("themeToggleBlog");
+  const moonIcon = "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>";
+  const sunIcon = "<circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>";
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute("data-theme", "dark");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${sunIcon}</svg>`;
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.removeAttribute("data-theme");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${moonIcon}</svg>`;
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  if(toggle) {
+    toggle.addEventListener("click", () => {
+      const currentlyDark = html.getAttribute("data-theme") === "dark";
+      setTheme(!currentlyDark);
+    });
+  }
+})();
+</script>
+</body></html>

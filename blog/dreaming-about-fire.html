@@ -96,4 +96,38 @@ footer a:hover{color:var(--accent)}
 <a href="why-dreams-feel-real.html">Why Do Dreams Feel So Real? The Neuroscience Explained</a>
 </div>
 </div>
-<footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer></body></html>
+<footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer><script>
+(function() {
+  const html = document.documentElement;
+  const toggle = document.getElementById("themeToggleBlog");
+  const moonIcon = "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>";
+  const sunIcon = "<circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>";
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute("data-theme", "dark");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${sunIcon}</svg>`;
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.removeAttribute("data-theme");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${moonIcon}</svg>`;
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  if(toggle) {
+    toggle.addEventListener("click", () => {
+      const currentlyDark = html.getAttribute("data-theme") === "dark";
+      setTheme(!currentlyDark);
+    });
+  }
+})();
+</script>
+</body></html>

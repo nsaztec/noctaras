@@ -6,4 +6,38 @@
 <section><h2>Actions and Events</h2><p><strong>Falling</strong> — Loss of control, insecurity, fear of failure, or surrender.</p><p><strong>Flying</strong> — Freedom, transcendence, empowerment, or escape from limitations.</p><p><strong>Being chased</strong> — Avoidance. Whatever chases you is what you refuse to face.</p><p><strong>Being lost</strong> — Lack of direction, identity confusion, searching for purpose.</p><p><strong>Drowning</strong> — Being overwhelmed by emotions, in over your head.</p><p><strong>Driving</strong> — Control over life direction. Who drives matters enormously.</p><p><strong>Taking an exam</strong> — Being tested by life, performance anxiety, fear of inadequacy.</p></section>
 <section><h2>Objects</h2><p><strong>Mirror</strong> — Self-reflection, confronting your true appearance. Distorted mirrors signal distorted self-image.</p><p><strong>Key</strong> — Access, secrets, solutions. Finding a key means finding an answer.</p><p><strong>Door</strong> — Opportunity, transition, the boundary between known and unknown.</p><p><strong>Clock</strong> — Time pressure, mortality, urgency. Stopped clocks signal stagnation.</p><p><strong>Money</strong> — Self-worth, personal power, energy exchange.</p><p><strong>Phone</strong> — Communication, connection. Broken phones signal communication breakdown.</p><p><strong>Knife/Sword</strong> — Discrimination, cutting away, aggression, or decisive action.</p><p><strong>Book</strong> — Knowledge, life story, hidden information waiting to be discovered.</p><p><strong>Ladder/Stairs</strong> — Progress, ascent or descent through psychological levels.</p><p><strong>Car</strong> — Your vehicle through life. The condition of the car reflects your condition.</p></section>
 <div class="cta-box"><h3>Found your symbol?</h3><p>Context changes everything. Tell Noctaras your full dream for a personalized interpretation.</p><a class="cta-btn" href="../index.html">Interpret My Dream ›</a></div>
-<div class="related"><h3>Related Articles</h3><a href="dreaming-about-snakes.html">Snakes in Dreams</a><a href="dreaming-about-water.html">Water in Dreams</a><a href="dreaming-about-houses.html">Houses in Dreams</a><a href="freud-vs-jung-dreams.html">Freud vs. Jung</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer></body></html>
+<div class="related"><h3>Related Articles</h3><a href="dreaming-about-snakes.html">Snakes in Dreams</a><a href="dreaming-about-water.html">Water in Dreams</a><a href="dreaming-about-houses.html">Houses in Dreams</a><a href="freud-vs-jung-dreams.html">Freud vs. Jung</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer><script>
+(function() {
+  const html = document.documentElement;
+  const toggle = document.getElementById("themeToggleBlog");
+  const moonIcon = "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>";
+  const sunIcon = "<circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>";
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute("data-theme", "dark");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${sunIcon}</svg>`;
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.removeAttribute("data-theme");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${moonIcon}</svg>`;
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  if(toggle) {
+    toggle.addEventListener("click", () => {
+      const currentlyDark = html.getAttribute("data-theme") === "dark";
+      setTheme(!currentlyDark);
+    });
+  }
+})();
+</script>
+</body></html>

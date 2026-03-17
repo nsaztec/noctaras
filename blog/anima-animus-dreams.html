@@ -3,4 +3,38 @@
 <section><h2>How They Appear in Dreams</h2><h3>The Positive Anima</h3><p>A beautiful, mysterious, or wise woman in a man's dream — a guide who leads him to hidden places, a lover who evokes deep feeling, a muse who inspires creation. She represents his capacity for emotional depth and connection. Following her in the dream often leads to psychological treasure.</p><h3>The Negative Anima</h3><p>A seductive but dangerous woman, a femme fatale, a witch, or a devouring figure. This represents undeveloped or projected feminine energy — when a man has not integrated his emotional life, the Anima becomes destructive: moodiness, sentimentality, passive aggression.</p><h3>The Positive Animus</h3><p>A strong, capable, or wise man in a woman's dream — a protector, a teacher, a clear-headed guide. He represents her capacity for focused thought, assertion, and independent action. His presence suggests these qualities are available to her.</p><h3>The Negative Animus</h3><p>A tyrannical, rigid, or brutish male figure. This represents undeveloped masculine energy — harsh self-criticism, dogmatic opinions, or intellectual bullying that has not been consciously integrated.</p></section>
 <section><h2>Integration and Wholeness</h2><p>The goal is not to eliminate the Anima or Animus but to integrate them — to develop a conscious relationship with the qualities they represent. When integration succeeds, the dream figures transform: the mysterious stranger becomes a trusted companion, the threatening figure becomes an ally. Jung called this the "coniunctio" — the sacred marriage of opposites within the psyche, which he considered the foundation of psychological wholeness.</p><p>Research in personality psychology supports this. A 2017 meta-analysis by Donnelly and Twenge in the Journal of Research in Personality found that psychological androgyny — the integration of both masculine and feminine traits — correlates strongly with higher self-esteem, better relationships, and greater emotional resilience.</p></section>
 <div class="cta-box"><h3>A mysterious figure appeared in your dream?</h3><p>It might be your Anima or Animus reaching out. Tell Noctaras what happened.</p><a class="cta-btn" href="../index.html">Interpret My Dream ›</a></div>
-<div class="related"><h3>Related Articles</h3><a href="dream-archetypes-guide.html">The 7 Dream Archetypes</a><a href="jung-shadow-self-dreams.html">The Shadow Self in Dreams</a><a href="collective-unconscious-dreams.html">The Collective Unconscious</a><a href="dreaming-about-ex.html">Why You Dream About Your Ex</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer></body></html>
+<div class="related"><h3>Related Articles</h3><a href="dream-archetypes-guide.html">The 7 Dream Archetypes</a><a href="jung-shadow-self-dreams.html">The Shadow Self in Dreams</a><a href="collective-unconscious-dreams.html">The Collective Unconscious</a><a href="dreaming-about-ex.html">Why You Dream About Your Ex</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer><script>
+(function() {
+  const html = document.documentElement;
+  const toggle = document.getElementById("themeToggleBlog");
+  const moonIcon = "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>";
+  const sunIcon = "<circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>";
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute("data-theme", "dark");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${sunIcon}</svg>`;
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.removeAttribute("data-theme");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${moonIcon}</svg>`;
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  if(toggle) {
+    toggle.addEventListener("click", () => {
+      const currentlyDark = html.getAttribute("data-theme") === "dark";
+      setTheme(!currentlyDark);
+    });
+  }
+})();
+</script>
+</body></html>

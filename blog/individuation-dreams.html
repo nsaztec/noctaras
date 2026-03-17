@@ -3,4 +3,38 @@
 <section><h2>How Dreams Track the Process</h2><p>Dreams change as individuation progresses. In early stages, Shadow figures dominate — threatening, pursuing, demanding attention. As you begin integrating rejected aspects of yourself, the dream figures transform. The pursuer becomes an ally. The monster reveals a human face. New figures appear: wise guides, sacred spaces, symbols of unity.</p><p>Jung noticed that patients who were making genuine psychological progress had dreams that reflected it — mandala images, journeys to underground temples, encounters with light. Patients who were stuck had repetitive, anxious dreams that circled the same unresolved material. Your dreams are a progress report from the deepest part of your psyche.</p></section>
 <section><h2>The Four Stages in Dreams</h2><h3>1. Shadow Confrontation</h3><p>Dark figures, enemies, shameful scenarios. Your dream forces you to see what you have been refusing to acknowledge.</p><h3>2. Anima/Animus Encounter</h3><p>Compelling opposite-gender figures appear, representing qualities you need to develop. Romance dreams, conflict with a mysterious stranger, or guidance from an unknown figure.</p><h3>3. Persona Dissolution</h3><p>Dreams of being naked, losing your job title, forgetting your name. The social mask is being stripped away so the real self can emerge.</p><h3>4. Self Encounter</h3><p>Mandalas, sacred geometry, divine figures, moments of profound peace. The conscious and unconscious begin to merge into a unified experience.</p></section>
 <div class="cta-box"><h3>Where are you on the journey?</h3><p>Your dreams know. Tell Noctaras what you have been dreaming and discover where your individuation stands.</p><a class="cta-btn" href="../index.html">Interpret My Dream ›</a></div>
-<div class="related"><h3>Related Articles</h3><a href="jung-shadow-self-dreams.html">The Shadow Self in Dreams</a><a href="anima-animus-dreams.html">Anima and Animus</a><a href="dream-archetypes-guide.html">The 7 Dream Archetypes</a><a href="collective-unconscious-dreams.html">The Collective Unconscious</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer></body></html>
+<div class="related"><h3>Related Articles</h3><a href="jung-shadow-self-dreams.html">The Shadow Self in Dreams</a><a href="anima-animus-dreams.html">Anima and Animus</a><a href="dream-archetypes-guide.html">The 7 Dream Archetypes</a><a href="collective-unconscious-dreams.html">The Collective Unconscious</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer><script>
+(function() {
+  const html = document.documentElement;
+  const toggle = document.getElementById("themeToggleBlog");
+  const moonIcon = "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>";
+  const sunIcon = "<circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>";
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute("data-theme", "dark");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${sunIcon}</svg>`;
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.removeAttribute("data-theme");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${moonIcon}</svg>`;
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  if(toggle) {
+    toggle.addEventListener("click", () => {
+      const currentlyDark = html.getAttribute("data-theme") === "dark";
+      setTheme(!currentlyDark);
+    });
+  }
+})();
+</script>
+</body></html>

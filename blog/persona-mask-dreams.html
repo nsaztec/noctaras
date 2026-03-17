@@ -3,4 +3,38 @@
 <section><h2>Persona Dreams</h2><h3>Being Naked in Public</h3><p>The classic Persona dream. Your mask has been stripped away and everyone can see the "real" you. This dream surges during new jobs, public roles, and any situation where you feel your competence or image is being evaluated.</p><h3>Forgetting Your Lines</h3><p>Onstage, in a meeting, at a podium — you cannot remember what you are supposed to say. The script of your social performance has failed, and the authentic (unprepared) self is exposed.</p><h3>Wearing the Wrong Clothes</h3><p>Arriving at a formal event in pajamas, wearing a costume from another era, or finding your clothes do not fit. The "outfit" of your social role does not match the situation — your Persona is outdated, inappropriate, or insufficient.</p><h3>Being Someone Else</h3><p>Dreaming that you are a completely different person — different name, different life, different body. This can signal that your Persona has become so dominant that your authentic self barely recognizes itself. The dream is offering an alternative: what would you be if you dropped the mask entirely?</p></section>
 <section><h2>When the Persona Cracks</h2><p>Persona dissolution dreams often appear during life transitions: retirement, divorce, career changes, identity crises. The old role no longer fits, and the psyche has not yet constructed a new one. These dreams feel destabilizing but are actually signs of growth — the rigid mask is breaking so something more authentic can emerge.</p></section>
 <div class="cta-box"><h3>Felt exposed in a dream?</h3><p>Your Persona might be cracking open. Tell Noctaras what happened.</p><a class="cta-btn" href="../index.html">Interpret My Dream ›</a></div>
-<div class="related"><h3>Related Articles</h3><a href="dreaming-about-being-naked.html">Dreaming About Being Naked</a><a href="individuation-dreams.html">Individuation in Dreams</a><a href="jung-shadow-self-dreams.html">The Shadow Self</a><a href="anxiety-dreams-meaning.html">Anxiety Dreams</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer></body></html>
+<div class="related"><h3>Related Articles</h3><a href="dreaming-about-being-naked.html">Dreaming About Being Naked</a><a href="individuation-dreams.html">Individuation in Dreams</a><a href="jung-shadow-self-dreams.html">The Shadow Self</a><a href="anxiety-dreams-meaning.html">Anxiety Dreams</a></div></div><footer><p>© 2026 Noctaras · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../index.html">Home</a></p></footer><script>
+(function() {
+  const html = document.documentElement;
+  const toggle = document.getElementById("themeToggleBlog");
+  const moonIcon = "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>";
+  const sunIcon = "<circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>";
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute("data-theme", "dark");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${sunIcon}</svg>`;
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.removeAttribute("data-theme");
+      if(toggle) toggle.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${moonIcon}</svg>`;
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  if(toggle) {
+    toggle.addEventListener("click", () => {
+      const currentlyDark = html.getAttribute("data-theme") === "dark";
+      setTheme(!currentlyDark);
+    });
+  }
+})();
+</script>
+</body></html>

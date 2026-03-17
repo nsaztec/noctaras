@@ -7,14 +7,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
+  --bg: #f7f5f0; --surface: #ffffff; --surface2: #f0eee9;
+  --border: rgba(0,0,0,0.12); --border-h: rgba(0,0,0,0.25);
+  --purple: #4a6b5b; --purple-dim: rgba(90,123,107,0.12);
+  --purple-glow: rgba(90,123,107,0.05); --text: #1a202c;
+  --muted: #5a657a; --dim: rgba(26,32,44,0.45);
+  --accent: #4a6b5b; --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', sans-serif;
+}
+[data-theme="dark"] {
   --bg: #1e1d24; --surface: #26252d; --surface2: #2e2d36;
   --border: rgba(160,140,255,0.26); --border-h: rgba(160,140,255,0.5);
   --purple: #9B8FE8; --purple-dim: rgba(155,143,232,0.18);
   --purple-glow: rgba(155,143,232,0.08); --text: #EAE6FF;
   --muted: rgba(234,230,255,0.82); --dim: rgba(234,230,255,0.55);
-  --accent: #C4B8FF; --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'Outfit', sans-serif;
+  --accent: #C4B8FF;
 }
+
+.theme-toggle-app {
+  background: transparent; border: 1px solid var(--border);
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text); transition: all 0.3s ease;
+  margin-right: 8px;
+}
+.theme-toggle-app:hover { background: var(--surface2); transform: scale(1.05); }
+.theme-toggle-app svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* Invert colors on some hardcoded canvases when light theme */
+html:not([data-theme="dark"]) .vanish-canvas { filter: invert(0.8) sepia(1) hue-rotate(90deg) saturate(0.5); }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; -webkit-font-smoothing: antialiased;  }
@@ -410,6 +431,9 @@ textarea { line-height: 1.75; min-height: 160px; }
       <span class="logo-text">Noctaras</span>
     </a>
     <div class="topbar-right">
+  <button class="theme-toggle-app" id="themeToggleApp1" aria-label="Toggle Theme">
+    <svg class="theme-icon" viewBox="0 0 24 24"><path d="M12 21A9 9 0 1 0 12 3a9 9 0 0 0 0 18zm0-2a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/></svg>
+  </button>
       <button class="btn-your-dreams" onclick="goTree()" style="margin-right:4px;">✦ Dream Tree</button>
       <button class="btn-your-dreams" onclick="goJournal()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -1052,7 +1076,7 @@ async function deleteDreamFromDB(id) {
   function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; ctx.filter = 'blur(10px)'; }
   function draw() {
     nt += 0.002;
-    ctx.fillStyle = '#1e1d24'; ctx.globalAlpha = 0.5; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = window.isDarkTheme ? '#1e1d24' : '#f7f5f0'; ctx.globalAlpha = 0.5; ctx.fillRect(0, 0, w, h);
     for (let i = 0; i < 5; i++) {
       ctx.beginPath(); ctx.lineWidth = 50; ctx.strokeStyle = colors[i % colors.length];
       for (let x = 0; x < w; x += 5) ctx.lineTo(x, n3(x/800, 0.3*i, nt)*100 + h*0.5);
@@ -1374,6 +1398,49 @@ window.deleteDream = async () => {
 function fmtDate(iso) { return new Date(iso).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}); }
 function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxious:'Anxious',joyful:'Joyful',dark:'Dark',neutral:'Neutral'}[m] || m; }
 
+</script>
+
+<script>
+// --- Global Dark Mode Logic ---
+(function() {
+  const html = document.documentElement;
+  const toggles = [document.getElementById("themeToggleApp1"), document.getElementById("themeToggleApp2")];
+  const moonIcon = "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>";
+  const sunIcon = "<circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>";
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute("data-theme", "dark");
+      toggles.forEach(t => { if(t) t.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${sunIcon}</svg>`; });
+      localStorage.setItem("theme", "dark");
+      window.isDarkTheme = true;
+    } else {
+      html.removeAttribute("data-theme");
+      toggles.forEach(t => { if(t) t.innerHTML = `<svg class="theme-icon" viewBox="0 0 24 24" style="width:16px;height:16px;">${moonIcon}</svg>`; });
+      localStorage.setItem("theme", "light");
+      window.isDarkTheme = false;
+    }
+    // Fire event to re-render canvases if needed
+    window.dispatchEvent(new Event("themechanged"));
+  }
+
+  // Determine initial
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  toggles.forEach(tbr => {
+    if(tbr) {
+      tbr.addEventListener("click", () => {
+        const currentlyDark = html.getAttribute("data-theme") === "dark";
+        setTheme(!currentlyDark);
+      });
+    }
+  });
+})();
 </script>
 </body>
 </html>
