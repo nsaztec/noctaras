@@ -127,9 +127,9 @@ a { text-decoration: none; color: inherit; }
 
 .dream-card { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); padding: 20px 24px; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; box-shadow: var(--shadow-sm); }
 .dream-card:hover { border-color: var(--border-strong); transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.card-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
-.card-title { font-weight: 600; color: var(--text); font-size: 16px; }
-.card-date { font-size: 13px; color: var(--subtle); }
+.card-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 12px; }
+.card-title { font-weight: 600; color: var(--text); font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+.card-date { font-size: 13px; color: var(--subtle); flex-shrink: 0; white-space: nowrap; }
 .card-row { display: flex; align-items: center; gap: 12px; }
 .card-mood { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text); background: var(--surface-hover); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); }
 .card-preview { font-size: 14px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 400px; }
@@ -1192,17 +1192,20 @@ function addAIMsg(text, dreamText, titleText) {
     } else {
       el.innerHTML = text.replace(/\n/g, '<br>');
       if (dreamText) {
-        const btn = document.createElement('button'); btn.className = 'msg-save-btn';
-        btn.innerHTML = '✦ Save to journal';
-        btn.onclick = async () => {
-          btn.innerHTML = 'Saving...'; btn.disabled = true;
-          const finalTitle = titleText || 'Dream Entry';
-          const dreamData = { title: finalTitle, text: dreamText, mood: 'mysterious', date: new Date().toISOString(), analysis: text };
-          const id = await saveDreamToDB(dreamData);
-          if (id) { dreams.unshift({id, ...dreamData}); btn.innerHTML = '✓ Saved'; }
-          else { btn.innerHTML = 'Error saving'; btn.disabled = false; }
+        const finalTitle = titleText || 'Dream Entry';
+        const dreamData = { 
+          title: finalTitle, 
+          text: dreamText, 
+          mood: 'mysterious', 
+          date: new Date().toISOString(), 
+          analysis: text 
         };
-        el.appendChild(document.createElement('br')); el.appendChild(btn);
+        // Auto-save quietly in the background
+        saveDreamToDB(dreamData).then(id => {
+          if (id) {
+            dreams.unshift({id, ...dreamData});
+          }
+        });
       }
       c.removeEventListener('scroll', onScroll);
     }
