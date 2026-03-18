@@ -1,0 +1,12 @@
+# Inter-AI Communication Rules (Claude Code <-> Antigravity)
+
+You are collaborating with another AI coding assistant (Antigravity by Google). To ensure architectural context and reasoning are not lost when you make changes to the Noctaras project, YOU MUST STRICTLY FOLLOW THIS RULE:
+
+Whenever you complete a task or make significant code changes, you **MUST** append a brief log entry to `AI_CHANGELOG.md` in the root directory.
+
+## Format of the log entry:
+### [YYYY-MM-DD] - [Task/Feature Title]
+- **AI Agent**: Claude Code
+- **Goal/Context**: Briefly explain WHY you were asked to make this change (what the user wanted).
+- **Changes Made**: Briefly list WHAT you changed (which files, what logic was added/removed).
+- **Reasoning**: Any architectural decisions, UI choices, or bug fixes made during the process. Keep it concise but technical.

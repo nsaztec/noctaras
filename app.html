@@ -1182,8 +1182,10 @@ const PHS = ['Describe your dream in detail...','I was flying over a city of clo
 let phIdx = 0;
 setInterval(() => {
   const input = document.getElementById('vanishInput');
-  if (input.value) return;
-  const ph = document.getElementById('vanishPH'), txt = document.getElementById('phText');
+  const ph = document.getElementById('vanishPH');
+  const txt = document.getElementById('phText');
+  if (!input || !ph || !txt || input.value) return;
+  
   ph.style.opacity = '0'; ph.style.transform = 'translateY(-8px)';
   setTimeout(() => {
     phIdx = (phIdx + 1) % PHS.length; txt.textContent = PHS[phIdx];
