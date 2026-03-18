@@ -12,8 +12,8 @@ export default async function handler(req, res) {
   }
 
   const { error } = await resend.emails.send({
-    from: 'onboarding@resend.dev',
-    to: 'support@noctaras.com',
+    from: 'noreply@noctaras.com',
+    to: 'enes.pirt@gmail.com',
     reply_to: email,
     subject: `Support Request from ${name}`,
     html: `<p><strong>From:</strong> ${name} &lt;${email}&gt;</p><p>${message.replace(/\n/g, '<br>')}</p>`
