@@ -171,73 +171,30 @@ nav.scrolled {
 .section-title { font-size: 32px; font-weight: 600; letter-spacing: -0.03em; color: var(--text); margin-bottom: 16px; }
 .section-desc { font-size: 16px; color: var(--muted); line-height: 1.6; }
 
-/* ── FEATURE CAROUSEL ── */
-.feat-car {
-  display: flex; border-radius: 24px; overflow: hidden;
-  border: 1px solid var(--border); min-height: 520px;
+/* ── FEATURE ACCORDION ── */
+.acc-feat { display: flex; gap: 64px; align-items: flex-start; }
+.acc-feat-left { flex: 1; }
+.acc-item { border-bottom: 1px solid var(--border); }
+.acc-trigger {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0; background: none; border: none; cursor: pointer; text-align: left; gap: 16px; font-family: inherit;
 }
-.feat-left {
-  width: 38%; flex-shrink: 0; background: #171717;
-  position: relative; overflow: hidden; display: flex; align-items: center;
-}
-[data-theme="dark"] .feat-left { background: #EDE8DF; }
-.feat-fade-t, .feat-fade-b {
-  position: absolute; left: 0; right: 0; height: 110px; z-index: 2; pointer-events: none;
-}
-.feat-fade-t { top: 0; background: linear-gradient(to bottom, #171717, transparent); }
-.feat-fade-b { bottom: 0; background: linear-gradient(to top, #171717, transparent); }
-[data-theme="dark"] .feat-fade-t { background: linear-gradient(to bottom, #EDE8DF, transparent); }
-[data-theme="dark"] .feat-fade-b { background: linear-gradient(to top, #EDE8DF, transparent); }
-.feat-pill-area {
-  width: 100%; height: 380px; position: relative; overflow: hidden;
-}
-.feat-pill {
-  position: absolute; left: 28px; right: 28px; top: 50%;
-  display: flex; align-items: center; gap: 12px; padding: 14px 20px;
-  border-radius: 40px; border: 1px solid transparent; background: transparent;
-  color: rgba(255,255,255,0.35); font-size: 11px; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
-  transition: transform 0.55s cubic-bezier(0.175,0.885,0.32,1.05), opacity 0.55s ease, background 0.3s, border-color 0.3s, color 0.3s;
-  font-family: inherit; white-space: nowrap; transform: translateY(-50%);
-}
-.feat-pill.fp-active { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); color: #fff; }
-[data-theme="dark"] .feat-pill { color: rgba(0,0,0,0.35); }
-[data-theme="dark"] .feat-pill.fp-active { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.2); color: #111; }
-.feat-pill svg { width: 15px; height: 15px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.feat-right {
-  flex: 1; background: var(--surface-hover); display: flex; align-items: center;
-  justify-content: center; position: relative; overflow: hidden; padding: 48px 40px;
-  border-left: 1px solid var(--border);
-}
-.feat-card-wrap { position: relative; width: 280px; aspect-ratio: 4/5; }
-.feat-card {
-  position: absolute; inset: 0; border-radius: 22px; overflow: hidden;
-  border: 5px solid var(--surface); background: var(--surface); box-shadow: var(--shadow-lg);
-  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.175,0.885,0.32,1.05), filter 0.4s;
-  transform-origin: center;
-}
-.feat-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.feat-card.fc-hidden  { opacity: 0; transform: scale(0.7); z-index: 0; pointer-events: none; }
-.feat-card.fc-prev    { opacity: 0.4; transform: translateX(-70px) scale(0.87) rotate(-4deg); z-index: 1; pointer-events: none; filter: grayscale(1) brightness(0.6); }
-.feat-card.fc-next    { opacity: 0.4; transform: translateX(70px) scale(0.87) rotate(4deg); z-index: 1; pointer-events: none; filter: grayscale(1) brightness(0.6); }
-.feat-card.fc-active  { opacity: 1; transform: translateX(0) scale(1) rotate(0deg); z-index: 10; filter: none; }
-.feat-caption {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 40px 20px 20px; background: linear-gradient(to top, rgba(0,0,0,0.88) 60%, transparent);
-  opacity: 0; transition: opacity 0.3s;
-}
-.feat-card.fc-active .feat-caption { opacity: 1; }
-.feat-cap-tag {
-  display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.85); font-size: 9px; font-weight: 600; letter-spacing: 0.18em;
-  text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 8px;
-}
-.feat-cap-desc { color: #fff; font-size: 15px; line-height: 1.5; margin: 0; }
+.acc-trigger h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: var(--muted); transition: color 0.2s; margin: 0; }
+.acc-item.acc-open .acc-trigger h3 { color: var(--text); }
+.acc-chev { width: 18px; height: 18px; flex-shrink: 0; stroke: var(--muted); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s ease, stroke 0.2s; }
+.acc-item.acc-open .acc-chev { transform: rotate(180deg); stroke: var(--text); }
+.acc-body { max-height: 0; overflow: hidden; transition: max-height 0.38s ease; }
+.acc-item.acc-open .acc-body { max-height: 360px; }
+.acc-desc { font-size: 14px; color: var(--muted); line-height: 1.75; padding-bottom: 22px; }
+.acc-mobile-img { display: none; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.acc-mobile-img img { width: 100%; max-height: 240px; object-fit: cover; display: block; }
+.acc-feat-right { width: 45%; flex-shrink: 0; position: sticky; top: 88px; }
+.acc-feat-img-wrap { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); aspect-ratio: 4/3; }
+.acc-feat-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s ease; }
 @media (max-width: 860px) {
-  .feat-car { flex-direction: column; }
-  .feat-left { width: 100%; min-height: 260px; }
-  .feat-pill-area { height: 220px; }
-  .feat-right { min-height: 380px; }
+  .acc-feat { flex-direction: column; gap: 0; }
+  .acc-feat-right { display: none; }
+  .acc-mobile-img { display: block; }
 }
 
 /* ── HOW IT WORKS (Minimal Path) ── */
@@ -714,16 +671,12 @@ footer {
     <p class="section-desc">Everything you need to untangle your subconscious, with zero friction.</p>
   </div>
 
-  <div class="feat-car reveal delay-1">
-    <!-- Left: cycling feature pills -->
-    <div class="feat-left">
-      <div class="feat-fade-t"></div>
-      <div class="feat-pill-area" id="featPillArea"></div>
-      <div class="feat-fade-b"></div>
-    </div>
-    <!-- Right: image card stack -->
-    <div class="feat-right">
-      <div class="feat-card-wrap" id="featCardWrap"></div>
+  <div class="acc-feat reveal delay-1">
+    <div class="acc-feat-left" id="accFeatLeft"></div>
+    <div class="acc-feat-right">
+      <div class="acc-feat-img-wrap">
+        <img id="accFeatImg" src="" alt="Feature preview">
+      </div>
     </div>
   </div>
 </section>
@@ -1228,124 +1181,82 @@ document.getElementById('t-prev').addEventListener('click', () => {
   });
 })();
 
-// Feature Carousel
+// Feature Accordion
 (function() {
-  var ITEM_H = 64;
-  var INTERVAL = 3400;
   var FEATURES = [
     {
-      label: 'Deep Symbol Analysis',
-      icon: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><circle cx="11" cy="11" r="3"/></svg>',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=80',
+      title: 'Deep Symbol Analysis',
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
       description: 'Every symbol in your dream carries meaning. We decode archetypes using Jungian frameworks and link recurring images to past emotional contexts.'
     },
     {
-      label: 'Dream Tree',
-      icon: '<svg viewBox="0 0 24 24"><path d="M12 22V12"/><path d="M12 12C10 10 7 7 7 5a5 5 0 0 1 10 0c0 2-3 5-5 7z"/><path d="M5 20c0-2 3-3 7-3s7 1 7 3"/></svg>',
-      image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=700&q=80',
+      title: 'Dream Tree',
+      image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80',
       description: 'A living visual tree of your entire dream history. Watch branches grow as months pass — each leaf a dream, each branch a recurring theme.'
     },
     {
-      label: 'Monthly Mood Report',
-      icon: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>',
-      image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=700&q=80',
+      title: 'Monthly Mood Report',
+      image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=800&q=80',
       description: 'At the end of each month, Noctaras generates a full emotional landscape report — tracking your mood shifts, dominant symbols, and inner growth.'
     },
     {
-      label: 'Pattern Recognition',
-      icon: '<svg viewBox="0 0 24 24"><path d="M2 12h20M12 2v20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/></svg>',
-      image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=700&q=80',
+      title: 'Pattern Recognition',
+      image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
       description: 'Our AI identifies hidden psychological archetypes repeating across your sessions — themes you might have never consciously noticed.'
     },
     {
-      label: 'End-to-End Encryption',
-      icon: '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
-      image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=700&q=80',
+      title: 'End-to-End Encryption',
+      image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80',
       description: 'Your dreams are intimate. Every entry is encrypted before leaving your device. Only you hold the key — Noctaras never reads your data.'
     },
     {
-      label: 'Multilingual AI',
-      icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/></svg>',
-      image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=700&q=80',
+      title: 'Multilingual AI',
+      image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80',
       description: 'Enter your dream in English, Turkish, Spanish, or any mix of languages. The engine parses meaning cross-lingually without losing nuance.'
     },
     {
-      label: 'Chronological Timeline',
-      icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
-      image: 'https://images.unsplash.com/photo-1495364141860-b0d03eccd065?auto=format&fit=crop&w=700&q=80',
+      title: 'Chronological Timeline',
+      image: 'https://images.unsplash.com/photo-1495364141860-b0d03eccd065?auto=format&fit=crop&w=800&q=80',
       description: 'View how your subconscious themes shift over months and years — a longitudinal map of your inner emotional landscape and personal growth.'
     }
   ];
 
-  var pillArea = document.getElementById('featPillArea');
-  var cardWrap = document.getElementById('featCardWrap');
-  if (!pillArea || !cardWrap) return;
+  var container = document.getElementById('accFeatLeft');
+  var mainImg = document.getElementById('accFeatImg');
+  if (!container || !mainImg) return;
 
-  var currentIdx = 0;
-  var isPaused = false;
-  var timer = null;
+  var activeIdx = 0;
+  var CHEV = '<svg class="acc-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
 
-  // Build pills
+  // Build accordion items
   FEATURES.forEach(function(f, i) {
-    var btn = document.createElement('button');
-    btn.className = 'feat-pill';
-    btn.innerHTML = f.icon + '<span>' + f.label + '</span>';
-    btn.addEventListener('click', function() { goTo(i); });
-    btn.addEventListener('mouseenter', function() { isPaused = true; });
-    btn.addEventListener('mouseleave', function() { isPaused = false; });
-    pillArea.appendChild(btn);
-  });
-
-  // Build cards
-  FEATURES.forEach(function(f, i) {
-    var card = document.createElement('div');
-    card.className = 'feat-card fc-hidden';
-    card.innerHTML = '<img src="' + f.image + '" alt="' + f.label + '" loading="lazy">'
-      + '<div class="feat-caption">'
-      + '<div class="feat-cap-tag">' + (i + 1) + ' \u00B7 ' + f.label + '</div>'
-      + '<p class="feat-cap-desc">' + f.description + '</p>'
+    var item = document.createElement('div');
+    item.className = 'acc-item' + (i === 0 ? ' acc-open' : '');
+    item.innerHTML = '<button class="acc-trigger">'
+      + '<h3>' + f.title + '</h3>' + CHEV
+      + '</button>'
+      + '<div class="acc-body">'
+      + '<p class="acc-desc">' + f.description + '</p>'
+      + '<div class="acc-mobile-img"><img src="' + f.image + '" alt="' + f.title + '" loading="lazy"></div>'
       + '</div>';
-    cardWrap.appendChild(card);
+
+    item.querySelector('.acc-trigger').addEventListener('click', function() {
+      var isOpen = item.classList.contains('acc-open');
+      // close all
+      container.querySelectorAll('.acc-item').forEach(function(el) { el.classList.remove('acc-open'); });
+      if (!isOpen) {
+        item.classList.add('acc-open');
+        // fade-swap main image
+        mainImg.style.opacity = '0';
+        setTimeout(function() { mainImg.src = f.image; mainImg.style.opacity = '1'; }, 220);
+      }
+    });
+
+    container.appendChild(item);
   });
 
-  var pills = pillArea.querySelectorAll('.feat-pill');
-  var cards = cardWrap.querySelectorAll('.feat-card');
-
-  function goTo(idx) {
-    currentIdx = ((idx % FEATURES.length) + FEATURES.length) % FEATURES.length;
-    update();
-  }
-
-  function update() {
-    var len = FEATURES.length;
-    pills.forEach(function(pill, i) {
-      var diff = i - currentIdx;
-      if (diff > len / 2) diff -= len;
-      if (diff < -len / 2) diff += len;
-      pill.style.transform = 'translateY(calc(-50% + ' + (diff * ITEM_H) + 'px))';
-      pill.style.opacity = Math.max(0, 1 - Math.abs(diff) * 0.22);
-      pill.classList.toggle('fp-active', i === currentIdx);
-    });
-    cards.forEach(function(card, i) {
-      var diff = i - currentIdx;
-      if (diff > len / 2) diff -= len;
-      if (diff < -len / 2) diff += len;
-      card.classList.remove('fc-active', 'fc-prev', 'fc-next', 'fc-hidden');
-      if (diff === 0) card.classList.add('fc-active');
-      else if (diff === -1) card.classList.add('fc-prev');
-      else if (diff === 1) card.classList.add('fc-next');
-      else card.classList.add('fc-hidden');
-    });
-  }
-
-  function startTimer() {
-    timer = setInterval(function() {
-      if (!isPaused) goTo(currentIdx + 1);
-    }, INTERVAL);
-  }
-
-  update();
-  startTimer();
+  // Set initial image
+  mainImg.src = FEATURES[0].image;
 })();
 
 // Pricing toggle — monthly ↔ annual (handles both instances)
