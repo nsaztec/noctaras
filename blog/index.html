@@ -100,7 +100,7 @@
             backdrop-filter: blur(12px);
             border-bottom-color: var(--border);
         }
-        .logo { font-family: var(--sans); font-size: 1.2rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .logo { font-family: var(--sans); font-size: 14px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
         .logo svg { transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1); }
         .logo:hover svg { transform: rotate(180deg) scale(1.1); }
         .nav-links { display: flex; gap: 2.5rem; align-items: center; }
@@ -509,17 +509,18 @@
 <style>
 /* Universal Standardized Logo Styles based on NoctarasBlog */
 .logo, .f-logo, .auth-logo, .nav-logo, .j-logo {
-  font-family: var(--sans, 'Inter', sans-serif) !important; 
-  font-size: 1.2rem !important; 
-  font-weight: 600 !important; 
-  display: flex !important; 
-  align-items: center !important; 
+  font-family: var(--sans, 'Inter', sans-serif) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
   justify-content: flex-start !important;
-  gap: 10px !important; 
+  gap: 10px !important;
   color: var(--text) !important;
   text-decoration: none !important;
-  letter-spacing: normal !important;
-  margin-bottom: 0 !important; /* clear overrides */
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0 !important;
 }
 .logo:hover, .f-logo:hover, .auth-logo:hover, .nav-logo:hover, .j-logo:hover {
   opacity: 1 !important;
@@ -534,7 +535,7 @@
   transform: rotate(180deg) scale(1.1) !important;
 }
 .auth-logo span, .nav-logo-text, .nav-logo span, .j-logo span, .f-logo {
-  font-size: 1.2rem !important;
+  font-size: 14px !important;
 }
 </style>
 
