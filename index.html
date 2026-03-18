@@ -115,7 +115,11 @@ nav.scrolled {
   padding: 6px 12px; border-radius: 99px; margin-bottom: 24px;
   box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; gap: 8px;
 }
-.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 8px #22C55E; }
+.badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 6px #22C55E; animation: pulse-dot 2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px #22C55E; }
+  50% { opacity: 0.5; box-shadow: 0 0 12px #22C55E; }
+}
 .hero-title {
   font-size: clamp(40px, 7vw, 76px); font-weight: 600; letter-spacing: -0.04em;
   color: var(--text); margin-bottom: 20px; line-height: 1.05; max-width: 800px;
@@ -378,7 +382,7 @@ footer {
 </nav>
 
 <section id="hero">
-  <div class="badge reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;margin-right:2px"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> AI Dream Analysis Engine v2.0</div>
+  <div class="badge reveal"><span class="badge-dot"></span> AI Dream Analysis Engine v2.0</div>
   <h1 class="hero-title reveal delay-1">Every dream has a meaning.<br>Find yours.</h1>
   <p class="hero-sub reveal delay-2">A minimalist dream journal and analysis engine that uses deep psychological frameworks to interpret the fragmented metaphors of your subconscious.</p>
   <div class="hero-actions reveal delay-2">
