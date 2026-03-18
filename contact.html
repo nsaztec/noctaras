@@ -283,14 +283,34 @@ nav.dark-nav {
 </footer>
 
 <script>
-function sendMail(e) {
+async function sendMail(e) {
   e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
   const name = document.getElementById('contactName').value.trim();
   const email = document.getElementById('contactEmail').value.trim();
   const message = document.getElementById('contactMessage').value.trim();
-  const subject = encodeURIComponent('Support Request from ' + name);
-  const body = encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + message);
-  window.location.href = 'mailto:support@noctaras.com?subject=' + subject + '&body=' + body;
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message })
+    });
+
+    if (res.ok) {
+      btn.textContent = 'Message sent!';
+      document.getElementById('contactForm').reset();
+    } else {
+      btn.textContent = 'Failed — try again';
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = 'Failed — try again';
+    btn.disabled = false;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
