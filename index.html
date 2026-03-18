@@ -341,6 +341,29 @@ footer {
 .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
 .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
 
+/* ── FAQ SECTION ── */
+.faq-section { position: relative; overflow: hidden; padding-bottom: 60px; }
+.faq-glow { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(160,160,255,0.05), transparent 70%); filter: blur(40px); z-index: -1; pointer-events: none; }
+.faq-subtitle { background: linear-gradient(to right, var(--text), var(--muted)); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 500; font-size: 14px; margin-bottom: 16px; display: inline-block; letter-spacing: 0.05em; text-transform: uppercase; text-align: center; }
+.faq-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 60px; position: relative; z-index: 10; }
+.faq-tab { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; transition: all 0.3s var(--ease-out); cursor: pointer; position: relative; overflow: hidden; }
+.faq-tab:hover { color: var(--text); border-color: var(--border-strong); }
+.faq-tab.active { background: var(--text); color: var(--bg); border-color: var(--text); box-shadow: var(--shadow-sm); }
+.faq-container { max-width: 768px; margin: 0 auto; position: relative; z-index: 10; padding: 0 5%; }
+.faq-group { display: none; animation: fadeUp 0.4s var(--ease-out); }
+.faq-group.active { display: block; }
+.faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; transition: all 0.3s var(--ease-out); box-shadow: var(--shadow-sm); }
+.faq-item.active { background: var(--surface-hover); border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+.faq-question { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px; background: transparent; border: none; color: var(--text); font-size: 16px; font-weight: 500; cursor: pointer; text-align: left; transition: color 0.3s; }
+.faq-question:hover { color: var(--accent); }
+.faq-item.active .faq-question { color: var(--text); }
+.faq-icon { width: 20px; height: 20px; color: var(--muted); transition: transform 0.3s var(--ease-spring), color 0.3s; flex-shrink: 0; }
+.faq-item.active .faq-icon { transform: rotate(45deg); color: var(--text); }
+.faq-answer-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s var(--ease-out); }
+.faq-item.active .faq-answer-wrapper { grid-template-rows: 1fr; }
+.faq-answer { overflow: hidden; }
+.faq-answer-inner { padding: 0 24px 24px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 <script src="/logo.js"></script>
 </head>
@@ -731,6 +754,79 @@ footer {
   </div>
 </section>
 
+<section id="faq" class="section-wrap faq-section reveal" style="padding-top: 60px;">
+  <div class="faq-glow"></div>
+  <div class="section-header reveal" style="text-align: center; margin: 0 auto 40px; max-width: 100%;">
+    <span class="faq-subtitle">Let's answer some questions</span>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+  </div>
+
+  <div class="faq-tabs reveal delay-1" id="faqTabs">
+    <button class="faq-tab active" data-target="faq-general">General</button>
+    <button class="faq-tab" data-target="faq-interp">Interpretations</button>
+    <button class="faq-tab" data-target="faq-privacy">Privacy & Security</button>
+    <button class="faq-tab" data-target="faq-pricing">Pricing</button>
+  </div>
+
+  <div class="faq-container reveal delay-2">
+    <!-- General -->
+    <div class="faq-group active" id="faq-general">
+      <div class="faq-item">
+        <button class="faq-question">What is Noctaras? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">Noctaras is a digital dream journal and interpretation engine that uses advanced psychological analysis and pattern recognition to help you decode the language of your subconscious.</div></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Do I need an account to use the service? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">Yes, creating a free account is necessary to securely store your dreams and track recurring themes over time. Your data is strictly personal.</div></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">How is this different from a dream dictionary? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">Standard dictionaries provide generic meanings. Noctaras uses Jungian archetypal frameworks combined with contextual pattern recognition to provide an analysis tailored to your specific emotional state and history.</div></div></div>
+      </div>
+    </div>
+
+    <!-- Interpretations -->
+    <div class="faq-group" id="faq-interp">
+      <div class="faq-item">
+        <button class="faq-question">How does the AI dream interpreter work? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">The engine has been trained on deep psychological frameworks, classical archetype literature, and symbolism. It analyzes your narrative for emotional themes, conflicts, and recurring symbols rather than literal events.</div></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Can the engine understand fragmented dreams? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">Absolutely. Dreams are inherently non-linear and fragmented. The engine is specifically designed to parse stream-of-consciousness text, multiple languages, and chaotic imagery without requiring perfect grammar.</div></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Are the interpretations perfectly accurate? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">Interpretations are structural insights meant to spark self-reflection. Only you can confirm the final meaning, but Noctaras acts as a highly trained psychological mirror to guide you there.</div></div></div>
+      </div>
+    </div>
+
+    <!-- Privacy -->
+    <div class="faq-group" id="faq-privacy">
+      <div class="faq-item">
+        <button class="faq-question">What happens to my dreams after I log them? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">Your entries are kept strictly confidential. They are stored securely in our databases. We never sell your personal narrative data to third parties.</div></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Can anyone else read my journal? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">No. Your journal is a private space locked behind your authentication credentials. Only you have access to your saved dreams and their interpretations.</div></div></div>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="faq-group" id="faq-pricing">
+      <div class="faq-item">
+        <button class="faq-question">Is there a free version available? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">Yes, Noctaras offers a forever-free tier that includes 3 deep interpretations per month and unlimited basic journaling.</div></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What are the benefits of upgrading to Pro? <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <div class="faq-answer-wrapper"><div class="faq-answer"><div class="faq-answer-inner">Pro users unlock unlimited interpretations, our unique chronological emotional mapping tools, and priority processing. This is ideal for active dreamers who want longitudinal insights into their mental landscape.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="f-grid">
     <div>
@@ -818,7 +914,22 @@ document.getElementById('t-prev').addEventListener('click', () => {
   idx = Math.max(idx - 1, 0);
   track.style.transform = `translateX(-${idx * (340 + 24)}px)`;
 });
-</script>
 
+// FAQ Logic
+document.querySelectorAll('.faq-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.faq-group').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.target).classList.add('active');
+  });
+});
+
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('.faq-item').classList.toggle('active');
+  });
+});
+</script>
 </body>
 </html>
