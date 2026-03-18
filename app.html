@@ -693,6 +693,11 @@ let vanishData = [], vanishBusy = false;
 // ── Auth state ──
 onAuthStateChanged(auth, async (user) => {
   if (user) {
+    // Block email/password accounts that haven't verified their email yet
+    if (!user.emailVerified && user.providerData[0]?.providerId === 'password') {
+      await fbSignOut(auth);
+      return;
+    }
     currentUser = user;
     showScreen('chat');
     await loadDreams();
@@ -721,7 +726,12 @@ window.signInEmail = async () => {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    if (!cred.user.emailVerified) {
+      await fbSignOut(auth);
+      document.getElementById('loginError').textContent = 'Please verify your email first. Check your inbox for the verification link.';
+      return;
+    }
   } catch (e) {
     document.getElementById('loginError').textContent = friendlyError(e.code);
   }
