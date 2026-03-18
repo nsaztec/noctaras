@@ -421,7 +421,7 @@ textarea { min-height: 160px; resize: vertical; }
 
 <!-- ══════════════ AUTH SCREEN ══════════════ -->
 <!-- ══════════════ AUTH SCREEN (Shadcn Minimal Redesign) ══════════════ -->
-<div id="screen-auth">
+<div id="screen-auth" class="active">
   <canvas id="authParticles"></canvas>
   <div class="auth-bg-decorators">
     <div class="auth-bg-gradient-1"></div>
@@ -1647,8 +1647,12 @@ function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxiou
   }
 
   function draw() {
+    if (!canvas.closest('#screen-auth').classList.contains('active')) {
+      requestAnimationFrame(draw);
+      return;
+    }
     ctx.clearRect(0, 0, width, height);
-    
+
     // dynamic colors based on current theme
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     rgb = isDark ? [255, 255, 255] : [100, 100, 100];
