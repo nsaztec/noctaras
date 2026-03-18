@@ -21,7 +21,9 @@
     const nav = document.querySelector('nav');
     if (!nav) return;
 
-    // Force consistent nav padding so logo is always 48px from edge
+    // Force consistent nav padding on all 4 sides so logo is always in same position
+    nav.style.setProperty('padding-top', '20px', 'important');
+    nav.style.setProperty('padding-bottom', '20px', 'important');
     nav.style.setProperty('padding-left', '48px', 'important');
     nav.style.setProperty('padding-right', '48px', 'important');
 
