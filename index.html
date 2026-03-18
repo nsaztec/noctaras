@@ -240,231 +240,170 @@ nav.scrolled {
 .p-list li.off { opacity: 0.4; text-decoration: line-through; }
 .p-btn { width: 100%; height: 40px; }
 
-/* ── DREAM JOURNEY ── */
-.dj-section {
+/* ── FINAL CTA ── */
+.fcta-section {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 120px 5% 140px;
   position: relative;
-  background: #080810;
   overflow: hidden;
-  padding: 120px 5% 100px;
 }
-.dj-stars {
+.fcta-section::before {
+  content: '';
   position: absolute;
-  inset: 0;
-  pointer-events: none;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
 }
-.dj-star {
-  position: absolute;
-  border-radius: 50%;
-  background: #fff;
-  animation: dj-twinkle var(--t, 3s) ease-in-out infinite;
-  animation-delay: var(--d, 0s);
-}
-@keyframes dj-twinkle {
-  0%, 100% { opacity: var(--o1, 0.4); }
-  50% { opacity: var(--o2, 0.1); }
-}
-.dj-moon {
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 340px;
-  height: 340px;
-  pointer-events: none;
-}
-.dj-inner {
-  position: relative;
-  z-index: 1;
+.fcta-inner {
   max-width: 1100px;
   margin: 0 auto;
 }
-.dj-header {
+.fcta-top {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 72px;
 }
-.dj-label {
+.fcta-label {
   font-size: 10px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #7a9b8b;
+  color: #5a7b6b;
   font-weight: 600;
   display: block;
   margin-bottom: 20px;
 }
-.dj-title {
-  font-family: var(--serif);
-  font-size: clamp(32px, 4vw, 54px);
-  font-weight: 500;
-  color: #f7f5f0;
-  line-height: 1.15;
+.fcta-headline {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   margin-bottom: 20px;
 }
-.dj-sub {
-  font-size: 16px;
-  color: rgba(247,245,240,0.5);
-  max-width: 520px;
+.fcta-headline em {
+  font-style: normal;
+  color: #5a7b6b;
+}
+.fcta-desc {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 480px;
   margin: 0 auto;
-  line-height: 1.8;
+  line-height: 1.75;
 }
-.dj-journey-wrap {
-  position: relative;
-  margin-bottom: 80px;
-}
-.dj-path-svg {
-  position: absolute;
-  top: 50%;
-  left: 5%;
-  width: 90%;
-  height: 160px;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-#djPathProgress {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  transition: stroke-dashoffset 1.8s ease;
-}
-.dj-path-animated #djPathProgress {
-  stroke-dashoffset: 0;
-}
-.dj-steps {
+.fcta-cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  position: relative;
-  z-index: 1;
-}
-.dj-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 20px;
-}
-.dj-dot {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
-}
-.dj-dot-done {
-  background: #5a7b6b;
-  border: 2px solid #7a9b8b;
-}
-.dj-dot-done svg { width: 20px; height: 20px; }
-.dj-dot-active {
-  background: rgba(122,155,139,0.15);
-  border: 2px solid #7a9b8b;
-}
-.dj-dot-pulse {
-  display: block;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #7a9b8b;
-  animation: dj-pulse 2s ease-in-out infinite;
-}
-.dj-dot-active::before {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  background: rgba(122,155,139,0.12);
-  animation: dj-pulse-ring 2s ease-in-out infinite;
-}
-@keyframes dj-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
-}
-@keyframes dj-pulse-ring {
-  0%, 100% { transform: scale(1); opacity: 0.4; }
-  50% { transform: scale(1.3); opacity: 0; }
-}
-.dj-dot-pending {
-  background: rgba(255,255,255,0.04);
-  border: 2px solid rgba(255,255,255,0.12);
-  width: 48px;
-  height: 48px;
-}
-.dj-step-body { flex: 1; }
-.dj-step-num {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: #7a9b8b;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 8px;
-}
-.dj-step h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #f7f5f0;
-  margin-bottom: 10px;
-  line-height: 1.3;
-}
-.dj-step p {
-  font-size: 14px;
-  color: rgba(247,245,240,0.45);
-  line-height: 1.7;
-}
-.dj-cta {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+  margin-bottom: 72px;
 }
-.dj-cta-eyebrow {
-  font-family: var(--serif);
-  font-size: 22px;
-  font-style: italic;
-  color: rgba(247,245,240,0.7);
-  margin: 0;
-}
-.dj-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #f7f5f0;
-  color: #080810;
-  font-size: 15px;
-  font-weight: 600;
-  padding: 16px 40px;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: all 0.25s var(--ease-out);
-  letter-spacing: -0.01em;
-}
-.dj-cta-btn:hover {
-  background: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-}
-.dj-cta-note {
-  font-size: 12px;
-  color: rgba(247,245,240,0.3);
-  letter-spacing: 0.05em;
-}
-/* Reveal animation */
-.dj-reveal {
+.fcta-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  transition-delay: var(--dj-delay, 0s);
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.2s, box-shadow 0.2s;
+  transition-delay: var(--fc-delay, 0s);
 }
-.dj-reveal.dj-visible {
+.fcta-card.fc-visible {
   opacity: 1;
   transform: translateY(0);
 }
-@media (max-width: 768px) {
-  .dj-steps { grid-template-columns: 1fr 1fr; }
-  .dj-path-svg { display: none; }
+.fcta-card:hover {
+  border-color: rgba(90,123,107,0.3);
+  box-shadow: var(--shadow-float);
 }
-@media (max-width: 480px) {
-  .dj-steps { grid-template-columns: 1fr; }
+.fcta-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(90,123,107,0.08);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.fcta-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #5a7b6b;
+}
+.fcta-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.fcta-card p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+}
+.fcta-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+}
+.fcta-bottom.fc-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fcta-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 18px 48px;
+  border-radius: 12px;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: all 0.2s var(--ease-out);
+}
+.fcta-cta-btn svg {
+  width: 18px; height: 18px;
+  transition: transform 0.2s ease;
+}
+.fcta-cta-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+}
+.fcta-cta-btn:hover svg { transform: translateX(4px); }
+.fcta-pills {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.fcta-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.fcta-pill svg {
+  width: 14px; height: 14px;
+  stroke: #5a7b6b;
+}
+[data-theme="dark"] .fcta-section { background: var(--bg); }
+[data-theme="dark"] .fcta-card { background: var(--surface); }
+@media (max-width: 768px) {
+  .fcta-cards { grid-template-columns: 1fr; }
+  .fcta-headline { letter-spacing: -0.02em; }
 }
 
 /* ── FOOTER ── */
@@ -1054,79 +993,62 @@ footer {
   </div>
 </section>
 
-<!-- ══════════════ DREAM JOURNEY CTA ══════════════ -->
-<section id="dream-journey" class="dj-section">
-  <div class="dj-stars" id="djStars" aria-hidden="true"></div>
-  <div class="dj-moon" aria-hidden="true">
-    <svg viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="90" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/><circle cx="100" cy="100" r="60" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)" stroke-width="1"/><path d="M100 20 C140 20 170 55 170 100 C170 145 140 180 100 180 C120 160 134 132 134 100 C134 68 120 40 100 20Z" fill="rgba(255,255,255,0.05)"/></svg>
-  </div>
-
-  <div class="dj-inner">
-    <div class="dj-header dj-reveal">
-      <span class="dj-label">How it works</span>
-      <h2 class="dj-title">From dream to discovery,<br>in four steps.</h2>
-      <p class="dj-sub">Every night, your subconscious leaves a trail. Noctaras follows it — and leads you back to yourself.</p>
+<!-- ══════════════ FINAL CTA ══════════════ -->
+<section id="dream-journey" class="fcta-section">
+  <div class="fcta-inner">
+    <div class="fcta-top">
+      <span class="fcta-label">Start tonight</span>
+      <h2 class="fcta-headline">You've already had the dream.<br><em>Now understand it.</em></h2>
+      <p class="fcta-desc">Every dream carries meaning. Noctaras uses AI-powered psychological analysis to decode yours — privately, instantly, and with depth.</p>
     </div>
 
-    <div class="dj-journey-wrap">
-      <!-- Animated SVG path -->
-      <svg class="dj-path-svg" viewBox="0 0 900 160" preserveAspectRatio="none" aria-hidden="true">
-        <path id="djPathLine" d="M 80 80 C 200 20, 280 140, 450 80 C 620 20, 700 140, 820 80" fill="none" stroke="rgba(122,155,139,0.4)" stroke-width="2" stroke-dasharray="6 4" stroke-linecap="round"/>
-        <path id="djPathProgress" d="M 80 80 C 200 20, 280 140, 450 80 C 620 20, 700 140, 820 80" fill="none" stroke="#7a9b8b" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-
-      <div class="dj-steps">
-        <div class="dj-step dj-reveal" style="--dj-delay:0.1s">
-          <div class="dj-dot dj-dot-done">
-            <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="dj-step-body">
-            <span class="dj-step-num">01</span>
-            <h3>Record your dream</h3>
-            <p>Right when you wake up — before the images fade. Voice or text, whatever feels natural.</p>
-          </div>
+    <div class="fcta-cards">
+      <div class="fcta-card" style="--fc-delay:0s">
+        <div class="fcta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3.5-2.5 6.4-5.8 7.7L12 21l-1.2-4.3C7.5 15.4 5 12.5 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
         </div>
-
-        <div class="dj-step dj-reveal" style="--dj-delay:0.25s">
-          <div class="dj-dot dj-dot-done">
-            <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="dj-step-body">
-            <span class="dj-step-num">02</span>
-            <h3>Receive your interpretation</h3>
-            <p>Noctaras decodes the archetypes, symbols, and emotional themes through Jungian psychology — in seconds.</p>
-          </div>
+        <h3>Deep symbol analysis</h3>
+        <p>Uncover the hidden language of your subconscious. Each symbol, emotion, and narrative thread interpreted with Jungian depth.</p>
+      </div>
+      <div class="fcta-card" style="--fc-delay:0.12s">
+        <div class="fcta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><circle cx="8.5" cy="14" r="1"/><circle cx="12" cy="14" r="1"/><circle cx="15.5" cy="14" r="1"/></svg>
         </div>
-
-        <div class="dj-step dj-reveal" style="--dj-delay:0.4s">
-          <div class="dj-dot dj-dot-active">
-            <span class="dj-dot-pulse"></span>
-          </div>
-          <div class="dj-step-body">
-            <span class="dj-step-num">03</span>
-            <h3>Discover your patterns</h3>
-            <p>Over weeks, your dream map takes shape — recurring symbols and the deepest themes of your inner world emerge.</p>
-          </div>
+        <h3>Pattern tracking over time</h3>
+        <p>Your dream journal becomes a map. See recurring themes, symbols, and emotions evolve as your inner world shifts.</p>
+      </div>
+      <div class="fcta-card" style="--fc-delay:0.24s">
+        <div class="fcta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10z"/><path d="M12 8v4l3 3"/></svg>
         </div>
-
-        <div class="dj-step dj-reveal" style="--dj-delay:0.55s">
-          <div class="dj-dot dj-dot-pending"></div>
-          <div class="dj-step-body">
-            <span class="dj-step-num">04</span>
-            <h3>Understand yourself</h3>
-            <p>Transform subconscious insight into conscious growth. The answers were always there — now you can hear them.</p>
-          </div>
-        </div>
+        <h3>Private by design</h3>
+        <p>Your dreams are intimate. End-to-end encrypted, never sold, never shared. What you dream stays between you and Noctaras.</p>
       </div>
     </div>
 
-    <div class="dj-cta dj-reveal" style="--dj-delay:0.3s">
-      <p class="dj-cta-eyebrow">Your first dream is waiting to be understood.</p>
-      <a href="app.html" class="dj-cta-btn">Start interpreting tonight</a>
-      <span class="dj-cta-note">Free to start · No credit card required</span>
+    <div class="fcta-bottom">
+      <a href="app.html" class="fcta-cta-btn">
+        Interpret my dream
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="fcta-pills">
+        <span class="fcta-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Free to start
+        </span>
+        <span class="fcta-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          No credit card required
+        </span>
+        <span class="fcta-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Cancel anytime
+        </span>
+      </div>
     </div>
   </div>
 </section>
+
 
 <footer>
   <div class="f-grid">
@@ -1216,55 +1138,19 @@ document.getElementById('t-prev').addEventListener('click', () => {
   track.style.transform = `translateX(-${idx * (340 + 24)}px)`;
 });
 
-// Dream Journey — stars + scroll animations
+// Final CTA — scroll reveal
 (function() {
-  // Generate stars
-  var container = document.getElementById('djStars');
-  if (container) {
-    for (var i = 0; i < 80; i++) {
-      var star = document.createElement('div');
-      star.className = 'dj-star';
-      var size = Math.random() * 2 + 0.5;
-      star.style.cssText = [
-        'width:' + size + 'px',
-        'height:' + size + 'px',
-        'top:' + Math.random() * 100 + '%',
-        'left:' + Math.random() * 100 + '%',
-        '--t:' + (2 + Math.random() * 4) + 's',
-        '--d:' + (Math.random() * 4) + 's',
-        '--o1:' + (0.2 + Math.random() * 0.6),
-        '--o2:' + (Math.random() * 0.15)
-      ].join(';');
-      container.appendChild(star);
-    }
-  }
-
-  // Intersection Observer for reveal + path animation
-  var djObs = new IntersectionObserver(function(entries) {
+  var fcObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        entry.target.classList.add('dj-visible');
-        djObs.unobserve(entry.target);
+        entry.target.classList.add('fc-visible');
+        fcObs.unobserve(entry.target);
       }
     });
   }, { threshold: 0.15 });
-
-  document.querySelectorAll('.dj-reveal').forEach(function(el) {
-    djObs.observe(el);
+  document.querySelectorAll('.fcta-card, .fcta-bottom').forEach(function(el) {
+    fcObs.observe(el);
   });
-
-  // Path animation when journey wrap enters view
-  var pathObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('dj-path-animated');
-        pathObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  var wrap = document.querySelector('.dj-journey-wrap');
-  if (wrap) pathObs.observe(wrap);
 })();
 
 // FAQ Logic
