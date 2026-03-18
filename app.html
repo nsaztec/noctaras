@@ -298,6 +298,19 @@ textarea { min-height: 160px; resize: vertical; }
 .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
 
 @media(max-width:600px){ .tree-months-grid{grid-template-columns:1fr 1fr;} .chat-main, .journal-wrap, .tree-wrap{padding: 0 16px;} .paywall-plans{grid-template-columns:1fr;} }
+
+/* Light Mode Background Gradient */
+.app-bg-gradient-light {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -10;
+  background-color: #fff;
+  background-image: radial-gradient(125% 125% at 50% 10%, #fff 40%, #63e 100%);
+  pointer-events: none;
+}
+[data-theme="dark"] .app-bg-gradient-light {
+  display: none;
+}
 </style>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
@@ -333,6 +346,7 @@ textarea { min-height: 160px; resize: vertical; }
 <script src="/logo.js"></script>
 </head>
 <body>
+<div class="app-bg-gradient-light"></div>
 
 <div id="stars"></div>
 <canvas id="wavyCanvas"></canvas>
