@@ -1,145 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Noctaras</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<style>
-:root {
-  --bg: #f7f5f0;
-  --surface: #fff;
-  --border: rgba(0,0,0,0.07);
-  --accent: #5a7b6b;
-  --text: #1a202c;
-  --muted: rgba(26, 32, 44, 0.7);
-  --sans: 'Inter', 'Segoe UI', Tahoma, sans-serif;
-  --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
-}
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { 
-  background: var(--bg); 
-  color: var(--text); 
-  font-family: var(--sans); 
-  font-weight: 300; 
-  line-height: 1.8; 
-  -webkit-font-smoothing: antialiased;
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const files = ['privacy.html', 'terms.html', 'contact.html'];
 
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 48px;
-  background: rgba(247, 245, 240, 0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.nav-logo-text { 
-  font-family: var(--sans);
-  font-size: 14px; 
-  font-weight: 600; 
-  color: var(--text); 
-  letter-spacing: 0.15em; 
-  text-transform: uppercase; 
-}
-.nav-back { 
-  font-size: 12px; 
-  text-decoration: none; 
-  letter-spacing: 0.08em; 
-  color: var(--text);
-  transition: color 0.2s;
-}
-.nav-back:hover { color: var(--accent); }
-
-.page-wrap {
-  position: relative; z-index: 1;
-  max-width: 760px; margin: 0 auto;
-  padding: 120px 32px 80px;
-}
-
-.page-label {
-  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 16px;
-  display: flex; align-items: center; gap: 10px;
-  font-weight: 600;
-}
-.page-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px; }
-
-h1 {
-  font-family: var(--serif); font-size: clamp(28px, 4vw, 42px);
-  font-weight: 500; margin-bottom: 8px; line-height: 1.2; color: var(--text);
-}
-
-.intro {
-  font-family: var(--serif); font-size: 17px; font-style: italic;
-  color: var(--text); margin-bottom: 48px; line-height: 1.8;
-}
-
-section { margin-bottom: 40px; }
-
-h2 {
-  font-family: var(--sans); font-size: 16px; font-weight: 600;
-  color: var(--text); margin-bottom: 16px; padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-p { font-size: 15.5px; margin-bottom: 18px; line-height: 1.85; color: var(--text); }
-
-.highlight-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 48px 24px;
-  margin-top: 32px;
-  margin-bottom: 18px;
-  text-align: center;
-}
-
-.highlight-box h3 {
-  font-family: var(--sans);
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.btn-primary {
-  display: inline-block;
-  background: var(--text);
-  color: var(--surface);
-  padding: 12px 32px;
-  border-radius: 8px;
-  font-weight: 500;
-  text-decoration: none;
-  border: none;
-  margin-top: 16px;
-  transition: opacity 0.2s;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-}
-
-footer {
-  position: relative; z-index: 1;
-  text-align: center; padding: 32px;
-  border-top: 1px solid var(--border);
-  font-size: 13px; background: rgba(255, 255, 255, 0.5); color: var(--muted);
-}
-footer a { color: var(--muted); text-decoration: none; }
-footer a:hover { color: var(--accent); }
-
-@media (max-width: 600px) {
-  nav { padding: 16px 20px; }
-  .page-wrap { padding: 100px 20px 60px; }
-}
-
+const CSS_INJECT = `
 html[data-theme="dark"] {
   --bg: #1a202c;
   --surface: #2d3748;
@@ -172,20 +39,9 @@ nav.dark-nav {
 .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__moon { transform: translate(0); }
 .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
 .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
-</style>
-</head>
-<body>
+</style>`;
 
-<nav>
-  <a class="nav-logo" href="index.html">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
-      <circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.6"/>
-      <path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="currentColor" opacity="0.28"/>
-    </svg>
-    <span class="nav-logo-text">Noctaras</span>
-  </a>
-  <div class="nav-right" style="display:flex;align-items:center;gap:1.5rem;">
+const BTN_HTML = `<div class="nav-right" style="display:flex;align-items:center;gap:1.5rem;">
   <a class="nav-back" href="index.html">← Back to site</a>
   <div class="theme-switch-wrapper">
       <label class="theme-switch" for="themeTogglePage">
@@ -208,31 +64,9 @@ nav.dark-nav {
       </label>
   </div>
 </div>
-</nav>
+</nav>`;
 
-<div class="page-wrap">
-  <div class="page-label">Support</div>
-  <h1>Contact Us</h1>
-
-  <p class="intro">We're here to listen, assist, and help you navigate your inner world.</p>
-
-  <section>
-    <h2>Get in Touch</h2>
-    <p>If you have any questions, feedback, or need support regarding your account, subscriptions, or dream interpretations, please don't hesitate to reach out to our team.</p>
-    
-    <div class="highlight-box">
-      <h3>Email Support</h3>
-      <p style="margin-bottom: 8px;">We typically respond within 24 hours.</p>
-      <a href="mailto:support@noctaras.com" class="btn-primary">support@noctaras.com</a>
-    </div>
-  </section>
-</div>
-
-<footer>
-  <p>© 2026 Noctaras · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="contact.html">Contact</a></p>
-</footer>
-
-<script>
+const JS_INJECT = `<script>
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById("themeTogglePage");
   const html = document.documentElement;
@@ -259,5 +93,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
-</body>
-</html>
+</body>`;
+
+for (const file of files) {
+  const filePath = path.join(__dirname, file);
+  if (!fs.existsSync(filePath)) continue;
+  let content = fs.readFileSync(filePath, 'utf8');
+  
+  if (!content.includes('.theme-switch-wrapper')) {
+    content = content.replace('</style>', CSS_INJECT);
+  }
+  if (!content.includes('id="themeTogglePage"')) {
+    content = content.replace('<a class="nav-back" href="index.html">← Back to site</a>\r\n</nav>', BTN_HTML);
+    content = content.replace('<a class="nav-back" href="index.html">← Back to site</a>\n</nav>', BTN_HTML);
+    content = content.replace('</body>', JS_INJECT);
+  }
+  fs.writeFileSync(filePath, content, 'utf8');
+  console.log('Fixed ' + file);
+}

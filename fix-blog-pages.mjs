@@ -33,7 +33,7 @@ const CSS_INJECT = `
 const BTN_HTML = `<div class="nav-right" style="display:flex;align-items:center;gap:1.5rem;">
   <a class="nav-back" href="index.html">← All Articles</a>
   <div class="theme-switch-wrapper">
-      <label class="theme-switch">
+      <label class="theme-switch" for="themeToggleBlog">
           <input type="checkbox" class="theme-switch__checkbox" id="themeToggleBlog" />
           <div class="theme-switch__container">
               <div class="theme-switch__clouds"></div>
@@ -65,6 +65,9 @@ async function processFiles() {
   const files = fs.readdirSync(blogDir).filter(f => f.endsWith('.html') && f !== 'index.html');
   let count = 0;
   
+  const navRegex = new RegExp('<a class="nav-back" href="index\\\\.html">.*?<\\/a><\\/nav>');
+  const logoBlockRegex = new RegExp('(<a class="nav-logo"[^>]*>)\\\\s*<svg[\\\\s\\\\S]*?<\\/svg>');
+
   for (const file of files) {
     const filePath = path.join(blogDir, file);
     let content = fs.readFileSync(filePath, 'utf8');
@@ -80,22 +83,20 @@ async function processFiles() {
       if (content.includes(backLinkStr)) {
         content = content.replace(backLinkStr + '</nav>', BTN_HTML);
       } else {
-        const navRegex = /<a class="nav-back" href="index\.html">.*?<\\/a><\\/nav>/;
         content = content.replace(navRegex, BTN_HTML);
       }
     }
     
     // 3. Standardize logo SVG
-    const logoBlockRegex = /(<a class="nav-logo"[^>]*>)\s*<svg[\s\S]*?<\/svg>/;
     if (logoBlockRegex.test(content)) {
-      content = content.replace(logoBlockRegex, \`$1\n\${SVG_LOGO}\`);
+      content = content.replace(logoBlockRegex, "$1\\n" + SVG_LOGO);
     }
 
     fs.writeFileSync(filePath, content, 'utf8');
     count++;
   }
   
-  console.log(\`Successfully processed \${count} blog articles.\`);
+  console.log('Successfully processed ' + count + ' blog articles.');
 }
 
 processFiles();
