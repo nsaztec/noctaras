@@ -221,24 +221,51 @@ nav.scrolled {
 }
 .nav-btn:hover { background: var(--surface-hover); color: var(--text); }
 
-/* ── PRICING (SaaS Clean) ── */
-.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.price-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 40px 32px; display: flex; flex-direction: column; transition: all 0.3s;
+/* ── PRICING v2 ── */
+.pricing-toggle {
+  display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 48px;
 }
-.price-card:hover { border-color: var(--border-strong); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.price-card.featured { border-color: var(--text); box-shadow: var(--shadow-md); }
-
-.p-name { font-size: 14px; font-weight: 600; color: var(--muted); margin-bottom: 12px; }
-.p-price { font-size: 40px; font-weight: 700; letter-spacing: -0.04em; color: var(--text); margin-bottom: 8px; line-height: 1; }
-.p-price sup { font-size: 20px; font-weight: 500; top: -12px; position: relative; }
-.p-term { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
-.p-list { list-style: none; margin-bottom: 40px; flex-grow: 1; }
-.p-list li { font-size: 14px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
-.p-list li svg { width: 14px; height: 14px; color: var(--text); flex-shrink: 0; }
-.p-list li.off { opacity: 0.4; text-decoration: line-through; }
+.pt-label { font-size: 14px; font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.pt-save { font-size: 11px; font-weight: 600; color: #5a7b6b; background: rgba(90,123,107,0.1); padding: 2px 8px; border-radius: 20px; }
+.pt-switch {
+  width: 44px; height: 24px; background: var(--border-strong); border: none; border-radius: 12px;
+  cursor: pointer; position: relative; transition: background 0.2s; padding: 0; flex-shrink: 0;
+}
+.pt-switch[aria-checked="true"] { background: var(--text); }
+.pt-thumb {
+  position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;
+  background: var(--surface); border-radius: 50%; transition: transform 0.2s var(--ease-out); pointer-events: none;
+}
+.pt-switch[aria-checked="true"] .pt-thumb { transform: translateX(20px); }
+.price-grid-2 {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  max-width: 760px; margin: 0 auto;
+}
+.price-card-2 {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 40px 36px; display: flex; flex-direction: column; transition: all 0.3s; position: relative;
+}
+.price-card-2:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+.p2-featured { border-color: var(--text); box-shadow: var(--shadow-lg); }
+.p2-badge {
+  position: absolute; top: -1px; right: 20px; background: var(--text); color: var(--bg);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 0 0 8px 8px;
+}
+.p2-name { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px; }
+.p2-price-wrap { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+.p2-price { font-size: 48px; font-weight: 700; letter-spacing: -0.04em; color: var(--text); line-height: 1; transition: opacity 0.15s, transform 0.15s; }
+.p2-price.animating { opacity: 0; transform: translateY(-8px); }
+.p2-period { font-size: 14px; color: var(--muted); font-weight: 500; }
+.p2-billing { font-size: 12px; color: var(--subtle); margin-bottom: 28px; }
+.p2-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+.p2-list { list-style: none; flex-grow: 1; margin-bottom: 32px; }
+.p2-list li { font-size: 14px; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.p2-list li svg { width: 15px; height: 15px; flex-shrink: 0; stroke: #5a7b6b; }
+.p2-list li.off { opacity: 0.35; }
+.p2-list li.off svg { stroke: var(--subtle); }
 .p-btn { width: 100%; height: 40px; }
+@media (max-width: 640px) { .price-grid-2 { grid-template-columns: 1fr; } }
 
 /* ── FINAL CTA ── */
 .fcta-section {
@@ -461,7 +488,6 @@ footer {
   .bento { grid-template-columns: 1fr; }
   .b-large, .b-tall { grid-column: span 1; grid-row: span 1; }
   .path-grid { grid-template-columns: 1fr; gap: 24px; }
-  .price-grid { grid-template-columns: 1fr; }
   .f-grid { grid-template-columns: 1fr 1fr; }
   .trust-features { grid-template-columns: repeat(2, 1fr); }
   .t-feat:nth-child(even) { border-right: none; }
@@ -783,49 +809,58 @@ footer {
 </section>
 
 <section id="pricing" class="section-wrap">
-  <div class="section-header reveal" style="text-align: center; margin: 0 auto 60px;">
+  <div class="section-header reveal" style="text-align: center; margin: 0 auto 48px;">
     <h2 class="section-title">Simple pricing.</h2>
     <p class="section-desc">Start for free. Upgrade when you need deeper insights.</p>
   </div>
 
-  <div class="price-grid reveal delay-1">
-    <div class="price-card">
-      <div class="p-name">Free</div>
-      <div class="p-price"><sup>$</sup>0</div>
-      <div class="p-term">forever</div>
-      <ul class="p-list">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 3 interpretations / mo</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Basic journaling</li>
-        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Emotional graph</li>
-        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Priority processing</li>
+  <!-- Monthly / Annual toggle -->
+  <div class="pricing-toggle reveal">
+    <span class="pt-label">Monthly</span>
+    <button class="pt-switch" id="pricingToggle" role="switch" aria-checked="false" aria-label="Toggle annual billing">
+      <span class="pt-thumb"></span>
+    </button>
+    <span class="pt-label">Annual <span class="pt-save">Save 48%</span></span>
+  </div>
+
+  <div class="price-grid-2 reveal delay-1">
+    <!-- Free -->
+    <div class="price-card-2">
+      <div class="p2-name">Starter</div>
+      <div class="p2-price-wrap">
+        <span class="p2-price">$0</span>
+        <span class="p2-period">/ forever</span>
+      </div>
+      <p class="p2-billing">&nbsp;</p>
+      <p class="p2-desc">Explore your dreams at your own pace. No commitment required.</p>
+      <ul class="p2-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>3 interpretations / month</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Basic dream journaling</li>
+        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Emotional pattern graph</li>
+        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Priority AI processing</li>
+        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Unlimited history</li>
       </ul>
-      <a href="app.html" class="btn btn-secondary p-btn">Get Started</a>
+      <a href="app.html" class="btn btn-secondary p-btn">Get started free</a>
     </div>
 
-    <div class="price-card featured">
-      <div class="p-name" style="color:var(--text);display:flex;justify-content:space-between;">Pro Monthly <span class="badge" style="margin:0;padding:2px 8px;font-size:10px;">Popular</span></div>
-      <div class="p-price"><sup>$</sup>7.99</div>
-      <div class="p-term">per month, billed monthly</div>
-      <ul class="p-list">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Unlimited interpretations</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Advanced journaling</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Emotional graph map</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Priority AI processing</li>
+    <!-- Pro -->
+    <div class="price-card-2 p2-featured">
+      <div class="p2-badge">Most Popular</div>
+      <div class="p2-name">Pro</div>
+      <div class="p2-price-wrap">
+        <span class="p2-price" id="proPrice">$7.99</span>
+        <span class="p2-period" id="proPeriod">/ month</span>
+      </div>
+      <p class="p2-billing" id="proBilling">billed monthly</p>
+      <p class="p2-desc">Everything you need to understand your dream life completely.</p>
+      <ul class="p2-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited interpretations</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Advanced dream journaling</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Emotional pattern graph</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority AI processing</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited history</li>
       </ul>
-      <a href="https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a" class="btn btn-primary p-btn">Subscribe Monthly</a>
-    </div>
-
-    <div class="price-card">
-      <div class="p-name">Pro Annual</div>
-      <div class="p-price"><sup>$</sup>49.99</div>
-      <div class="p-term">per year (save 48%)</div>
-      <ul class="p-list">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Unlimited interpretations</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Advanced journaling</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Emotional graph map</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Priority AI processing</li>
-      </ul>
-      <a href="https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b" class="btn btn-secondary p-btn">Subscribe Annually</a>
+      <a href="https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a" class="btn btn-primary p-btn" id="proBtn">Subscribe</a>
     </div>
   </div>
 </section>
@@ -1150,6 +1185,37 @@ document.getElementById('t-prev').addEventListener('click', () => {
   }, { threshold: 0.15 });
   document.querySelectorAll('.fcta-card, .fcta-bottom').forEach(function(el) {
     fcObs.observe(el);
+  });
+})();
+
+// Pricing toggle — monthly ↔ annual
+(function() {
+  var toggle = document.getElementById('pricingToggle');
+  var proPrice = document.getElementById('proPrice');
+  var proBilling = document.getElementById('proBilling');
+  var proBtn = document.getElementById('proBtn');
+  var isAnnual = false;
+  if (!toggle) return;
+  toggle.addEventListener('click', function() {
+    isAnnual = !isAnnual;
+    toggle.setAttribute('aria-checked', isAnnual ? 'true' : 'false');
+    proPrice.classList.add('animating');
+    setTimeout(function() {
+      if (isAnnual) {
+        proPrice.textContent = '$49.99';
+        document.getElementById('proPeriod').textContent = '/ year';
+        proBilling.textContent = 'billed once annually (save 48%)';
+        proBtn.href = 'https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b';
+        proBtn.textContent = 'Subscribe Annually';
+      } else {
+        proPrice.textContent = '$7.99';
+        document.getElementById('proPeriod').textContent = '/ month';
+        proBilling.textContent = 'billed monthly';
+        proBtn.href = 'https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a';
+        proBtn.textContent = 'Subscribe';
+      }
+      proPrice.classList.remove('animating');
+    }, 150);
   });
 })();
 
