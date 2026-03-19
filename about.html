@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Noctaras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --surface: #fff;
+  --border: rgba(0,0,0,0.07);
+  --accent: #5a7b6b;
+  --text: #1a202c;
+  --muted: rgba(26, 32, 44, 0.7);
+  --sans: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+  --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { 
+  background: var(--bg); 
+  color: var(--text); 
+  font-family: var(--sans); 
+  font-weight: 300; 
+  line-height: 1.8; 
+  -webkit-font-smoothing: antialiased;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(247, 245, 240, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.page-wrap {
+  position: relative; z-index: 1;
+  max-width: 760px; margin: 0 auto;
+  padding: 120px 32px 80px;
+}
+
+.page-label {
+  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 600;
+}
+.page-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px; }
+
+h1 {
+  font-family: var(--serif); font-size: clamp(32px, 5vw, 48px);
+  font-weight: 500; margin-bottom: 24px; line-height: 1.2; color: var(--text);
+}
+
+.intro {
+  font-family: var(--serif); font-size: 20px; font-style: italic;
+  color: var(--text); margin-bottom: 48px; line-height: 1.8;
+}
+
+section { margin-bottom: 56px; }
+
+h2 {
+  font-family: var(--sans); font-size: 18px; font-weight: 600;
+  color: var(--text); margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+p { font-size: 16px; margin-bottom: 20px; line-height: 1.9; color: var(--text); }
+p:last-child { margin-bottom: 0; }
+
+.highlight-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 48px 32px;
+  border-top: 1px solid var(--border);
+  font-size: 13px; background: rgba(255, 255, 255, 0.5); color: var(--muted);
+}
+footer a { color: var(--muted); text-decoration: none; margin: 0 10px; }
+footer a:hover { color: var(--accent); }
+
+@media (max-width: 600px) {
+  nav { padding: 16px 20px; }
+  .page-wrap { padding: 100px 20px 60px; }
+}
+
+html[data-theme="dark"] {
+  --bg: #1a202c;
+  --surface: #2d3748;
+  --border: rgba(255,255,255,0.1);
+  --text: #f7f5f0;
+  --accent: #7a9b8b;
+  --muted: rgba(247, 245, 240, 0.6);
+}
+
+/* Standardized Logo */
+.nav-logo {
+  font-family: var(--sans) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--text) !important;
+  text-decoration: none !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+}
+.nav-logo svg { width: 24px; height: 24px; transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+.nav-logo:hover svg { transform: rotate(180deg) scale(1.1); }
+
+/* Theme Switch Styles (simplified for about) */
+.theme-switch-wrapper { display: inline-flex; align-items: center; transform: scale(0.65); }
+.theme-switch__checkbox { display: none; }
+.theme-switch__container { width: 5.625em; height: 2.5em; background-color: #3D7EAE; border-radius: 6.25em; position: relative; cursor: pointer; transition: 0.5s; overflow: hidden; }
+.theme-switch__checkbox:checked + .theme-switch__container { background-color: #1D1F2C; }
+.theme-switch__circle { width: 2.125em; height: 2.125em; background: #ECCA2F; border-radius: 50%; position: absolute; left: 0.1875em; top: 0.1875em; transition: 0.5s; }
+.theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle { left: calc(100% - 2.3125em); background: #C4C9D1; }
+</style>
+<script src="/logo.js"></script>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6.5" stroke="#5a7b6b" stroke-width="1.2" fill="none"/><circle cx="15" cy="12" r="6.5" stroke="#7a9b8b" stroke-width="1.2" fill="none" opacity="0.6"/><path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#5a7b6b" opacity="0.28"/></svg>
+    <span>Noctaras</span>
+  </a>
+  <div style="display:flex; align-items:center; gap:24px;">
+    <a href="index.html" style="font-size: 12px; text-decoration: none; color: var(--text); letter-spacing: 0.05em;">← BACK</a>
+    <div class="theme-switch-wrapper">
+      <label for="themeToggle">
+        <input type="checkbox" id="themeToggle" class="theme-switch__checkbox">
+        <div class="theme-switch__container"><div class="theme-switch__circle"></div></div>
+      </label>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-label">Our Story</div>
+  <h1>Decoding the Subconscious</h1>
+  
+  <p class="intro">We believe that every dream is a missed letter from the self. Noctaras is the bridge between ancient psychological wisdom and the frontier of artificial intelligence.</p>
+
+  <section>
+    <h2>Our Mission</h2>
+    <p>In a world of constant noise, we rarely listen to the quietest part of ourselves: the dreamer. Our mission at Noctaras is to empower individuals to explore their inner landscapes through digital journaling and profound psychological analysis.</p>
+    <p>We don't just "translate" dreams; we provide a framework for self-reflection based on Jungian archetypes, collective symbolism, and pattern recognition.</p>
+  </section>
+
+  <section>
+    <h2>The Technology</h2>
+    <p>Built with privacy at its core, Noctaras uses state-of-the-art AI engines trained to understand not just words, but themes, emotions, and metaphors. By processing stream-of-consciousness narratives, we help users identify recurring patterns across weeks, months, and years.</p>
+    <div class="highlight-box">
+      <p><strong>Note:</strong> While our AI is highly advanced, it is designed to be a tool for personal growth and self-discovery, not a substitute for clinical therapy or medical advice.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why Noctaras?</h2>
+    <p>Traditional dream dictionaries are static and generic. Noctaras is dynamic and personal. We take into account the unique context of your life and the emotional weight of your entries to provide insights that actually resonate.</p>
+    <p>We stand for clarity, nuance, and the absolute protection of your most private thoughts.</p>
+  </section>
+
+  <section>
+    <h2>Join the Journey</h2>
+    <p>Whether you're a lucid dreamer, a recurring dreamer, or someone who rarely remembers their nights, Noctaras offers a home for your subconscious. Start your journal today and see what the night has to say.</p>
+  </section>
+</div>
+
+<footer>
+  <p>© 2026 Noctaras · 
+    <a href="about.html">About Us</a> · 
+    <a href="privacy.html">Privacy Policy</a> · 
+    <a href="terms.html">Terms of Service</a> · 
+    <a href="index.html">Main Site</a>
+  </p>
+</footer>
+
+<script>
+  const html = document.documentElement;
+  const nav = document.getElementById('nav');
+  const toggle = document.getElementById('themeToggle');
+
+  function setTheme(isDark) {
+    if (isDark) {
+      html.setAttribute('data-theme', 'dark');
+      if (nav) nav.style.background = 'rgba(26, 32, 44, 0.92)';
+      localStorage.setItem('theme', 'dark');
+      toggle.checked = true;
+    } else {
+      html.removeAttribute('data-theme');
+      if (nav) nav.style.background = 'rgba(247, 245, 240, 0.92)';
+      localStorage.setItem('theme', 'light');
+      toggle.checked = false;
+    }
+  }
+
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    setTheme(true);
+  }
+
+  toggle.addEventListener('change', (e) => setTheme(e.target.checked));
+</script>
+</body>
+</html>
