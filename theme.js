@@ -1,7 +1,7 @@
 (function () {
   var html = document.documentElement;
 
-  function setTheme(isDark) {
+  function applyTheme(isDark) {
     if (isDark) {
       html.setAttribute('data-theme', 'dark');
       localStorage.setItem('theme', 'dark');
@@ -9,24 +9,34 @@
       html.removeAttribute('data-theme');
       localStorage.setItem('theme', 'light');
     }
-    // sync sky-toggle checkboxes on the page
+  }
+
+  function syncCheckboxes() {
+    var dark = html.getAttribute('data-theme') === 'dark';
     document.querySelectorAll('.theme-switch__checkbox').forEach(function (cb) {
-      cb.checked = isDark;
+      cb.checked = dark;
     });
   }
 
-  // Apply saved / system preference immediately (before paint)
+  // Apply theme immediately (prevents flash)
   var saved = localStorage.getItem('theme');
   var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  setTheme(saved === 'dark' || (!saved && prefersDark));
+  applyTheme(saved === 'dark' || (!saved && prefersDark));
 
-  // Wire sky-toggle after DOM is ready
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.theme-switch__checkbox').forEach(function (cb) {
-      cb.checked = html.getAttribute('data-theme') === 'dark';
-      cb.addEventListener('change', function () { setTheme(cb.checked); });
-    });
+  // Sync checkbox visual state after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncCheckboxes);
+  } else {
+    syncCheckboxes();
+  }
+
+  // Event delegation — no DOMContentLoaded needed for interaction
+  document.addEventListener('change', function (e) {
+    if (e.target.classList.contains('theme-switch__checkbox')) {
+      applyTheme(e.target.checked);
+      syncCheckboxes();
+    }
   });
 
-  window.__setTheme = setTheme;
+  window.__setTheme = applyTheme;
 })();
