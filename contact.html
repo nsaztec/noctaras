@@ -305,7 +305,21 @@ nav.dark-nav {
     <div class="highlight-box">
       <h3>Email Support</h3>
       <p style="margin-bottom: 24px;">We typically respond within 24 hours.</p>
-      <a href="mailto:support@noctaras.com" class="btn-primary" style="display:inline-block;text-decoration:none;">Send us an email</a>
+      <form action="https://formsubmit.co/support@noctaras.com" method="POST">
+        <input type="hidden" name="_subject" value="Support Request — Noctaras">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://noctaras.com/contact.html?sent=1">
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Your name" required />
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Your email address" required />
+        </div>
+        <div class="form-group">
+          <textarea name="message" placeholder="How can we help you?" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
     </div>
   </section>
 </div>
@@ -315,16 +329,19 @@ nav.dark-nav {
   <p>© 2026 Noctaras · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="contact.html">Contact</a></p>
 </footer>
 
-<script>
-      body: JSON.stringify({ name, email, message })
-    });
+<div class="toast" id="toast">
+  <div class="toast-icon">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  Message sent!
+</div>
 
-    if (res.ok) {
-      document.getElementById('contactForm').reset();
-      btn.disabled = false;
-      btn.textContent = 'Send Message';
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
+<script>
+if (window.location.search.includes('sent=1')) {
+  var t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 4000);
+}
 </script>
 </body>
 </html>
