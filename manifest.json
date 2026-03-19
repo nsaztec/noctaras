@@ -1,0 +1,20 @@
+{
+  "name": "Noctaras — Dream Journal",
+  "short_name": "Noctaras",
+  "description": "AI-powered dream journal and interpreter",
+  "start_url": "/app.html",
+  "display": "standalone",
+  "background_color": "#07060F",
+  "theme_color": "#07060F",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "lifestyle"],
+  "lang": "en"
+}
