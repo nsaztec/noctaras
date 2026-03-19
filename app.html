@@ -728,7 +728,7 @@ textarea { min-height: 160px; resize: vertical; }
       <div class="profile-field">
         <label>About You</label>
         <textarea id="profileBio" placeholder="Your life situation, recurring themes, relationships, fears, aspirations... The more you share, the deeper and more personal your dream interpretations become."></textarea>
-        <p class="profile-hint">✦ Tell us a bit about yourself so your dream interpretations can be more accurate. This information is kept private and only used to personalize your analyses.</p>
+        <p class="profile-hint">Tell us a bit about yourself so your dream interpretations can be more accurate. This information is kept private and only used to personalize your analyses.</p>
       </div>
     </div>
 
@@ -784,6 +784,13 @@ onAuthStateChanged(auth, async (user) => {
     }
     await loadDreams();
     try { await setDoc(doc(db, 'users', user.uid), { email: user.email || '' }, { merge: true }); } catch(e) {}
+    try {
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      if (snap.data()?.isPro) {
+        const btn = document.getElementById('btnGetPro');
+        if (btn) btn.style.display = 'none';
+      }
+    } catch(e) {}
   } else {
     currentUser = null;
     showAuthScreen('login');
@@ -1025,11 +1032,11 @@ async function renderTree() {
     else cardClass += ' has-dreams';
 
     const dreamChips = dreams.slice(0,3).map(d => 
-      `<div class="month-dream-chip">✦ ${d.title || d.dream?.substring(0,40) || 'Dream'}</div>`
+      `<div class="month-dream-chip">${d.title || d.dream?.substring(0,40) || 'Dream'}</div>`
     ).join('');
 
     const analyzeBtn = (!isEmpty && !isFuture) ? 
-      `<button class="month-analyze-btn" onclick="analyzeMonth(${i}, ${treeYear})">✦ Analyze ${MONTHS_SHORT[i]}</button>` : '';
+      `<button class="month-analyze-btn" onclick="analyzeMonth(${i}, ${treeYear})">Analyze ${MONTHS_SHORT[i]}</button>` : '';
 
     return `
       <div class="${cardClass}">
@@ -1051,7 +1058,7 @@ async function renderTree() {
     </div>
     <div class="tree-svg-wrap">${treeSvg}</div>
     <div class="tree-months-grid" style="margin-top:40px;">${monthCards}</div>
-    <button class="tree-annual-btn" onclick="analyzeYear(${treeYear})" ${annualDisabled}>✦ ${annualTitle}</button>
+    <button class="tree-annual-btn" onclick="analyzeYear(${treeYear})" ${annualDisabled}>${annualTitle}</button>
     <div class="tree-analysis-panel" id="treeAnalysisPanel">
       <div class="tree-analysis-title" id="treeAnalysisTitle"></div>
       <div class="tree-analysis-text" id="treeAnalysisText"></div>
@@ -1563,12 +1570,12 @@ window.openDream = (id) => {
     <h1 class="detail-title">${d.title}</h1>
     <div class="detail-dream-box"><p class="detail-dream-text">${d.text}</p></div>
     ${d.analysis
-      ? `<div class="interp-box show"><div class="interp-label">✦ Interpretation</div><p class="interp-text">${d.analysis}</p></div>`
+      ? `<div class="interp-box show"><div class="interp-label">Interpretation</div><p class="interp-text">${d.analysis}</p></div>`
       : `<div class="no-interp"><p>No interpretation recorded</p>
           <button class="btn-full-j" style="margin-top:0;" onclick="interpretExisting('${d.id}')">Interpret this dream</button>
           <div class="j-loading" id="detailLoading" style="margin-top:16px;"></div>
           <div class="interp-box" id="detailInterp" style="margin-top:16px;">
-            <div class="interp-label">✦ Interpretation</div>
+            <div class="interp-label">Interpretation</div>
             <p class="interp-text" id="detailInterpText"></p>
             <button class="btn-full-j" onclick="saveDetailInterp('${d.id}')">Save interpretation</button>
           </div></div>`}`;
