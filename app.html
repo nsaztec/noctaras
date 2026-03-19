@@ -159,14 +159,15 @@ a { text-decoration: none; color: inherit; }
 .j-title { font-size: 28px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 8px; }
 .j-sub { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
 
-.dream-card { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); padding: 20px 24px; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; box-shadow: var(--shadow-sm); }
+.dream-card { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); padding: 20px 24px; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; box-shadow: var(--shadow-sm); overflow: hidden; }
 .dream-card:hover { border-color: var(--border-strong); transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.card-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 12px; }
-.card-title { font-weight: 600; color: var(--text); font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+.card-body { flex: 1; min-width: 0; overflow: hidden; }
+.card-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; gap: 12px; overflow: hidden; }
+.card-title { font-weight: 600; color: var(--text); font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; }
 .card-date { font-size: 13px; color: var(--subtle); flex-shrink: 0; white-space: nowrap; }
-.card-row { display: flex; align-items: center; gap: 12px; }
-.card-mood { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text); background: var(--surface-hover); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); }
-.card-preview { font-size: 14px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 400px; }
+.card-row { display: flex; align-items: center; gap: 12px; overflow: hidden; }
+.card-mood { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text); background: var(--surface-hover); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); flex-shrink: 0; }
+.card-preview { font-size: 14px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
 .interp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text); }
 
 .empty-state { text-align: center; padding: 80px 0; border: 1px dashed var(--border); border-radius: 8px; }
@@ -337,7 +338,7 @@ textarea { min-height: 160px; resize: vertical; }
   .chat-topbar { padding: 10px 16px; }
   .topbar-nav-group, .topbar-divider, .topbar-blog-link { display: none !important; }
   .btn-icon { display: none !important; }
-  #btnGetPro { display: inline-flex !important; font-size: 12px; padding: 6px 10px; height: 34px; }
+  #btnGetPro { display: inline-flex !important; font-size: 12px; padding: 6px 10px; height: 34px; white-space: nowrap; align-items: center; }
 
   /* Bottom navigation bar */
   .bottom-nav {
