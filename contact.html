@@ -325,36 +325,6 @@ nav.dark-nav {
       btn.textContent = 'Send Message';
       const toast = document.getElementById('toast');
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 4000);
-    } else {
-      btn.textContent = 'Failed — try again';
-      btn.disabled = false;
-    }
-document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById("themeTogglePage");
-  const html = document.documentElement;
-  const nav = document.querySelector("nav");
-  
-  if (localStorage.getItem("blogTheme") === "dark") {
-      html.setAttribute("data-theme", "dark");
-      if (toggle) toggle.checked = true;
-      if (nav) nav.classList.add("dark-nav");
-  }
-  
-  if (toggle) {
-      toggle.addEventListener("change", function() {
-          if (this.checked) {
-              html.setAttribute("data-theme", "dark");
-              localStorage.setItem("blogTheme", "dark");
-              if (nav) nav.classList.add("dark-nav");
-          } else {
-              html.removeAttribute("data-theme");
-              localStorage.setItem("blogTheme", "light");
-              if (nav) nav.classList.remove("dark-nav");
-          }
-      });
-  }
-});
 </script>
 </body>
 </html>
