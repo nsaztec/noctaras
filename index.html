@@ -515,6 +515,10 @@ footer {
   .trust-features { grid-template-columns: 1fr; }
   .t-feat { border-right: none !important; border-bottom: 1px dashed var(--border-strong); }
   .t-feat:last-child { border-bottom: none; }
+  /* Nav: hide Sign in / Account / theme toggle — show only CTA */
+  #navSignIn, #navAccount { display: none !important; }
+  .theme-switch-wrapper { display: none; }
+  nav { padding: 16px 5%; }
 }
 
 /* ── ANIMATIONS ── */
