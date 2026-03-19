@@ -378,6 +378,13 @@ textarea { min-height: 160px; resize: vertical; }
   /* Journal / Tree / Profile */
   .journal-wrap, .tree-wrap { padding: 0 16px 24px; margin: 20px auto; }
   .journal-topbar, .tree-topbar { margin-bottom: 20px; padding-bottom: 16px; }
+  /* Hide Back button and secondary theme toggle in journal/tree topbar — bottom nav handles navigation */
+  #screen-journal .journal-topbar > .btn-action,
+  #screen-journal .journal-topbar .theme-switch-wrapper,
+  #screen-tree .journal-topbar > .btn-action,
+  #screen-tree .journal-topbar .theme-switch-wrapper { display: none !important; }
+  /* Profile topbar: hide back button too */
+  #screen-profile .journal-topbar > .btn-action { display: none !important; }
   .j-title { font-size: 22px; }
   .detail-title { font-size: 20px; }
   .dream-card { padding: 14px 16px; }
@@ -831,8 +838,8 @@ textarea { min-height: 160px; resize: vertical; }
       <div class="profile-section-title">Dream Profile</div>
       <div class="profile-field">
         <label>About You</label>
-        <textarea id="profileBio" placeholder="Your life situation, recurring themes, relationships, fears, aspirations... The more you share, the deeper and more personal your dream interpretations become."></textarea>
-        <p class="profile-hint">Tell us a bit about yourself so your dream interpretations can be more accurate. This information is kept private and only used to personalize your analyses.</p>
+        <textarea id="profileBio" placeholder="Your life situation, recurring themes, relationships, fears, aspirations..."></textarea>
+        <p class="profile-hint">Kept private. Used only to personalize your dream analyses.</p>
       </div>
     </div>
 

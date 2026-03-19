@@ -1330,15 +1330,19 @@ const app = initializeApp({
   appId: "1:414698039475:web:958d09a4a63421815ba8c6"
 });
 const auth = getAuth(app);
+// Pre-set CTA from localStorage to avoid flash
+const cta = document.getElementById('navCTA');
+if (localStorage.getItem('nc_user') && cta) cta.textContent = 'Journal';
 onAuthStateChanged(auth, (user) => {
   const signIn = document.getElementById('navSignIn');
   const account = document.getElementById('navAccount');
-  const cta = document.getElementById('navCTA');
   if (user) {
+    localStorage.setItem('nc_user', '1');
     signIn.style.display = 'none';
     account.style.display = '';
     cta.textContent = 'Journal';
   } else {
+    localStorage.removeItem('nc_user');
     signIn.style.display = '';
     account.style.display = 'none';
     cta.textContent = 'Start Journaling';
