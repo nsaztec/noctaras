@@ -69,7 +69,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
-        max_tokens: 1200,
+        max_tokens: isAnalysis ? 2000 : 1200,
         messages: [
           {
             role: 'system',

@@ -223,6 +223,26 @@ textarea { min-height: 160px; resize: vertical; }
 .tree-analysis-loading { color: var(--muted); font-size: 14px; }
 .seedling-state { text-align: center; padding: 60px 0; }
 
+/* PROFILE */
+.profile-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--surface-hover); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 600; margin: 0 auto 32px; color: var(--text); letter-spacing: -0.02em; }
+.profile-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px 28px; margin-bottom: 16px; }
+.profile-section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 20px; }
+.profile-field { margin-bottom: 18px; }
+.profile-field:last-child { margin-bottom: 0; }
+.profile-field label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 7px; }
+.profile-field input, .profile-field textarea { width: 100%; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 15px; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+.profile-field input:focus, .profile-field textarea:focus { border-color: var(--text); }
+.profile-field input[readonly] { opacity: 0.55; cursor: default; background: var(--surface-hover); }
+.profile-field textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+.profile-hint { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.55; }
+.profile-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.profile-save-btn { background: var(--text); color: var(--bg); border: none; padding: 14px; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; margin-top: 8px; transition: opacity 0.2s; }
+.profile-save-btn:hover { opacity: 0.85; }
+.profile-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.profile-signout { margin-top: 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; transition: 0.2s; }
+.profile-signout:hover { border-color: #ef4444; color: #ef4444; }
+@media(max-width:600px) { .profile-row { grid-template-columns: 1fr; } }
+
 /* PRICING MODAL REDESIGN */
 .paywall-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
 .paywall-overlay.active { display: flex; animation: fadeUp 0.3s ease; }
@@ -517,6 +537,7 @@ textarea { min-height: 160px; resize: vertical; }
       <button class="btn-action" onclick="goTree()">Dream Tree</button>
       <button class="btn-action" onclick="goJournal()">Your Dreams</button>
       <button class="btn-get-pro" id="btnGetPro" onclick="showPaywall()">Get Pro</button>
+      <button class="btn-action" onclick="goProfile()">Account</button>
       <button class="btn-action" onclick="signOut()">Sign out</button>
     </div>
   </div>
@@ -661,11 +682,66 @@ textarea { min-height: 160px; resize: vertical; }
     <div id="treeContent"></div>
   </div>
 </div>
+
+<!-- ══════════════ SCREEN 4: PROFILE ══════════════ -->
+<div id="screen-profile" class="screen">
+  <div class="journal-wrap">
+    <div class="journal-topbar">
+      <button class="btn-action" onclick="goChat()">← Back</button>
+      <div class="j-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6.5" stroke="#5a7b6b" stroke-width="1.2" fill="none"/><circle cx="15" cy="12" r="6.5" stroke="#7a9b8b" stroke-width="1.2" fill="none" opacity="0.6"/><path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#5a7b6b" opacity="0.28"/></svg>
+        <span>Account</span>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="profile-avatar" id="profileAvatar">?</div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">Account</div>
+      <div class="profile-field">
+        <label>Email</label>
+        <input type="email" id="profileEmail" readonly />
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">Personal Information</div>
+      <div class="profile-field">
+        <label>Display Name</label>
+        <input type="text" id="profileName" placeholder="Your name" />
+      </div>
+      <div class="profile-row">
+        <div class="profile-field">
+          <label>Age <span style="font-weight:400;text-transform:none;opacity:0.7">(optional)</span></label>
+          <input type="number" id="profileAge" placeholder="e.g. 28" min="1" max="120" />
+        </div>
+        <div class="profile-field">
+          <label>Phone <span style="font-weight:400;text-transform:none;opacity:0.7">(optional)</span></label>
+          <input type="tel" id="profilePhone" placeholder="+1 555 000 0000" />
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">Dream Profile</div>
+      <div class="profile-field">
+        <label>About You</label>
+        <textarea id="profileBio" placeholder="Your life situation, recurring themes, relationships, fears, aspirations... The more you share, the deeper and more personal your dream interpretations become."></textarea>
+        <p class="profile-hint">✦ Tell us a bit about yourself so your dream interpretations can be more accurate. This information is kept private and only used to personalize your analyses.</p>
+      </div>
+    </div>
+
+    <button class="profile-save-btn" id="profileSaveBtn" onclick="saveProfile()">Save changes</button>
+    <button class="profile-signout" onclick="signOut()">Sign out</button>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtLITcSC2vN_dSCvgG5Jz0TQ8AaU5Z0VM",
@@ -700,7 +776,12 @@ onAuthStateChanged(auth, async (user) => {
       return;
     }
     currentUser = user;
-    showScreen('chat');
+    if (window.location.hash === '#profile') {
+      showScreen('profile');
+      loadProfile();
+    } else {
+      showScreen('chat');
+    }
     await loadDreams();
     try { await setDoc(doc(db, 'users', user.uid), { email: user.email || '' }, { merge: true }); } catch(e) {}
   } else {
@@ -783,7 +864,7 @@ function friendlyError(code) {
 
 // ── Screen management ──
 function showScreen(name) {
-  ['auth','chat','journal','tree'].forEach(s => {
+  ['auth','chat','journal','tree','profile'].forEach(s => {
     const el = document.getElementById('screen-'+s);
     if (!el) return;
     el.classList.remove('active');
@@ -802,7 +883,7 @@ function showScreen(name) {
 }
 
 function showAuthScreen(form) {
-  ['auth','chat','journal','tree'].forEach(s => {
+  ['auth','chat','journal','tree','profile'].forEach(s => {
     const el = document.getElementById('screen-'+s);
     if (el) { el.classList.remove('active'); el.style.display = ''; }
   });
@@ -813,6 +894,47 @@ function showAuthScreen(form) {
 window.goJournal = () => { showScreen('journal'); renderJournal(); };
 window.goChat = () => showScreen('chat');
 window.goTree = () => { showScreen('tree'); renderTree(); };
+window.goProfile = () => { showScreen('profile'); loadProfile(); };
+
+async function loadProfile() {
+  if (!currentUser) return;
+  const el = document.getElementById('profileEmail');
+  if (el) el.value = currentUser.email || '';
+  const initEl = document.getElementById('profileAvatar');
+  if (initEl) initEl.textContent = (currentUser.displayName || currentUser.email || '?')[0].toUpperCase();
+  try {
+    const snap = await getDoc(doc(db, 'users', currentUser.uid));
+    const data = snap.data() || {};
+    const nameEl = document.getElementById('profileName');
+    const phoneEl = document.getElementById('profilePhone');
+    const ageEl = document.getElementById('profileAge');
+    const bioEl = document.getElementById('profileBio');
+    if (nameEl) nameEl.value = data.displayName || currentUser.displayName || '';
+    if (phoneEl) phoneEl.value = data.phone || '';
+    if (ageEl) ageEl.value = data.age || '';
+    if (bioEl) bioEl.value = data.bio || '';
+  } catch(e) {}
+}
+
+window.saveProfile = async () => {
+  if (!currentUser) return;
+  const btn = document.getElementById('profileSaveBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+  try {
+    await setDoc(doc(db, 'users', currentUser.uid), {
+      displayName: document.getElementById('profileName').value.trim(),
+      phone: document.getElementById('profilePhone').value.trim(),
+      age: document.getElementById('profileAge').value.trim(),
+      bio: document.getElementById('profileBio').value.trim(),
+    }, { merge: true });
+    btn.textContent = 'Saved ✓';
+    setTimeout(() => { btn.textContent = 'Save changes'; btn.disabled = false; }, 2000);
+  } catch(e) {
+    btn.textContent = 'Error — try again';
+    btn.disabled = false;
+  }
+};
 
 // ══════════════ DREAM TREE ══════════════
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -1093,15 +1215,15 @@ window.analyzeMonth = async (monthIdx, year) => {
   text.innerHTML = `<span class="tree-analysis-loading">Analyzing your dreams...</span>`;
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const dreamSummary = monthDreams.map((d,i) => `Dream ${i+1}: ${d.dream || d.title}`).join('\n');
-  
+  const dreamSummary = monthDreams.map((d,i) => `Dream ${i+1}: ${d.text?.substring(0, 300) || d.dream || d.title}`).join('\n\n');
+
   try {
     const res = await fetch('/api/interpret', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         isAnalysis: true,
-        dream: `Monthly analysis request for ${MONTHS[monthIdx]} ${year}. The user had ${monthDreams.length} dreams this month:\n${dreamSummary}\n\nProvide a monthly psychological analysis: recurring themes, emotional patterns, what the subconscious was processing this month, and key insights.`,
+        dream: `Monthly dream analysis — ${MONTHS[monthIdx]} ${year}. ${monthDreams.length} dream(s) recorded:\n\n${dreamSummary}\n\nProvide a monthly psychological analysis: recurring themes, emotional patterns, what the subconscious was processing, key insights. IMPORTANT: respond in the exact same language as the dream texts above.`,
         userId: currentUser?.uid,
         skipLimit: true
       })
@@ -1131,8 +1253,8 @@ window.analyzeYear = async (year) => {
 
   const dreamSummary = yearDreams.map((d,i) => {
     const date = d.createdAt?.toDate ? d.createdAt.toDate() : new Date(d.createdAt);
-    return `[${MONTHS_SHORT[date.getMonth()]}] ${d.dream || d.title}`;
-  }).join('\n');
+    return `[${MONTHS_SHORT[date.getMonth()]}] ${d.text?.substring(0, 200) || d.dream || d.title}`;
+  }).join('\n\n');
 
   try {
     const res = await fetch('/api/interpret', {
@@ -1140,7 +1262,7 @@ window.analyzeYear = async (year) => {
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         isAnalysis: true,
-        dream: `Annual dream analysis for ${year}. The user had ${yearDreams.length} dreams throughout the year:\n${dreamSummary}\n\nProvide a deep annual psychological analysis: the overarching themes of the year, emotional and subconscious evolution across months, recurring symbols and what they collectively reveal, mood patterns, and a profound reflection on what this year meant for the dreamer's inner world.`,
+        dream: `Annual dream analysis for ${year}. ${yearDreams.length} dreams recorded throughout the year:\n\n${dreamSummary}\n\nProvide a deep annual psychological analysis: overarching themes of the year, emotional and subconscious evolution across months, recurring symbols and their collective meaning, mood patterns, and a profound reflection on the dreamer's inner world this year. IMPORTANT: respond in the exact same language as the dream texts above.`,
         userId: currentUser?.uid,
         skipLimit: true
       })
