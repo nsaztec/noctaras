@@ -235,6 +235,9 @@ nav.scrolled {
 .pricing-toggle {
   display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 48px;
 }
+.pt-inline {
+  justify-content: flex-start; margin-bottom: 20px; margin-top: 4px;
+}
 .pt-label { font-size: 14px; font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 8px; }
 .pt-save { font-size: 11px; font-weight: 600; color: #5a7b6b; background: rgba(90,123,107,0.1); padding: 2px 8px; border-radius: 20px; }
 .pt-switch {
@@ -804,15 +807,6 @@ footer {
     <p class="section-desc">Start for free. Upgrade when you need deeper insights.</p>
   </div>
 
-  <!-- Monthly / Annual toggle -->
-  <div class="pricing-toggle reveal">
-    <span class="pt-label">Monthly</span>
-    <button class="pt-switch" id="pricingToggle" role="switch" aria-checked="false" aria-label="Toggle annual billing">
-      <span class="pt-thumb"></span>
-    </button>
-    <span class="pt-label">Annual <span class="pt-save">Save 48%</span></span>
-  </div>
-
   <div class="price-grid-2 reveal delay-1">
     <!-- Free -->
     <div class="price-card-2">
@@ -837,6 +831,14 @@ footer {
     <div class="price-card-2 p2-featured">
       <div class="p2-badge">Most Popular</div>
       <div class="p2-name">Pro</div>
+      <!-- Monthly / Annual toggle inside card -->
+      <div class="pricing-toggle pt-inline">
+        <span class="pt-label">Monthly</span>
+        <button class="pt-switch" id="pricingToggle" role="switch" aria-checked="false" aria-label="Toggle annual billing">
+          <span class="pt-thumb"></span>
+        </button>
+        <span class="pt-label">Annual <span class="pt-save">Save 48%</span></span>
+      </div>
       <div class="p2-price-wrap">
         <span class="p2-price" id="proPrice">$7.99</span>
         <span class="p2-period" id="proPeriod">/ month</span>
@@ -1026,15 +1028,6 @@ footer {
       <p class="section-desc">Start for free. Upgrade when you need deeper insights.</p>
     </div>
 
-    <!-- Monthly / Annual toggle -->
-    <div class="pricing-toggle reveal">
-      <span class="pt-label">Monthly</span>
-      <button class="pt-switch" id="pricingToggle2" role="switch" aria-checked="false" aria-label="Toggle annual billing">
-        <span class="pt-thumb"></span>
-      </button>
-      <span class="pt-label">Annual <span class="pt-save">Save 48%</span></span>
-    </div>
-
     <div class="price-grid-2 reveal delay-1">
       <!-- Free -->
       <div class="price-card-2">
@@ -1059,6 +1052,14 @@ footer {
       <div class="price-card-2 p2-featured">
         <div class="p2-badge">Most Popular</div>
         <div class="p2-name">Pro</div>
+        <!-- Monthly / Annual toggle inside card -->
+        <div class="pricing-toggle pt-inline">
+          <span class="pt-label">Monthly</span>
+          <button class="pt-switch" id="pricingToggle2" role="switch" aria-checked="false" aria-label="Toggle annual billing">
+            <span class="pt-thumb"></span>
+          </button>
+          <span class="pt-label">Annual <span class="pt-save">Save 48%</span></span>
+        </div>
         <div class="p2-price-wrap">
           <span class="p2-price" id="proPrice2">$7.99</span>
           <span class="p2-period" id="proPeriod2">/ month</span>
