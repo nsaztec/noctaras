@@ -781,6 +781,7 @@ const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
 let currentUser = null;
+let cachedUserData = null;
 let dreams = [];
 let chatHistory = [];
 let currentMood = 'mysterious';
@@ -798,39 +799,44 @@ onAuthStateChanged(auth, async (user) => {
       return;
     }
     currentUser = user;
-    if (window.location.hash === '#profile') {
-      showScreen('profile');
-      loadProfile();
-    } else {
-      showScreen('chat');
-    }
-    // Hide loader once screen is determined
+    const isProfile = window.location.hash === '#profile';
+    showScreen(isProfile ? 'profile' : 'chat');
     const loader = document.getElementById('appLoader');
     if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 260); }
-    await loadDreams();
-    try { await setDoc(doc(db, 'users', user.uid), { email: user.email || '' }, { merge: true }); } catch(e) {}
-    try {
-      const snap = await getDoc(doc(db, 'users', user.uid));
-      const userData = snap.data() || {};
-      let isPro = userData.isPro;
-      // Fallback: check pending_pro collection by email
-      if (!isPro && user.email) {
+
+    // Parallel: read user doc + load dreams simultaneously (was sequential before)
+    const [userSnap] = await Promise.all([
+      getDoc(doc(db, 'users', user.uid)),
+      loadDreams()
+    ]);
+    cachedUserData = userSnap.data() || {};
+
+    // Update email in background (fire-and-forget, no need to await)
+    setDoc(doc(db, 'users', user.uid), { email: user.email || '' }, { merge: true }).catch(() => {});
+
+    // Fill profile if on profile screen (uses cache, no extra Firestore call)
+    if (isProfile) fillProfileFields(cachedUserData);
+
+    let isPro = cachedUserData.isPro;
+    if (!isPro && user.email) {
+      try {
         const pendingSnap = await getDoc(doc(db, 'pending_pro', user.email));
         if (pendingSnap.exists()) {
           const pd = pendingSnap.data();
           if (pd.event === 'subscription_created' || pd.status === 'active' || pd.status === 'trialing') {
             isPro = true;
-            await setDoc(doc(db, 'users', user.uid), { isPro: true }, { merge: true });
+            setDoc(doc(db, 'users', user.uid), { isPro: true }, { merge: true }).catch(() => {});
           }
         }
-      }
-      if (isPro) {
-        const btn = document.getElementById('btnGetPro');
-        if (btn) btn.style.display = 'none';
-      }
-    } catch(e) {}
+      } catch(e) {}
+    }
+    if (isPro) {
+      const btn = document.getElementById('btnGetPro');
+      if (btn) btn.style.display = 'none';
+    }
   } else {
     currentUser = null;
+    cachedUserData = null;
     const loader = document.getElementById('appLoader');
     if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 260); }
     showAuthScreen('login');
@@ -943,24 +949,33 @@ window.goChat = () => { history.replaceState(null, '', 'app.html'); showScreen('
 window.goTree = () => { history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
 window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
 
+function fillProfileFields(data) {
+  const d = data || {};
+  const nameEl = document.getElementById('profileName');
+  const phoneEl = document.getElementById('profilePhone');
+  const ageEl = document.getElementById('profileAge');
+  const bioEl = document.getElementById('profileBio');
+  if (nameEl) nameEl.value = d.displayName || currentUser?.displayName || '';
+  if (phoneEl) phoneEl.value = d.phone || '';
+  if (ageEl) ageEl.value = d.age || '';
+  if (bioEl) bioEl.value = d.bio || '';
+}
+
 async function loadProfile() {
   if (!currentUser) return;
   const el = document.getElementById('profileEmail');
   if (el) el.value = currentUser.email || '';
   const initEl = document.getElementById('profileAvatar');
   if (initEl) initEl.textContent = (currentUser.displayName || currentUser.email || '?')[0].toUpperCase();
-  try {
-    const snap = await getDoc(doc(db, 'users', currentUser.uid));
-    const data = snap.data() || {};
-    const nameEl = document.getElementById('profileName');
-    const phoneEl = document.getElementById('profilePhone');
-    const ageEl = document.getElementById('profileAge');
-    const bioEl = document.getElementById('profileBio');
-    if (nameEl) nameEl.value = data.displayName || currentUser.displayName || '';
-    if (phoneEl) phoneEl.value = data.phone || '';
-    if (ageEl) ageEl.value = data.age || '';
-    if (bioEl) bioEl.value = data.bio || '';
-  } catch(e) {}
+  if (cachedUserData) {
+    fillProfileFields(cachedUserData);
+  } else {
+    try {
+      const snap = await getDoc(doc(db, 'users', currentUser.uid));
+      cachedUserData = snap.data() || {};
+      fillProfileFields(cachedUserData);
+    } catch(e) {}
+  }
 }
 
 window.saveProfile = async () => {
@@ -969,12 +984,14 @@ window.saveProfile = async () => {
   btn.disabled = true;
   btn.textContent = 'Saving...';
   try {
-    await setDoc(doc(db, 'users', currentUser.uid), {
+    const updates = {
       displayName: document.getElementById('profileName').value.trim(),
       phone: document.getElementById('profilePhone').value.trim(),
       age: document.getElementById('profileAge').value.trim(),
       bio: document.getElementById('profileBio').value.trim(),
-    }, { merge: true });
+    };
+    await setDoc(doc(db, 'users', currentUser.uid), updates, { merge: true });
+    cachedUserData = { ...(cachedUserData || {}), ...updates };
     btn.textContent = 'Saved ✓';
     setTimeout(() => { btn.textContent = 'Save changes'; btn.disabled = false; }, 2000);
   } catch(e) {
