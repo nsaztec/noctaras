@@ -608,8 +608,9 @@ footer {
         </div>
       </label>
     </div>
-    <a href="app.html" class="btn btn-secondary" style="height: 32px; padding: 0 12px; font-size: 12px;">Sign in</a>
-    <a href="app.html" class="btn btn-primary" style="height: 32px; padding: 0 12px; font-size: 12px;">Start Journaling</a>
+    <a href="app.html" id="navSignIn" class="btn btn-secondary" style="height: 32px; padding: 0 12px; font-size: 12px;">Sign in</a>
+    <a href="app.html" id="navAccount" class="btn btn-secondary" style="height: 32px; padding: 0 12px; font-size: 12px; display:none;">Account</a>
+    <a href="app.html" id="navCTA" class="btn btn-primary" style="height: 32px; padding: 0 12px; font-size: 12px;">Start Journaling</a>
   </div>
 </nav>
 
@@ -1296,6 +1297,7 @@ document.getElementById('t-prev').addEventListener('click', () => {
 })();
 
 // FAQ Logic
+
 document.querySelectorAll('.faq-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
@@ -1309,6 +1311,34 @@ document.querySelectorAll('.faq-question').forEach(btn => {
   btn.addEventListener('click', () => {
     btn.closest('.faq-item').classList.toggle('active');
   });
+});
+</script>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+const app = initializeApp({
+  apiKey: "AIzaSyDtLITcSC2vN_dSCvgG5Jz0TQ8AaU5Z0VM",
+  authDomain: "noctaras.firebaseapp.com",
+  projectId: "noctaras",
+  storageBucket: "noctaras.firebasestorage.app",
+  messagingSenderId: "414698039475",
+  appId: "1:414698039475:web:958d09a4a63421815ba8c6"
+});
+const auth = getAuth(app);
+onAuthStateChanged(auth, (user) => {
+  const signIn = document.getElementById('navSignIn');
+  const account = document.getElementById('navAccount');
+  const cta = document.getElementById('navCTA');
+  if (user) {
+    signIn.style.display = 'none';
+    account.style.display = '';
+    cta.textContent = 'Journal';
+  } else {
+    signIn.style.display = '';
+    account.style.display = 'none';
+    cta.textContent = 'Start Journaling';
+  }
 });
 </script>
 </body>
