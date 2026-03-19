@@ -899,6 +899,7 @@ let currentAnalysis = '';
 let selectedId = null;
 let typingIv = null;
 let vanishData = [], vanishBusy = false;
+let _currentAiTitle = '', _isValidAnalysis = false, _pa = '', _isDetailValid = false;
 
 // ── Auth state ──
 onAuthStateChanged(auth, async (user) => {
@@ -1042,13 +1043,17 @@ function setBottomNav(name) {
   if (nav) nav.style.display = name === 'auth' ? 'none' : '';
 }
 
-function showScreen(name) {
+function resetScreens() {
   ['auth','chat','journal','tree','profile'].forEach(s => {
     const el = document.getElementById('screen-'+s);
     if (!el) return;
     el.classList.remove('active');
     el.style.display = '';
   });
+}
+
+function showScreen(name) {
+  resetScreens();
   if (name === 'auth') {
     document.getElementById('screen-auth').classList.add('active');
   } else if (name === 'chat') {
@@ -1063,21 +1068,14 @@ function showScreen(name) {
 }
 
 function showAuthScreen(form) {
-  ['auth','chat','journal','tree','profile'].forEach(s => {
-    const el = document.getElementById('screen-'+s);
-    if (el) { el.classList.remove('active'); el.style.display = ''; }
-  });
-  document.getElementById('screen-auth').classList.add('active');
-  setBottomNav('auth');
+  showScreen('auth');
   window.showAuthForm(form);
 }
 
-window.goJournal = () => { closeMobileMenu(); history.replaceState(null, '', 'app.html'); showScreen('journal'); renderJournal(); };
-window.goChat = () => { closeMobileMenu(); history.replaceState(null, '', 'app.html'); showScreen('chat'); };
-window.goTree = () => { closeMobileMenu(); history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
-window.goProfile = () => { closeMobileMenu(); history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
-
-function closeMobileMenu() {} // kept for compatibility
+window.goJournal = () => { history.replaceState(null, '', 'app.html'); showScreen('journal'); renderJournal(); };
+window.goChat = () => { history.replaceState(null, '', 'app.html'); showScreen('chat'); };
+window.goTree = () => { history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
+window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
 
 // ── Keyboard-aware bottom nav (hide when soft keyboard is open) ──
 if (window.visualViewport) {
@@ -1160,14 +1158,15 @@ async function renderTree() {
   const currentYear = now.getFullYear();
   const currentMonth = now.getMonth(); // 0-indexed
 
-  // Load dreams from Firestore
   if (!currentUser) return;
-  try {
-    const q = query(collection(db, 'users', currentUser.uid, 'dreams'), orderBy('createdAt', 'desc'));
-    const snap = await getDocs(q);
-    allDreams = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  } catch(e) {
-    allDreams = [];
+  // Reuse already-loaded dreams; only fetch from Firestore if not yet loaded
+  allDreams = dreams.length ? dreams.slice() : [];
+  if (!allDreams.length) {
+    try {
+      const q = query(collection(db, 'users', currentUser.uid, 'dreams'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      allDreams = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch(e) {}
   }
 
   // Year selector
@@ -1284,7 +1283,7 @@ function getTreeSvg(stage, byMonth, currentMonthIdx) {
   const s = stages[stage];
   
   // Unique animation id to avoid conflicts
-  const aid = 'tree_' + Math.random().toString(36).slice(2,6);
+  const aid = 'tree_' + treeYear + '_' + stage;
 
   let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;margin:0 auto;display:block;">
   <defs>
@@ -1494,7 +1493,7 @@ async function loadDreams() {
     const q = query(collection(db, 'users', currentUser.uid, 'dreams'), orderBy('createdAt', 'desc'));
     const snap = await getDocs(q);
     dreams = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderJournal();
+    if (document.getElementById('screen-journal')?.classList.contains('active')) renderJournal();
   } catch (e) {
     console.error('Load error:', e);
   }
@@ -1559,6 +1558,7 @@ async function deleteDreamFromDB(id) {
 const PHS = ['Describe your dream in detail...','I was flying over a city of clouds...','There was a door that kept moving away...','The ocean turned into black glass...','A forest that whispered my name...','Someone I knew but couldn\'t recognize...'];
 let phIdx = 0;
 setInterval(() => {
+  if (!document.getElementById('screen-chat')?.classList.contains('active')) return;
   const input = document.getElementById('vanishInput');
   const ph = document.getElementById('vanishPH');
   const txt = document.getElementById('phText');
@@ -1803,7 +1803,6 @@ window.showJP = (name) => {
 };
 
 function resetForm() {
-  document.getElementById('titleInput').value = '';
   document.getElementById('dreamInput').value = '';
   document.getElementById('interpBox').classList.remove('show');
   document.getElementById('jLoading').classList.remove('show');
@@ -1820,13 +1819,13 @@ window.interpretForm = async () => {
   document.getElementById('interpretBtn').disabled = true;
   document.getElementById('savePlainBtn').disabled = true;
   currentAnalysis = '';
-  window._currentAiTitle = '';
+  _currentAiTitle = '';
   try {
     const rawAi = await callAI(text); 
     const tMatch = rawAi.match(/^TITLE:\s*(.*)/im);
     const aMatch = rawAi.match(/ANALYSIS:\s*([\s\S]*)/im);
-    window._currentAiTitle = tMatch ? tMatch[1].trim() : 'Dream Analysis';
-    window._isValidAnalysis = !!aMatch;
+    _currentAiTitle = tMatch ? tMatch[1].trim() : 'Dream Analysis';
+    _isValidAnalysis = !!aMatch;
     currentAnalysis = aMatch ? aMatch[1].trim() : rawAi;
 
     document.getElementById('jLoading').classList.remove('show');
@@ -1838,7 +1837,7 @@ window.interpretForm = async () => {
 
 window.saveDream = async () => {
   const text = document.getElementById('dreamInput').value.trim(); if (!text) return;
-  const title = window._currentAiTitle || 'Dream Entry';
+  const title = _currentAiTitle || 'Dream Entry';
   const dreamData = { title, text, mood: currentMood, date: new Date().toISOString(), analysis: '' };
   const id = await saveDreamToDB(dreamData);
   if (id) { dreams.unshift({id, ...dreamData}); renderJournal(); showJP('list'); }
@@ -1846,11 +1845,11 @@ window.saveDream = async () => {
 
 window.saveDreamInterp = async () => {
   const text = document.getElementById('dreamInput').value.trim(); if (!text) return;
-  if (!currentAnalysis || !window._isValidAnalysis) {
+  if (!currentAnalysis || !_isValidAnalysis) {
     alert("This input was not recognized as a valid dream and cannot be saved with an analysis.");
     return;
   }
-  const title = window._currentAiTitle || 'Dream Analysis';
+  const title = _currentAiTitle || 'Dream Analysis';
   const dreamData = { title, text, mood: currentMood, date: new Date().toISOString(), analysis: currentAnalysis };
   const id = await saveDreamToDB(dreamData);
   if (id) { dreams.unshift({id, ...dreamData}); renderJournal(); showJP('list'); }
@@ -1865,21 +1864,21 @@ window.interpretExisting = async (id) => {
     const rawAi = await callAI(d.text);
     const aMatch = rawAi.match(/ANALYSIS:\s*([\s\S]*)/im);
     const a = aMatch ? aMatch[1].trim() : rawAi;
-    window._pa = a;
-    window._isDetailValid = !!aMatch;
+    _pa = a;
+    _isDetailValid = !!aMatch;
     ld.classList.remove('show'); ie.classList.add('show');
     typeText(a, document.getElementById('detailInterpText'), null);
   } catch(e) { ld.classList.remove('show'); alert('Error: ' + e.message); }
 };
 
 window.saveDetailInterp = async (id) => {
-  if (!window._isDetailValid) {
+  if (!_isDetailValid) {
     alert("This input was not recognized as a valid dream and cannot be saved with an analysis.");
     return;
   }
   const idx = dreams.findIndex(x => x.id === id); if (idx === -1) return;
-  await updateDreamInDB(id, { analysis: window._pa || '' });
-  dreams[idx].analysis = window._pa || '';
+  await updateDreamInDB(id, { analysis: _pa || '' });
+  dreams[idx].analysis = _pa || '';
   openDream(id);
 };
 
@@ -1934,17 +1933,6 @@ function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxiou
     }
   });
 
-  // Setup AI Input Resize & Submit Logic
-  const aiInput = document.getElementById('vanishInput');
-  const aiBtn = document.getElementById('vanishBtn');
-  if (aiInput && aiBtn) {
-    aiInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        window.submitChat();
-      }
-    });
-  }
 })();
 
 // Auth Particles System (Vanilla JS equivalent of dillionverma/particles)
@@ -1989,7 +1977,8 @@ function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxiou
   }
 
   function draw() {
-    if (!canvas.closest('#screen-auth').classList.contains('active')) {
+    const authScreen = canvas.closest('#screen-auth');
+    if (!authScreen || !authScreen.classList.contains('active')) {
       requestAnimationFrame(draw);
       return;
     }
@@ -1999,25 +1988,26 @@ function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxiou
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     rgb = isDark ? [255, 255, 255] : [100, 100, 100];
 
-    particles.forEach((p, i) => {
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
       const edge = Math.min(
         p.x + p.tx - p.size, width - (p.x + p.tx) - p.size,
         p.y + p.ty - p.size, height - (p.y + p.ty) - p.size
       );
       const remapEdge = Math.max(0, edge / 20);
-      
+
       if (remapEdge > 1) {
         p.alpha += 0.02;
-        if(p.alpha > p.targetAlpha) p.alpha = p.targetAlpha;
+        if (p.alpha > p.targetAlpha) p.alpha = p.targetAlpha;
       } else {
         p.alpha = p.targetAlpha * remapEdge;
       }
-      
+
       p.x += p.dx;
       p.y += p.dy;
       p.tx += (canvasMouse.x / (staticity / p.magnetism) - p.tx) / ease;
       p.ty += (canvasMouse.y / (staticity / p.magnetism) - p.ty) / ease;
-      
+
       ctx.translate(p.tx, p.ty);
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -2029,7 +2019,7 @@ function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxiou
         particles.splice(i, 1);
         particles.push(createParticle());
       }
-    });
+    }
     requestAnimationFrame(draw);
   }
 
