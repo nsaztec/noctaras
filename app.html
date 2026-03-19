@@ -801,20 +801,26 @@ onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     const isProfile = window.location.hash === '#profile';
     showScreen(isProfile ? 'profile' : 'chat');
+    // Set email + avatar immediately — no network needed
+    if (isProfile) {
+      const emailEl = document.getElementById('profileEmail');
+      if (emailEl) emailEl.value = user.email || '';
+      const avatarEl = document.getElementById('profileAvatar');
+      if (avatarEl) avatarEl.textContent = (user.displayName || user.email || '?')[0].toUpperCase();
+    }
     const loader = document.getElementById('appLoader');
     if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 260); }
 
-    // Parallel: read user doc + load dreams simultaneously (was sequential before)
-    const [userSnap] = await Promise.all([
-      getDoc(doc(db, 'users', user.uid)),
-      loadDreams()
-    ]);
+    // Fire dreams load in background — don't block profile on it
+    loadDreams();
+    // Fetch user doc independently (not tied to dreams load time)
+    const userSnap = await getDoc(doc(db, 'users', user.uid));
     cachedUserData = userSnap.data() || {};
 
-    // Update email in background (fire-and-forget, no need to await)
+    // Update email in background (fire-and-forget)
     setDoc(doc(db, 'users', user.uid), { email: user.email || '' }, { merge: true }).catch(() => {});
 
-    // Fill profile if on profile screen (uses cache, no extra Firestore call)
+    // Fill profile fields from cache (instant, no extra Firestore call)
     if (isProfile) fillProfileFields(cachedUserData);
 
     let isPro = cachedUserData.isPro;
