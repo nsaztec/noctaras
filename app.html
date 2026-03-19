@@ -1368,7 +1368,7 @@ window.setPricing = function(plan) {
   document.getElementById('toggleMonthly').classList.toggle('active', !isAnnual);
   document.getElementById('toggleAnnually').classList.toggle('active', isAnnual);
   
-  document.getElementById('priceTier').textContent = isAnnual ? 'Annual' : 'Starter';
+  document.getElementById('priceTier').textContent = isAnnual ? 'Annual Pro' : 'Monthly Pro';
   document.getElementById('priceVal').textContent = isAnnual ? '$49.99' : '$7.99';
   document.getElementById('priceSuffix').textContent = isAnnual ? '/yr' : '/mo';
   
@@ -1379,7 +1379,7 @@ window.setPricing = function(plan) {
   }
   
   const btn = document.getElementById('planButton');
-  btn.textContent = isAnnual ? 'Get Annual Pro' : 'Get started with Starter';
+  btn.textContent = isAnnual ? 'Get Annual Pro' : 'Get Monthly Pro';
   btn.href = isAnnual ? ANNUAL_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '') : MONTHLY_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
 }
 
