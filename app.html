@@ -372,6 +372,10 @@ textarea { min-height: 160px; resize: vertical; }
 <script src="/logo.js"></script>
 </head>
 <body>
+<div id="appLoader" style="position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity 0.25s;">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="animation:spin 1.2s linear infinite;opacity:0.35"><circle cx="9" cy="12" r="6.5" stroke="#5a7b6b" stroke-width="1.2"/><circle cx="15" cy="12" r="6.5" stroke="#7a9b8b" stroke-width="1.2" opacity="0.6"/><path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#5a7b6b" opacity="0.28"/></svg>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 <div class="app-bg-gradient-light"></div>
 <div class="app-bg-gradient-dark"></div>
 
@@ -782,17 +786,35 @@ onAuthStateChanged(auth, async (user) => {
     } else {
       showScreen('chat');
     }
+    // Hide loader once screen is determined
+    const loader = document.getElementById('appLoader');
+    if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 260); }
     await loadDreams();
     try { await setDoc(doc(db, 'users', user.uid), { email: user.email || '' }, { merge: true }); } catch(e) {}
     try {
       const snap = await getDoc(doc(db, 'users', user.uid));
-      if (snap.data()?.isPro) {
+      const userData = snap.data() || {};
+      let isPro = userData.isPro;
+      // Fallback: check pending_pro collection by email
+      if (!isPro && user.email) {
+        const pendingSnap = await getDoc(doc(db, 'pending_pro', user.email));
+        if (pendingSnap.exists()) {
+          const pd = pendingSnap.data();
+          if (pd.event === 'subscription_created' || pd.status === 'active' || pd.status === 'trialing') {
+            isPro = true;
+            await setDoc(doc(db, 'users', user.uid), { isPro: true }, { merge: true });
+          }
+        }
+      }
+      if (isPro) {
         const btn = document.getElementById('btnGetPro');
         if (btn) btn.style.display = 'none';
       }
     } catch(e) {}
   } else {
     currentUser = null;
+    const loader = document.getElementById('appLoader');
+    if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 260); }
     showAuthScreen('login');
   }
 });

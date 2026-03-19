@@ -415,8 +415,8 @@
         .cta-btn {
             display: inline-block;
             padding: 0.85rem 2rem;
-            background: var(--accent);
-            color: #fff;
+            background: var(--text);
+            color: var(--bg) !important;
             border: none;
             border-radius: 8px;
             font-family: var(--sans);
@@ -428,15 +428,17 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 0.5rem;
+            text-decoration: none;
         }
         .cta-btn:hover {
             transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 8px 25px rgba(90,123,107,0.25);
-            color: #fff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            color: var(--bg) !important;
+            opacity: 0.88;
         }
         .cta-btn:active {
             transform: translateY(0) scale(0.98);
-            box-shadow: 0 2px 8px rgba(90,123,107,0.2);
+            opacity: 1;
         }
         /* Ripple effect via JS */
         .cta-btn .ripple {

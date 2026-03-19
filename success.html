@@ -14,7 +14,6 @@
   --bg: #f7f5f0;
   --surface: #fff;
   --border: rgba(0,0,0,0.07);
-  --accent: #5a7b6b;
   --text: #1a202c;
   --muted: rgba(26,32,44,0.6);
   --sans: 'Inter', 'Segoe UI', sans-serif;
@@ -26,7 +25,6 @@ html[data-theme="dark"] {
   --border: rgba(255,255,255,0.08);
   --text: #f0ede8;
   --muted: rgba(240,237,232,0.5);
-  --accent: #7a9b8b;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -74,18 +72,17 @@ body::before {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 36px;
-  box-shadow: 0 0 0 16px rgba(90,123,107,0.1);
   animation: pulse-ring 2.5s ease infinite;
 }
 @keyframes pulse-ring {
-  0%   { box-shadow: 0 0 0 0px rgba(90,123,107,0.18); }
-  70%  { box-shadow: 0 0 0 20px rgba(90,123,107,0); }
-  100% { box-shadow: 0 0 0 0px rgba(90,123,107,0); }
+  0%   { box-shadow: 0 0 0 0px rgba(26,32,44,0.15); }
+  70%  { box-shadow: 0 0 0 20px rgba(26,32,44,0); }
+  100% { box-shadow: 0 0 0 0px rgba(26,32,44,0); }
 }
 
 .check-wrap svg { display: block; }
@@ -185,8 +182,8 @@ h1 {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: rgba(90,123,107,0.12);
-  border: 1px solid rgba(90,123,107,0.25);
+  background: var(--surface);
+  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,7 +243,7 @@ nav {
 
 <nav>
   <a href="index.html" style="display:flex;align-items:center;gap:9px;text-decoration:none;">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6.5" stroke="#5a7b6b" stroke-width="1.2" fill="none"/><circle cx="15" cy="12" r="6.5" stroke="#7a9b8b" stroke-width="1.2" fill="none" opacity="0.6"/><path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#5a7b6b" opacity="0.28"/></svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6.5" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="15" cy="12" r="6.5" stroke="#7a9b8b" stroke-width="1.2" fill="none" opacity="0.6"/><path d="M12 6.2C13.6 7.8 13.6 16.2 12 17.8C10.4 16.2 10.4 7.8 12 6.2Z" fill="#5a7b6b" opacity="0.28"/></svg>
     <span style="font-size:13px;font-weight:600;color:var(--text);letter-spacing:0.15em;text-transform:uppercase;">Noctaras</span>
   </a>
   <div class="theme-switch-wrapper">
@@ -285,25 +282,25 @@ nav {
   <div class="features">
     <div class="feat">
       <div class="feat-icon">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5a7b6b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       Unlimited dream interpretations
     </div>
     <div class="feat">
       <div class="feat-icon">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5a7b6b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       Monthly &amp; annual dream analysis
     </div>
     <div class="feat">
       <div class="feat-icon">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5a7b6b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       Full dream journal with history
     </div>
     <div class="feat">
       <div class="feat-icon">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5a7b6b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       Priority AI processing
     </div>
