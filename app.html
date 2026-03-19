@@ -1395,6 +1395,7 @@ async function deleteDreamFromDB(id) {
   let w, h, nt = 0, n3;
   function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; ctx.filter = 'blur(10px)'; }
   function draw() {
+    if (canvas.offsetParent === null) { requestAnimationFrame(draw); return; }
     nt += 0.002;
     ctx.fillStyle = window.isDarkTheme ? '#1e1d24' : '#f7f5f0'; ctx.globalAlpha = 0.5; ctx.fillRect(0, 0, w, h);
     for (let i = 0; i < 5; i++) {
