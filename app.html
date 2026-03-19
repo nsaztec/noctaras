@@ -325,7 +325,65 @@ textarea { min-height: 160px; resize: vertical; }
 .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
 .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
 
-@media(max-width:600px){ .tree-months-grid{grid-template-columns:1fr 1fr;} .chat-main, .journal-wrap, .tree-wrap{padding: 0 16px;} .paywall-plans{grid-template-columns:1fr;} }
+/* ══ MOBILE ══ */
+@media(max-width:600px){
+  /* Topbar */
+  .chat-topbar { padding: 10px 16px; }
+  .topbar-nav-group, .topbar-divider, .topbar-blog-link { display: none !important; }
+  #btnGetPro { display: none !important; }
+  .btn-icon.btn-hamburger { display: inline-flex !important; }
+  .btn-icon:not(.btn-hamburger) { display: none !important; }
+
+  /* Mobile menu */
+  .mobile-menu { display: none; position: fixed; top: 57px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); z-index: 200; flex-direction: column; padding: 8px 0; box-shadow: var(--shadow-md); }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu-item { background: none; border: none; text-align: left; padding: 14px 20px; font-size: 15px; font-weight: 500; color: var(--text); cursor: pointer; width: 100%; font-family: inherit; }
+  .mobile-menu-item:active { background: var(--surface-hover); }
+  .mobile-menu-divider { height: 1px; background: var(--border); margin: 6px 0; }
+  .mobile-menu-pro { margin: 8px 16px; background: var(--text); color: var(--bg); border: none; border-radius: 6px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .mobile-menu-signout { color: var(--muted); }
+
+  /* Chat */
+  .chat-main { margin: 20px auto; padding: 0 16px; }
+  .chat-title { font-size: 24px; }
+  .chat-sub { font-size: 13px; }
+  .ai-input-textarea { font-size: 16px; } /* prevent iOS zoom */
+  .msg-user, .msg-ai { max-width: 92%; font-size: 14px; line-height: 1.6; }
+
+  /* Journal / Tree / Profile wrap */
+  .journal-wrap, .tree-wrap { padding: 0 16px 60px; margin: 20px auto; }
+  .journal-topbar, .tree-topbar { margin-bottom: 20px; padding-bottom: 16px; }
+  .j-title { font-size: 22px; }
+  .detail-title { font-size: 20px; }
+  .dream-card { padding: 14px 16px; }
+  .card-preview { font-size: 13px; }
+
+  /* Tree */
+  .tree-months-grid { grid-template-columns: 1fr; }
+  .tree-annual-btn { width: 100%; }
+  .tree-analysis-panel { padding: 20px 16px; }
+  .month-card { padding: 16px; }
+
+  /* Profile */
+  .profile-section { padding: 16px; }
+  .profile-row { grid-template-columns: 1fr; }
+  .profile-field input, .profile-field textarea { font-size: 16px; } /* prevent iOS zoom */
+  .journal-topbar[style] .j-logo { font-size: 14px; } /* profile title */
+
+  /* Toast */
+  .toast-container { left: 12px; right: 12px; bottom: 12px; }
+  .toast { min-width: 0; width: 100%; }
+
+  /* Paywall */
+  .paywall-plans { grid-template-columns: 1fr; }
+  .paywall-card-new { padding: 20px 12px; max-height: 90vh; overflow-y: auto; }
+  .pricing-price { font-size: 32px; }
+
+  /* Auth */
+  .auth-container { padding: 20px 16px; }
+  .auth-title { font-size: 20px; }
+}
+.btn-hamburger { display: none; } /* hidden on desktop */
 
 /* Light & Dark Mode Background Gradients */
 .app-bg-gradient-light, .app-bg-gradient-dark {
@@ -561,7 +619,21 @@ textarea { min-height: 160px; resize: vertical; }
       <button class="btn-icon" onclick="signOut()" title="Sign out">
         <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
       </button>
+      <button class="btn-icon btn-hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" title="Menu" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+      </button>
     </div>
+  </div>
+
+  <!-- Mobile nav menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-item" onclick="goTree();closeMobileMenu()">Dream Tree</button>
+    <button class="mobile-menu-item" onclick="goJournal();closeMobileMenu()">Your Dreams</button>
+    <div class="mobile-menu-divider"></div>
+    <button class="mobile-menu-pro" id="btnGetProMobile" onclick="showPaywall();closeMobileMenu()">Get Pro</button>
+    <div class="mobile-menu-divider"></div>
+    <button class="mobile-menu-item" onclick="goProfile();closeMobileMenu()">Profile</button>
+    <button class="mobile-menu-item mobile-menu-signout" onclick="signOut()">Sign out</button>
   </div>
 
   <div class="chat-main">
@@ -839,6 +911,8 @@ onAuthStateChanged(auth, async (user) => {
     if (isPro) {
       const btn = document.getElementById('btnGetPro');
       if (btn) btn.style.display = 'none';
+      const btnM = document.getElementById('btnGetProMobile');
+      if (btnM) btnM.style.display = 'none';
     }
   } else {
     currentUser = null;
@@ -950,10 +1024,33 @@ function showAuthScreen(form) {
   window.showAuthForm(form);
 }
 
-window.goJournal = () => { history.replaceState(null, '', 'app.html'); showScreen('journal'); renderJournal(); };
-window.goChat = () => { history.replaceState(null, '', 'app.html'); showScreen('chat'); };
-window.goTree = () => { history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
-window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
+window.goJournal = () => { closeMobileMenu(); history.replaceState(null, '', 'app.html'); showScreen('journal'); renderJournal(); };
+window.goChat = () => { closeMobileMenu(); history.replaceState(null, '', 'app.html'); showScreen('chat'); };
+window.goTree = () => { closeMobileMenu(); history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
+window.goProfile = () => { closeMobileMenu(); history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
+
+// ── Mobile menu ──
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const btn = document.getElementById('hamburgerBtn');
+  if (!menu) return;
+  const open = menu.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', open);
+}
+function closeMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const btn = document.getElementById('hamburgerBtn');
+  if (menu) menu.classList.remove('open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+// Close mobile menu when tapping outside
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('mobileMenu');
+  const btn = document.getElementById('hamburgerBtn');
+  if (menu && menu.classList.contains('open') && !menu.contains(e.target) && e.target !== btn && !btn?.contains(e.target)) {
+    closeMobileMenu();
+  }
+});
 
 function fillProfileFields(data) {
   const d = data || {};
