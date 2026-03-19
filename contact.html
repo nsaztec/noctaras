@@ -305,48 +305,17 @@ nav.dark-nav {
     <div class="highlight-box">
       <h3>Email Support</h3>
       <p style="margin-bottom: 24px;">We typically respond within 24 hours.</p>
-      <form id="contactForm" onsubmit="sendMail(event)">
-        <div class="form-group">
-          <input type="text" id="contactName" placeholder="Your name" required />
-        </div>
-        <div class="form-group">
-          <input type="email" id="contactEmail" placeholder="Your email address" required />
-        </div>
-        <div class="form-group">
-          <textarea id="contactMessage" placeholder="How can we help you?" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn-primary">Send Message</button>
-      </form>
+      <a href="mailto:support@noctaras.com" class="btn-primary" style="display:inline-block;text-decoration:none;">Send us an email</a>
     </div>
   </section>
 </div>
 
-<div class="toast" id="toast">
-  <span class="toast-icon">
-    <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </span>
-  <span>Your message has been sent. We'll get back to you shortly.</span>
-</div>
 
 <footer>
   <p>© 2026 Noctaras · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="contact.html">Contact</a></p>
 </footer>
 
 <script>
-async function sendMail(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  const name = document.getElementById('contactName').value.trim();
-  const email = document.getElementById('contactEmail').value.trim();
-  const message = document.getElementById('contactMessage').value.trim();
-
-  btn.disabled = true;
-  btn.textContent = 'Sending...';
-
-  try {
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, message })
     });
 
@@ -361,12 +330,6 @@ async function sendMail(e) {
       btn.textContent = 'Failed — try again';
       btn.disabled = false;
     }
-  } catch {
-    btn.textContent = 'Failed — try again';
-    btn.disabled = false;
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById("themeTogglePage");
   const html = document.documentElement;
