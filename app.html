@@ -684,6 +684,7 @@ const googleProvider = new GoogleAuthProvider();
 
 let currentUser = null;
 let dreams = [];
+let chatHistory = [];
 let currentMood = 'mysterious';
 let currentAnalysis = '';
 let selectedId = null;
@@ -1280,25 +1281,30 @@ window.submitChat = async () => {
 
   const hero = document.getElementById('chatHero');
   if (hero && hero.style.display !== 'none') { hero.style.opacity = '0'; setTimeout(() => hero.style.display = 'none', 400); }
-  
-  addUserMsg(text);
-    const load = addLoadingMsg();
-    try {
-      const rawAi = await callAI(text);
-      const tMatch = rawAi.match(/^TITLE:\s*(.*)/im);
-      const aMatch = rawAi.match(/ANALYSIS:\s*([\s\S]*)/im);
-      
-      const title = tMatch ? tMatch[1].trim() : 'Dream Analysis';
-      const analysis = aMatch ? aMatch[1].trim() : rawAi;
 
-      load.remove();
-      addAIMsg(analysis, text, title, !!aMatch);
-    } catch(e) {
-      load.remove();
-      if (e.message !== 'upgrade_required') {
-        addAIMsg('The stars grew silent... ' + e.message, '', '', false);
-      }
+  const isFirstMessage = chatHistory.length === 0;
+  chatHistory.push({ role: 'user', content: text });
+  addUserMsg(text);
+  const load = addLoadingMsg();
+  try {
+    const rawAi = await callAI(text, chatHistory);
+    const tMatch = rawAi.match(/^TITLE:\s*(.*)/im);
+    const aMatch = rawAi.match(/ANALYSIS:\s*([\s\S]*)/im);
+
+    const title = tMatch ? tMatch[1].trim() : 'Dream Analysis';
+    const analysis = aMatch ? aMatch[1].trim() : rawAi;
+
+    chatHistory.push({ role: 'assistant', content: rawAi });
+    load.remove();
+    // Only save dream on the first valid analysis
+    addAIMsg(analysis, isFirstMessage ? text : '', title, !!aMatch);
+  } catch(e) {
+    chatHistory.pop(); // rollback on error
+    load.remove();
+    if (e.message !== 'upgrade_required') {
+      addAIMsg('The stars grew silent... ' + e.message, '', '', false);
     }
+  }
 };
 
 function addUserMsg(t) {
@@ -1388,8 +1394,8 @@ window.showPaywall = function showPaywall(limitReached) {
 window.closePaywall = () => document.getElementById('paywallOverlay').classList.remove('active');
 
 // ── AI ──
-async function callAI(dreamText) {
-  const body = { dream: dreamText, lang: navigator.language || 'en-US' };
+async function callAI(dreamText, history) {
+  const body = { dream: dreamText, messages: history || [], lang: navigator.language || 'en-US' };
   if (currentUser) { body.userId = currentUser.uid; body.email = currentUser.email || ''; }
   
   const res = await fetch('/api/interpret', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
