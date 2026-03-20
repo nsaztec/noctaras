@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Inter', system-ui, sans-serif; }
+  .card {
+    width: 800px;
+    height: 800px;
+    background: #07060F;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Ambient glow */
+  .card::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(155,143,232,0.12) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+  }
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  .wordmark {
+    font-size: 28px;
+    font-weight: 600;
+    color: #EDEDED;
+    letter-spacing: -0.02em;
+  }
+  .hero-icon {
+    margin-bottom: 32px;
+  }
+  .tagline {
+    font-size: 42px;
+    font-weight: 600;
+    color: #EDEDED;
+    letter-spacing: -0.03em;
+    text-align: center;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .tagline span {
+    color: #C4B8FF;
+  }
+  .sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    letter-spacing: -0.01em;
+    margin-bottom: 52px;
+  }
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+  }
+  .feature-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9B8FE8;
+    flex-shrink: 0;
+  }
+  /* Stars */
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.3;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="card" id="card">
+  <!-- Stars -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const card = document.getElementById('card');
+      for (let i = 0; i < 60; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        const sz = Math.random() * 2 + 0.5;
+        s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${Math.random()*0.25+0.05}`;
+        card.appendChild(s);
+      }
+    });
+  </script>
+
+  <div class="logo-wrap">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <circle cx="14" cy="18" r="9" stroke="#9B8FE8" stroke-width="1.6" fill="none"/>
+      <circle cx="22" cy="18" r="9" stroke="#C4B8FF" stroke-width="1.6" fill="none" opacity="0.6"/>
+      <path d="M18 10C20.2 12.2 20.2 23.8 18 26C15.8 23.8 15.8 12.2 18 10Z" fill="#C4B8FF" opacity="0.35"/>
+    </svg>
+    <span class="wordmark">Noctaras</span>
+  </div>
+
+  <div class="tagline">Your AI<br>Dream Journal</div>
+  <div class="sub">Interpret, record & track your dreams</div>
+
+  <div class="features">
+    <div class="feature"><div class="feature-dot"></div>Unlimited AI dream interpretations</div>
+    <div class="feature"><div class="feature-dot"></div>Dream Tree — visualize your year</div>
+    <div class="feature"><div class="feature-dot"></div>Monthly & annual dream analysis</div>
+    <div class="feature"><div class="feature-dot"></div>Private dream journal</div>
+  </div>
+</div>
+</body>
+</html>
