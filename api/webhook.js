@@ -2,7 +2,6 @@ import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import crypto from 'crypto';
 
-// Initialize Firebase Admin
 if (!getApps().length) {
   initializeApp({
     credential: cert({
@@ -15,6 +14,9 @@ if (!getApps().length) {
 
 const db = getFirestore();
 
+const ACTIVATING = ['checkout.completed', 'subscription.created', 'subscription.updated', 'subscription.active', 'subscription.trialing', 'subscription.paid'];
+const CANCELLING = ['subscription.deleted', 'subscription.cancelled', 'subscription.expired'];
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -23,10 +25,8 @@ export default async function handler(req, res) {
   // Verify Creem webhook signature
   const secret = process.env.CREEM_WEBHOOK_SECRET;
   const signature = req.headers['creem-signature'];
-
   if (secret && signature) {
-    const hmac = crypto.createHmac('sha256', secret);
-    const digest = hmac.update(JSON.stringify(req.body)).digest('hex');
+    const digest = crypto.createHmac('sha256', secret).update(JSON.stringify(req.body)).digest('hex');
     if (digest !== signature) {
       return res.status(401).json({ error: 'Invalid signature' });
     }
@@ -35,27 +35,35 @@ export default async function handler(req, res) {
   const eventType = req.body?.type;
   const data = req.body?.data;
 
-  // Get user email from the payload
-  const userEmail = data?.customer?.email;
+  // Creem may nest data under data.object — try both
+  const obj = data?.object ?? data ?? {};
+
+  // Try all known email locations in Creem payloads
+  const userEmail =
+    obj?.customer?.email ||
+    obj?.customer_email ||
+    data?.customer?.email ||
+    data?.customer_email ||
+    req.body?.customer?.email ||
+    req.body?.customer_email;
+
   if (!userEmail) {
+    console.error('No email found in payload:', JSON.stringify(req.body));
     return res.status(400).json({ error: 'No user email' });
   }
 
-  const status = data?.status;
-  const isPro = status === 'active' || status === 'trialing';
+  const status = obj?.status ?? data?.status;
+  const isPro = ACTIVATING.includes(eventType);
 
   try {
-    // Find user by email in Firestore
     const snapshot = await db.collection('users').where('email', '==', userEmail).get();
 
     if (snapshot.empty) {
-      // Store pending pro status — user will claim it on next login
-      const activatingEvents = ['checkout.completed', 'subscription.created', 'subscription.updated', 'subscription.active', 'subscription.trialing'];
       await db.collection('pending_pro').doc(userEmail).set({
         email: userEmail,
         event: eventType,
-        subscriptionId: data?.id,
-        status: activatingEvents.includes(eventType) ? 'active' : status,
+        subscriptionId: obj?.id ?? data?.id,
+        status: isPro ? 'active' : status,
         updatedAt: new Date().toISOString(),
       });
       return res.status(200).json({ ok: true, note: 'Stored as pending' });
@@ -63,20 +71,17 @@ export default async function handler(req, res) {
 
     const userId = snapshot.docs[0].id;
 
-    const activatingEvents = ['checkout.completed', 'subscription.created', 'subscription.updated', 'subscription.active', 'subscription.trialing'];
-    const cancellingEvents = ['subscription.deleted', 'subscription.cancelled', 'subscription.expired'];
-
-    if (activatingEvents.includes(eventType)) {
+    if (ACTIVATING.includes(eventType)) {
       await db.collection('users').doc(userId).set({
         email: userEmail,
-        isPro,
-        subscriptionId: data?.id,
-        subscriptionStatus: status,
+        isPro: true,
+        subscriptionId: obj?.id ?? data?.id,
+        subscriptionStatus: status || 'active',
         updatedAt: new Date().toISOString(),
       }, { merge: true });
     }
 
-    if (cancellingEvents.includes(eventType)) {
+    if (CANCELLING.includes(eventType)) {
       await db.collection('users').doc(userId).set({
         isPro: false,
         subscriptionStatus: 'cancelled',
