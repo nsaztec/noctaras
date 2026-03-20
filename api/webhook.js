@@ -50,11 +50,12 @@ export default async function handler(req, res) {
 
     if (snapshot.empty) {
       // Store pending pro status — user will claim it on next login
+      const activatingEvents = ['checkout.completed', 'subscription.created', 'subscription.updated', 'subscription.active', 'subscription.trialing'];
       await db.collection('pending_pro').doc(userEmail).set({
         email: userEmail,
         event: eventType,
         subscriptionId: data?.id,
-        status,
+        status: activatingEvents.includes(eventType) ? 'active' : status,
         updatedAt: new Date().toISOString(),
       });
       return res.status(200).json({ ok: true, note: 'Stored as pending' });
@@ -62,7 +63,10 @@ export default async function handler(req, res) {
 
     const userId = snapshot.docs[0].id;
 
-    if (eventType === 'subscription.created' || eventType === 'subscription.updated' || eventType === 'checkout.completed') {
+    const activatingEvents = ['checkout.completed', 'subscription.created', 'subscription.updated', 'subscription.active', 'subscription.trialing'];
+    const cancellingEvents = ['subscription.deleted', 'subscription.cancelled', 'subscription.expired'];
+
+    if (activatingEvents.includes(eventType)) {
       await db.collection('users').doc(userId).set({
         email: userEmail,
         isPro,
@@ -72,7 +76,7 @@ export default async function handler(req, res) {
       }, { merge: true });
     }
 
-    if (eventType === 'subscription.deleted') {
+    if (cancellingEvents.includes(eventType)) {
       await db.collection('users').doc(userId).set({
         isPro: false,
         subscriptionStatus: 'cancelled',
