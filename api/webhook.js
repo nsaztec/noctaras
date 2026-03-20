@@ -32,27 +32,16 @@ export default async function handler(req, res) {
     }
   }
 
-  const eventType = req.body?.type;
-  const data = req.body?.data;
-
-  // Creem may nest data under data.object — try both
-  const obj = data?.object ?? data ?? {};
-
-  // Try all known email locations in Creem payloads
-  const userEmail =
-    obj?.customer?.email ||
-    obj?.customer_email ||
-    data?.customer?.email ||
-    data?.customer_email ||
-    req.body?.customer?.email ||
-    req.body?.customer_email;
+  // Creem payload: { id, eventType, created_at, object: { ... } }
+  const eventType = req.body?.eventType;
+  const obj = req.body?.object ?? {};
+  const userEmail = obj?.customer?.email;
 
   if (!userEmail) {
-    // Return full payload so we can see the structure
-    return res.status(400).json({ error: 'No user email', payload: req.body });
+    return res.status(400).json({ error: 'No user email' });
   }
 
-  const status = obj?.status ?? data?.status;
+  const status = obj?.status;
   const isPro = ACTIVATING.includes(eventType);
 
   try {
@@ -62,7 +51,7 @@ export default async function handler(req, res) {
       await db.collection('pending_pro').doc(userEmail).set({
         email: userEmail,
         event: eventType,
-        subscriptionId: obj?.id ?? data?.id,
+        subscriptionId: obj?.id,
         status: isPro ? 'active' : status,
         updatedAt: new Date().toISOString(),
       });
@@ -75,7 +64,7 @@ export default async function handler(req, res) {
       await db.collection('users').doc(userId).set({
         email: userEmail,
         isPro: true,
-        subscriptionId: obj?.id ?? data?.id,
+        subscriptionId: obj?.id,
         subscriptionStatus: status || 'active',
         updatedAt: new Date().toISOString(),
       }, { merge: true });
