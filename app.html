@@ -1008,10 +1008,14 @@ window.registerEmail = async () => {
   const password = document.getElementById('registerPassword').value;
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
-    await sendEmailVerification(cred.user);
+    try {
+      await sendEmailVerification(cred.user, { url: 'https://noctaras.com/app.html' });
+    } catch(ve) {
+      console.error('Verification email error:', ve);
+    }
     await fbSignOut(auth);
     showAuthForm('login');
-    showToast('Welcome to Noctaras', 'Your account has been created successfully. Please check your inbox to verify your email. The universe awaits.');
+    showToast('Welcome to Noctaras', 'Account created! Check your inbox (and spam folder) for the verification link.');
   } catch (e) {
     document.getElementById('registerError').style.color = '';
     document.getElementById('registerError').textContent = friendlyError(e.code);
