@@ -48,8 +48,8 @@ export default async function handler(req, res) {
     req.body?.customer_email;
 
   if (!userEmail) {
-    console.error('No email found in payload:', JSON.stringify(req.body));
-    return res.status(400).json({ error: 'No user email' });
+    // Return full payload so we can see the structure
+    return res.status(400).json({ error: 'No user email', payload: req.body });
   }
 
   const status = obj?.status ?? data?.status;
