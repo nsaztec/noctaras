@@ -1699,8 +1699,8 @@ function addAIMsg(text, dreamText, titleText, isValidAnalysis) {
 }
 
 // ── Paywall ──
-const MONTHLY_URL = 'https://store.noctaras.com/checkout/buy/e9f3fc7e-266a-4316-b9b1-d0333d6e7d4a';
-const ANNUAL_URL = 'https://store.noctaras.com/checkout/buy/709acabc-7d78-4b7a-9367-c67bd51c475b';
+const MONTHLY_URL = 'https://www.creem.io/test/payment/prod_7llBpU2n2QAwJiyiULKlmH';
+const ANNUAL_URL = 'https://www.creem.io/test/payment/prod_2MGl161w98CGdfx4z1NBEJ';
 
 window.setPricing = function(plan) {
   const isAnnual = plan === 'annually';
@@ -1719,7 +1719,7 @@ window.setPricing = function(plan) {
   
   const btn = document.getElementById('planButton');
   btn.textContent = isAnnual ? 'Get Annual Pro' : 'Get Monthly Pro';
-  btn.href = isAnnual ? ANNUAL_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '') : MONTHLY_URL + (currentUser ? `?checkout[email]=${currentUser.email}` : '');
+  btn.href = isAnnual ? ANNUAL_URL + (currentUser ? `?prefilled_email=${currentUser.email}` : '') : MONTHLY_URL + (currentUser ? `?prefilled_email=${currentUser.email}` : '');
 }
 
 window.showPaywall = function showPaywall(limitReached) {

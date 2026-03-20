@@ -20,9 +20,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Verify LemonSqueezy webhook signature
-  const secret = process.env.LEMONSQUEEZY_WEBHOOK_SECRET;
-  const signature = req.headers['x-signature'];
+  // Verify Creem webhook signature
+  const secret = process.env.CREEM_WEBHOOK_SECRET;
+  const signature = req.headers['creem-signature'];
 
   if (secret && signature) {
     const hmac = crypto.createHmac('sha256', secret);
@@ -32,28 +32,29 @@ export default async function handler(req, res) {
     }
   }
 
-  const { meta, data } = req.body;
-  const eventName = meta?.event_name;
+  const eventType = req.body?.type;
+  const data = req.body?.data;
 
-  // Get user email from the order
-  const userEmail = data?.attributes?.user_email;
+  // Get user email from the payload
+  const userEmail = data?.customer?.email;
   if (!userEmail) {
     return res.status(400).json({ error: 'No user email' });
   }
 
+  const status = data?.status;
+  const isPro = status === 'active' || status === 'trialing';
+
   try {
     // Find user by email in Firestore
-    const usersRef = db.collection('users');
-    const snapshot = await usersRef.where('email', '==', userEmail).get();
+    const snapshot = await db.collection('users').where('email', '==', userEmail).get();
 
     if (snapshot.empty) {
-      // Store pending pro status by email (user will claim it on next login)
+      // Store pending pro status — user will claim it on next login
       await db.collection('pending_pro').doc(userEmail).set({
         email: userEmail,
-        event: eventName,
-        variantId: data?.attributes?.variant_id,
-        subscriptionId: data?.attributes?.id,
-        status: data?.attributes?.status,
+        event: eventType,
+        subscriptionId: data?.id,
+        status,
         updatedAt: new Date().toISOString(),
       });
       return res.status(200).json({ ok: true, note: 'Stored as pending' });
@@ -61,21 +62,17 @@ export default async function handler(req, res) {
 
     const userId = snapshot.docs[0].id;
 
-    if (eventName === 'subscription_created' || eventName === 'subscription_updated') {
-      const status = data?.attributes?.status;
-      const isPro = status === 'active' || status === 'trialing';
-
+    if (eventType === 'subscription.created' || eventType === 'subscription.updated' || eventType === 'checkout.completed') {
       await db.collection('users').doc(userId).set({
         email: userEmail,
         isPro,
-        subscriptionId: data?.attributes?.id,
-        variantId: data?.attributes?.variant_id,
+        subscriptionId: data?.id,
         subscriptionStatus: status,
         updatedAt: new Date().toISOString(),
       }, { merge: true });
     }
 
-    if (eventName === 'subscription_cancelled' || eventName === 'subscription_expired') {
+    if (eventType === 'subscription.deleted') {
       await db.collection('users').doc(userId).set({
         isPro: false,
         subscriptionStatus: 'cancelled',
@@ -89,4 +86,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: err.message });
   }
 }
-
