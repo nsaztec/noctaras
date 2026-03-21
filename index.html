@@ -234,12 +234,15 @@ nav.scrolled {
   filter: hue-rotate(150deg) saturate(0.65) brightness(0.75);
   z-index: 0;
 }
-/* Gradient overlay: page bg on left (text readable) → transparent on right */
+/* Gradient overlay: left (text) + top + bottom fades */
 #dream-tree::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, var(--bg) 30%, transparent 70%);
+  background:
+    linear-gradient(to right,  var(--bg) 30%, transparent 65%),
+    linear-gradient(to bottom, var(--bg) 0%,  transparent 18%),
+    linear-gradient(to top,    var(--bg) 0%,  transparent 18%);
   z-index: 1;
   pointer-events: none;
 }
@@ -1097,17 +1100,36 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// Dream Tree video — play once on scroll into view, stop at last frame
+// Dream Tree video — breathing effect (forward → reverse → forward)
 (function() {
   var vid = document.getElementById('dt5-video');
   if (!vid) return;
-  var played = false;
+  var started = false;
+  var dir = 1;          // 1 = forward, -1 = backward
+  var lastT = null;
+  var SPEED = 0.32;     // playback speed multiplier
+
+  function breathe(ts) {
+    if (lastT === null) lastT = ts;
+    var dt = Math.min((ts - lastT) / 1000, 0.05);
+    lastT = ts;
+    if (!vid.duration) { requestAnimationFrame(breathe); return; }
+
+    vid.currentTime = Math.max(0, Math.min(vid.duration, vid.currentTime + dir * dt * SPEED));
+
+    if (vid.currentTime >= vid.duration - 0.08) dir = -1;
+    else if (vid.currentTime <= 0.08)           dir =  1;
+
+    requestAnimationFrame(breathe);
+  }
+
   var vidObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      if (entry.isIntersecting && !played) {
-        played = true;
+      if (entry.isIntersecting && !started) {
+        started = true;
+        vid.pause();
         vid.currentTime = 0;
-        vid.play();
+        requestAnimationFrame(breathe);
         vidObs.disconnect();
       }
     });
