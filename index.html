@@ -209,24 +209,22 @@ nav.scrolled {
 .path-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
 /* ── DREAM TREE (Features 5 layout) ── */
-/* Section is full-bleed dark — no theme dependency */
-.dt5-inner { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
 .dt5-wrap { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
-@media(min-width:900px) { .dt5-wrap { grid-template-columns: 1fr 1fr; gap: 80px; } }
-.dt5-eyebrow { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(155,143,232,0.7); margin-bottom: 16px; }
-.dt5-title { font-size: clamp(26px, 3.2vw, 42px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: #EDE8FF; margin-bottom: 16px; }
-.dt5-desc { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 32px; }
-.dt5-list { border-top: 1px solid rgba(255,255,255,0.08); }
-.dt5-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+@media(min-width:900px) { .dt5-wrap { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.dt5-eyebrow { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em; color: var(--muted); margin-bottom: 16px; }
+.dt5-title { font-size: clamp(26px, 3.2vw, 42px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--text); margin-bottom: 16px; }
+.dt5-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+.dt5-list { border-top: 1px solid var(--border); }
+.dt5-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--border); }
 .dt5-item-icon { flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px; color: #9B8FE8; }
-.dt5-item-name { font-size: 14px; font-weight: 600; color: #EDE8FF; letter-spacing: -0.01em; }
-.dt5-item-desc { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; line-height: 1.55; }
-.dt5-cta { margin-top: 28px; display: inline-flex; align-items: center; gap: 7px; background: #9B8FE8; color: #07060F; padding: 11px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
-.dt5-cta:hover { opacity: 0.85; }
-/* Video fills its column — no panel, video bleeds into dark section bg */
-.dt5-visual { border-radius: 20px; overflow: hidden; }
-.dt5-video-wrap { position: relative; }
-.dt5-video { width: 100%; display: block; filter: hue-rotate(150deg) saturate(0.65) brightness(0.8); }
+.dt5-item-name { font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+.dt5-item-desc { font-size: 13px; color: var(--muted); margin-top: 2px; line-height: 1.55; }
+.dt5-cta { margin-top: 28px; display: inline-flex; align-items: center; gap: 7px; background: var(--text); color: var(--bg); padding: 11px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
+.dt5-cta:hover { opacity: 0.8; }
+/* Visual panel is always dark — theme-independent so video blends consistently */
+.dt5-visual { background: #07060F; border: 1px solid rgba(155,143,232,0.18); border-radius: 24px; padding: 8px; }
+.dt5-video-wrap { position: relative; overflow: hidden; border-radius: 18px; }
+.dt5-video { width: 100%; height: 100%; min-height: 400px; display: block; object-fit: cover; filter: hue-rotate(150deg) saturate(0.65) brightness(0.75); }
 .dt5-fade-t { position: absolute; top: 0; left: 0; right: 0; height: 100px; background: linear-gradient(to bottom, #07060F, transparent); z-index: 2; pointer-events: none; }
 .dt5-fade-b { position: absolute; bottom: 0; left: 0; right: 0; height: 100px; background: linear-gradient(to top, #07060F, transparent); z-index: 2; pointer-events: none; }
 
@@ -690,8 +688,8 @@ footer {
   </div>
 </section>
 
-<section id="dream-tree" style="background:#07060F; padding:100px 0;">
-<div class="dt5-inner">
+<section id="dream-tree" class="section-wrap" style="padding-bottom:64px;">
+
   <div class="dt5-wrap reveal">
 
     <!-- Left: text + feature list -->
@@ -747,7 +745,7 @@ footer {
     </div>
 
   </div>
-</div>
+
 </section>
 
 <section id="pricing" class="section-wrap">
