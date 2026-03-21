@@ -209,7 +209,7 @@ nav.scrolled {
 .path-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
 /* ── DREAM TREE (Features 5 layout) ── */
-#dream-tree { position: relative; overflow: hidden; }
+#dream-tree { position: relative; overflow: hidden; padding: 120px 0 64px; }
 .dt5-wrap { position: relative; z-index: 2; }
 .dt5-text { max-width: 520px; }
 @media(min-width:900px) { .dt5-text { max-width: 480px; } }
@@ -704,13 +704,14 @@ footer {
   </div>
 </section>
 
-<section id="dream-tree" class="section-wrap" style="padding-bottom:64px;">
+<section id="dream-tree">
 
-  <!-- Background video — mix-blend-mode removes its bg, only branches visible -->
-  <video class="dt5-bg-video" autoplay muted loop playsinline>
+  <!-- Background video: scroll-triggered, plays once, stops on last frame -->
+  <video id="dt5-video" class="dt5-bg-video" muted playsinline preload="auto">
     <source src="tree-leaves.mp4" type="video/mp4">
   </video>
 
+  <div style="max-width:1100px;margin:0 auto;padding:0 5%;">
   <div class="dt5-wrap reveal">
     <div class="dt5-text">
       <span class="dt5-eyebrow">Dream Tree</span>
@@ -751,6 +752,7 @@ footer {
       </div>
       <a href="#pricing" class="dt5-cta">Upgrade to Pro <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
+  </div>
   </div>
 
 </section>
@@ -1094,6 +1096,24 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: "0px" });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+
+// Dream Tree video — play once on scroll into view, stop at last frame
+(function() {
+  var vid = document.getElementById('dt5-video');
+  if (!vid) return;
+  var played = false;
+  var vidObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !played) {
+        played = true;
+        vid.currentTime = 0;
+        vid.play();
+        vidObs.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+  vidObs.observe(document.getElementById('dream-tree'));
+})();
 
 // Nav Blur
 window.addEventListener('scroll', () => {
