@@ -208,28 +208,32 @@ nav.scrolled {
 .path-title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); margin-bottom: 12px; }
 .path-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
-/* ── TESTIMONIALS (Clean Ribbon) ── */
-.test-wrap { position: relative; overflow: hidden; padding: 20px 0; }
-.test-track { display: flex; gap: 24px; transition: transform 0.5s var(--ease-out); }
-.test-card {
-  min-width: 340px; flex: 0 0 340px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 32px; box-shadow: var(--shadow-sm);
-  display: flex; flex-direction: column;
+/* ── DREAM TREE BENTO ── */
+.dt-eyebrow { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #9B8FE8; margin-bottom: 14px; }
+.dt-bento { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media(min-width: 700px) {
+  .dt-bento { grid-template-columns: repeat(5, 1fr); }
+  .dt-main    { grid-column: span 3; }
+  .dt-monthly { grid-column: span 2; }
+  .dt-yearly  { grid-column: span 2; }
+  .dt-pattern { grid-column: span 3; }
 }
-.test-quote { font-size: 15px; color: var(--text); line-height: 1.6; margin-bottom: 24px; flex: 1; }
-.test-author { display: flex; align-items: center; gap: 12px; }
-.test-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--surface-hover); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
-.test-info h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-.test-info p { font-size: 12px; color: var(--muted); }
-
-.test-nav { display: flex; gap: 8px; margin-top: 32px; justify-content: flex-end; }
-.nav-btn {
-  width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border);
-  background: var(--surface); display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--muted); transition: all 0.2s;
-}
-.nav-btn:hover { background: var(--surface-hover); color: var(--text); }
+.dt-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; transition: border-color 0.25s; overflow: hidden; position: relative; }
+.dt-card:hover { border-color: rgba(155,143,232,0.35); }
+.dt-tag { display: block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #9B8FE8; margin-bottom: 14px; opacity: 0.85; }
+.dt-card h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); line-height: 1.3; margin-bottom: 10px; }
+.dt-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+.dt-dt-icon { width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface-hover); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.dt-main { padding: 0; display: flex; flex-direction: column; }
+.dt-main-body { padding: 28px 28px 0; }
+.dt-main h3 { font-size: 22px; }
+.dt-tree-area { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; min-height: 180px; position: relative; }
+.dt-tree-glow { position: absolute; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(107,92,231,0.11) 0%, transparent 70%); pointer-events: none; }
+.dt-tree-svg { position: relative; z-index: 1; width: 180px; height: 200px; }
+.dt-cta-wrap { margin-top: 28px; text-align: center; }
+.dt-cta-link { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); padding: 12px 28px; border-radius: 8px; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; transition: opacity 0.2s; }
+.dt-cta-link:hover { opacity: 0.8; }
+.dt-cta-sub { margin-top: 10px; font-size: 13px; color: var(--muted); }
 
 /* ── PRICING v2 ── */
 .pricing-toggle {
@@ -691,120 +695,108 @@ footer {
   </div>
 </section>
 
-<section id="testimonials" class="section-wrap" style="padding-bottom: 40px;">
+<section id="dream-tree" class="section-wrap" style="padding-bottom: 40px;">
   <div class="section-header reveal">
-    <h2 class="section-title">Used by thousands.</h2>
-    <p class="section-desc">Psychologists, therapists, and seekers use Noctaras to access deeper insights.</p>
+    <span class="dt-eyebrow">Dream Tree</span>
+    <h2 class="section-title">Your dreams don't<br>repeat by accident.</h2>
+    <p class="section-desc">Every dream you record becomes a branch. Watch your inner world take shape — month by month, year by year.</p>
   </div>
 
-  <div class="test-wrap reveal delay-1">
-    <div class="test-track" id="testTrack">
-      <div class="test-card">
-        <p class="test-quote">"It completely recontextualized a terrifying nightmare I'd been having for months. Now I see it as a sign of necessary change."</p>
-        <div class="test-author"><div class="test-avatar">E</div><div class="test-info"><h4>Elena R.</h4></div></div>
+  <div class="dt-bento reveal delay-1">
+
+    <!-- Main hero card -->
+    <div class="dt-card dt-main">
+      <div class="dt-main-body">
+        <span class="dt-tag">Living Timeline</span>
+        <h3>Your subconscious has been trying to tell you something.</h3>
+        <p>Dream Tree maps every entry into a visual, growing structure — revealing the emotional patterns your waking mind never noticed.</p>
       </div>
-      <div class="test-card">
-        <p class="test-quote">"More than just an app, it feels like a very patient, very wise therapist for my sleeping mind. The UI is incredibly refined."</p>
-        <div class="test-author"><div class="test-avatar">M</div><div class="test-info"><h4>Marcus J.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I was skeptical of AI doing something this intuitive. But the Jungian analysis aspect is spot on and beautifully written."</p>
-        <div class="test-author"><div class="test-avatar">D</div><div class="test-info"><h4>David W.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"The journaling aspect alone is great, but having a deep breakdown of symbolic motifs has helped me uncover a lot of personal anxiety."</p>
-        <div class="test-author"><div class="test-avatar">C</div><div class="test-info"><h4>Chloe C.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I've tried every dream app out there. Nothing comes close to the depth Noctaras provides. It feels like it actually understands symbolism."</p>
-        <div class="test-author"><div class="test-avatar">A</div><div class="test-info"><h4>Aiden T.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"My recurring dream about water finally makes sense. The archetype breakdown gave me chills — it was so accurate to what I'm going through."</p>
-        <div class="test-author"><div class="test-avatar">S</div><div class="test-info"><h4>Sofia M.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I started journaling my dreams because of Noctaras and it's become the most grounding part of my morning routine. Genuinely life-changing."</p>
-        <div class="test-author"><div class="test-avatar">L</div><div class="test-info"><h4>Liam K.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"The interface is so clean and calming. It matches the introspective nature of what you're doing. Someone really thought this through."</p>
-        <div class="test-author"><div class="test-avatar">N</div><div class="test-info"><h4>Nora V.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I didn't expect AI to capture the emotional texture of my dreams, but it did. It even picked up on grief I hadn't consciously admitted yet."</p>
-        <div class="test-author"><div class="test-avatar">R</div><div class="test-info"><h4>Rafael D.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"Every morning I log my dream and every morning I learn something new about myself. It's like having a mirror for your subconscious."</p>
-        <div class="test-author"><div class="test-avatar">I</div><div class="test-info"><h4>Isla F.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"The shadow self analysis hit differently. I've been in therapy for years and this gave me a new angle I'd never considered before."</p>
-        <div class="test-author"><div class="test-avatar">J</div><div class="test-info"><h4>James O.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I recommended Noctaras to my entire study group. We compare interpretations now — it sparks the most fascinating conversations."</p>
-        <div class="test-author"><div class="test-avatar">P</div><div class="test-info"><h4>Priya S.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"Three weeks in and I'm already noticing patterns in my dream themes that map directly to stress cycles in my waking life. Incredible."</p>
-        <div class="test-author"><div class="test-avatar">T</div><div class="test-info"><h4>Thomas B.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"The writing quality of the interpretations is exceptional. It doesn't feel generated — it feels considered. That's rare."</p>
-        <div class="test-author"><div class="test-avatar">Z</div><div class="test-info"><h4>Zara H.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I had a dream about a burning house and nearly dismissed it. Noctaras explained the transformation symbolism and it clicked perfectly."</p>
-        <div class="test-author"><div class="test-avatar">K</div><div class="test-info"><h4>Kai N.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"My sleep quality improved because I stopped fearing my nightmares. Understanding them took away all the dread. Thank you Noctaras."</p>
-        <div class="test-author"><div class="test-avatar">A</div><div class="test-info"><h4>Amara L.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I've been journaling by hand for years. This is the first digital tool that actually felt worthy of my dream life. Beautifully done."</p>
-        <div class="test-author"><div class="test-avatar">O</div><div class="test-info"><h4>Owen P.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"The emotional graph over time is stunning. Seeing how my dream moods shifted through a hard month was actually moving to look at."</p>
-        <div class="test-author"><div class="test-avatar">Y</div><div class="test-info"><h4>Yuki A.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"Noctaras helped me realise I keep dreaming about doors because I'm afraid of commitment. That's not something I would've figured out alone."</p>
-        <div class="test-author"><div class="test-avatar">B</div><div class="test-info"><h4>Beatriz C.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"The app is fast, beautiful, and actually smart. It doesn't give generic answers — every interpretation feels tailored and thoughtful."</p>
-        <div class="test-author"><div class="test-avatar">F</div><div class="test-info"><h4>Finn G.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I lost my father last year and kept dreaming about him. Noctaras handled those dreams with such sensitivity. I cried reading the interpretation."</p>
-        <div class="test-author"><div class="test-avatar">H</div><div class="test-info"><h4>Hannah W.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I use it every single day. The streak feature keeps me accountable and the interpretations keep getting more meaningful as the pattern builds."</p>
-        <div class="test-author"><div class="test-avatar">V</div><div class="test-info"><h4>Victor E.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"It explained the anima archetype in my dreams in a way I actually understood. I've read Jung for years and still learned something new."</p>
-        <div class="test-author"><div class="test-avatar">G</div><div class="test-info"><h4>Grace Y.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"I was having the same dream about being chased every week for a year. After two weeks of Noctaras it stopped. The insight was that powerful."</p>
-        <div class="test-author"><div class="test-avatar">M</div><div class="test-info"><h4>Miles R.</h4></div></div>
-      </div>
-      <div class="test-card">
-        <p class="test-quote">"The dark theme, the gentle animations, the quality of thought — everything about this product feels intentional. It's a joy to use every morning."</p>
-        <div class="test-author"><div class="test-avatar">C</div><div class="test-info"><h4>Clara B.</h4></div></div>
+      <div class="dt-tree-area">
+        <div class="dt-tree-glow"></div>
+        <svg class="dt-tree-svg" viewBox="0 0 180 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M90 190 L90 128" stroke="#9B8FE8" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M90 188 L76 196" stroke="#9B8FE8" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+          <path d="M90 188 L104 196" stroke="#9B8FE8" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+          <path d="M90 148 L56 108" stroke="#9B8FE8" stroke-width="2" stroke-linecap="round"/>
+          <path d="M90 138 L124 96" stroke="#9B8FE8" stroke-width="2" stroke-linecap="round"/>
+          <path d="M56 108 L34 80" stroke="#C4B8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <path d="M56 108 L70 76" stroke="#C4B8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <path d="M124 96 L110 66" stroke="#C4B8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <path d="M124 96 L144 70" stroke="#C4B8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <path d="M34 80 L24 58" stroke="#C4B8FF" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+          <path d="M34 80 L44 52" stroke="#C4B8FF" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+          <path d="M70 76 L60 50" stroke="#C4B8FF" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+          <path d="M70 76 L78 46" stroke="#C4B8FF" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+          <path d="M110 66 L100 40" stroke="#C4B8FF" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+          <path d="M110 66 L116 36" stroke="#C4B8FF" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+          <path d="M144 70 L136 46" stroke="#C4B8FF" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+          <path d="M144 70 L154 50" stroke="#C4B8FF" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+          <circle cx="90" cy="190" r="3" fill="#9B8FE8" opacity="0.45"/>
+          <circle cx="56" cy="108" r="2.5" fill="#9B8FE8" opacity="0.9"/>
+          <circle cx="124" cy="96" r="2.5" fill="#9B8FE8" opacity="0.9"/>
+          <circle cx="34" cy="80" r="2" fill="#C4B8FF" opacity="0.75"/>
+          <circle cx="70" cy="76" r="2" fill="#C4B8FF" opacity="0.75"/>
+          <circle cx="110" cy="66" r="2" fill="#C4B8FF" opacity="0.75"/>
+          <circle cx="144" cy="70" r="2" fill="#C4B8FF" opacity="0.75"/>
+          <circle cx="24" cy="58" r="2.5" fill="#C4B8FF" opacity="0.5"/>
+          <circle cx="44" cy="52" r="2.5" fill="#C4B8FF" opacity="0.5"/>
+          <circle cx="60" cy="50" r="2.5" fill="#C4B8FF" opacity="0.5"/>
+          <circle cx="78" cy="46" r="2.5" fill="#C4B8FF" opacity="0.5"/>
+          <circle cx="100" cy="40" r="2.5" fill="#C4B8FF" opacity="0.5"/>
+          <circle cx="116" cy="36" r="2.5" fill="#C4B8FF" opacity="0.5"/>
+          <circle cx="136" cy="46" r="2.5" fill="#C4B8FF" opacity="0.5"/>
+          <circle cx="154" cy="50" r="2.5" fill="#C4B8FF" opacity="0.5"/>
+        </svg>
       </div>
     </div>
-    <div class="test-nav">
-      <button class="nav-btn" id="t-prev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-      <button class="nav-btn" id="t-next"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+
+    <!-- Monthly Rings -->
+    <div class="dt-card dt-monthly">
+      <div class="dt-dt-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="8" stroke="#9B8FE8" stroke-width="1.2" opacity="0.3"/>
+          <circle cx="9" cy="9" r="5.5" stroke="#9B8FE8" stroke-width="1.2" opacity="0.6"/>
+          <circle cx="9" cy="9" r="2.5" stroke="#9B8FE8" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <span class="dt-tag">Monthly Rings</span>
+      <h3>Each month, a new chapter.</h3>
+      <p>Which emotions dominated? Which symbols returned? Your tree remembers everything you've felt — so you don't have to.</p>
     </div>
+
+    <!-- Yearly Growth -->
+    <div class="dt-card dt-yearly">
+      <div class="dt-dt-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M2 14 L6 9 L10 11 L16 4" stroke="#9B8FE8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 4 L16 4 L16 8" stroke="#9B8FE8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="dt-tag">Yearly Growth</span>
+      <h3>A year of dreams, rendered into form.</h3>
+      <p>Watch your psychological landscape evolve in ways your waking mind couldn't track alone. Every year tells its own story.</p>
+    </div>
+
+    <!-- Hidden Patterns -->
+    <div class="dt-card dt-pattern">
+      <div class="dt-dt-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M3 9a6 6 0 1 0 6-6" stroke="#9B8FE8" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M7 1 L9 4 L7 7" stroke="#9B8FE8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="dt-tag">Hidden Patterns</span>
+      <h3>The themes that keep coming back.</h3>
+      <p>The symbols you keep dreaming about are the ones your mind hasn't resolved yet. Dream Tree makes them impossible to ignore — and finally possible to understand.</p>
+    </div>
+
   </div>
+
+  <div class="dt-cta-wrap reveal delay-2">
+    <a href="#pricing" class="dt-cta-link">Start growing your tree <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <p class="dt-cta-sub">Available with Pro · Unlock unlimited dream entries</p>
+  </div>
+
 </section>
 
 <section id="pricing" class="section-wrap">
@@ -943,7 +935,7 @@ footer {
       <div class="t-feat">
         <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
         <h3>We know what works</h3>
-        <p>With years of data mapped across thousands of users, we bring proven archetypal frameworks and practical psychological solutions to the table.</p>
+        <p>Built on proven Jungian frameworks and archetypal analysis, we bring genuine psychological depth to every interpretation.</p>
       </div>
       <div class="t-feat">
         <svg class="t-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1171,18 +1163,6 @@ if (themeToggle) {
   themeToggle.addEventListener('change', (e) => { setTheme(e.target.checked); });
 }
 
-// Minimal Carousel
-const track = document.getElementById('testTrack');
-const cards = track.children;
-let idx = 0;
-document.getElementById('t-next').addEventListener('click', () => {
-  idx = Math.min(idx + 1, cards.length - 1);
-  track.style.transform = `translateX(-${idx * (340 + 24)}px)`;
-});
-document.getElementById('t-prev').addEventListener('click', () => {
-  idx = Math.max(idx - 1, 0);
-  track.style.transform = `translateX(-${idx * (340 + 24)}px)`;
-});
 
 // Final CTA — scroll reveal
 (function() {
