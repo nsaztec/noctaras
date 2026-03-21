@@ -208,50 +208,25 @@ nav.scrolled {
 .path-title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); margin-bottom: 12px; }
 .path-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
-/* ── DREAM TREE — Bento Monochrome ── */
-@keyframes bm-float { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8%); } }
-@keyframes bm-pulse { 0%,100%{ transform:scale(1); opacity:.85; } 50%{ transform:scale(1.1); opacity:1; } }
-@keyframes bm-tilt  { 0%{ transform:rotate(-3deg); } 50%{ transform:rotate(3deg); } 100%{ transform:rotate(-3deg); } }
-@keyframes bm-drift { 0%,100%{ transform:translate3d(0,0,0); } 50%{ transform:translate3d(5%,-5%,0); } }
-@keyframes bm-card-in { from{ opacity:0; transform:translateY(18px) scale(.97); } to{ opacity:1; transform:translateY(0) scale(1); } }
-
-.bm-section { position: relative; }
-.bm-header { display: flex; flex-direction: column; gap: 20px; border-bottom: 1px solid var(--border); padding-bottom: 28px; margin-bottom: 20px; }
-@media(min-width:700px) { .bm-header { flex-direction: row; align-items: flex-end; justify-content: space-between; } }
-.bm-eyebrow { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.35em; color: var(--muted); margin-bottom: 10px; }
-.bm-title { font-size: clamp(26px, 4vw, 46px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; color: var(--text); }
-.bm-desc { max-width: 340px; font-size: 14px; color: var(--muted); line-height: 1.65; }
-.bm-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-@media(min-width:700px) {
-  .bm-grid { grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(130px, auto); }
-  .bm-c0 { grid-column: span 4; grid-row: span 2; }
-  .bm-c1 { grid-column: span 2; }
-  .bm-c2 { grid-column: span 2; }
-  .bm-c3 { grid-column: span 3; }
-  .bm-c4 { grid-column: span 3; }
-}
-.bm-card { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); padding: 22px; box-shadow: var(--shadow-sm); transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out), border-color .25s; opacity: 0; }
-.bm-card.bm-in { animation: bm-card-in .7s var(--ease-out) forwards; }
-.bm-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(155,143,232,.22); }
-.bm-card-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse 65% 110% at 10% 0%, rgba(155,143,232,.07), transparent 70%); }
-.bm-top { display: flex; align-items: flex-start; gap: 14px; position: relative; z-index: 1; }
-.bm-icon-circle { flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface-hover); display: flex; align-items: center; justify-content: center; }
-.bm-body { flex: 1; min-width: 0; }
-.bm-name-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.bm-name { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text); }
-.bm-badge { border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; font-size: 9.5px; text-transform: uppercase; letter-spacing: .28em; color: var(--muted); white-space: nowrap; }
-.bm-blurb { margin-top: 7px; font-size: 13px; line-height: 1.65; color: var(--muted); }
-.bm-visual { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; margin-top: 12px; min-height: 150px; }
-.bm-tree-glow { position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(107,92,231,.09) 0%, transparent 70%); pointer-events: none; }
-.bm-tree-svg { position: relative; z-index: 1; width: 185px; height: 210px; }
-.bm-cta { background: var(--surface-hover); }
-.bm-cta-body { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; }
-.bm-cta-label { font-size: 11px; text-transform: uppercase; letter-spacing: .3em; color: var(--muted); }
-.bm-cta-heading { font-size: 19px; font-weight: 700; letter-spacing: -.02em; color: var(--text); line-height: 1.2; margin-top: 10px; }
-.bm-cta-sub-text { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
-.bm-cta-btn { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; background: var(--text); color: var(--bg); padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; transition: opacity .2s; }
-.bm-cta-btn:hover { opacity: .8; }
-.bm-footer-line { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 11px; text-transform: uppercase; letter-spacing: .22em; color: var(--muted); }
+/* ── DREAM TREE (Features 5 layout) ── */
+.dt5-wrap { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+@media(min-width:900px) { .dt5-wrap { grid-template-columns: 2fr 3fr; gap: 72px; } }
+.dt5-eyebrow { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em; color: var(--muted); margin-bottom: 16px; }
+.dt5-title { font-size: clamp(26px, 3.2vw, 42px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--text); margin-bottom: 16px; }
+.dt5-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+.dt5-list { border-top: 1px solid var(--border); }
+.dt5-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.dt5-item-icon { flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px; color: #9B8FE8; }
+.dt5-item-name { font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+.dt5-item-desc { font-size: 13px; color: var(--muted); margin-top: 2px; line-height: 1.55; }
+.dt5-cta { margin-top: 28px; display: inline-flex; align-items: center; gap: 7px; background: var(--text); color: var(--bg); padding: 11px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
+.dt5-cta:hover { opacity: 0.8; }
+.dt5-visual { border: 1px solid var(--border); border-radius: 24px; padding: 10px; }
+.dt5-visual-inner { position: relative; overflow: hidden; border-radius: 16px; background: var(--surface); }
+.dt5-fade-t { position: absolute; top: 0; left: 0; right: 0; height: 72px; background: linear-gradient(to bottom, var(--surface), transparent); z-index: 2; pointer-events: none; }
+.dt5-fade-b { position: absolute; bottom: 0; left: 0; right: 0; height: 72px; background: linear-gradient(to top, var(--surface), transparent); z-index: 2; pointer-events: none; }
+.dt5-tree-wrap { display: flex; align-items: center; justify-content: center; padding: 28px; min-height: 340px; position: relative; }
+.dt5-tree-glow { position: absolute; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(107,92,231,0.1) 0%, transparent 65%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
 
 /* ── PRICING v2 ── */
 .pricing-toggle {
@@ -713,155 +688,119 @@ footer {
   </div>
 </section>
 
-<section id="dream-tree" class="section-wrap bm-section" style="padding-bottom:48px;">
+<section id="dream-tree" class="section-wrap" style="padding-bottom:64px;">
 
-  <div class="bm-header reveal">
+  <div class="dt5-wrap reveal">
+
+    <!-- Left: text + feature list -->
     <div>
-      <span class="bm-eyebrow">Dream Tree</span>
-      <h2 class="bm-title">Your dreams don't<br>repeat by accident.</h2>
+      <span class="dt5-eyebrow">Dream Tree</span>
+      <h2 class="dt5-title">Your subconscious has been trying to tell you something.</h2>
+      <p class="dt5-desc">Every dream you record becomes a branch. Month by month, year by year, your tree grows — revealing patterns your waking mind could never track alone.</p>
+      <div class="dt5-list">
+        <div class="dt5-item">
+          <svg class="dt5-item-icon" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="9"   stroke="currentColor" stroke-width="1.2" opacity="0.3"/>
+            <circle cx="10" cy="10" r="5.5" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+            <circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          <div>
+            <div class="dt5-item-name">Monthly Rings</div>
+            <div class="dt5-item-desc">Which emotions dominated? Which symbols returned? Your tree remembers.</div>
+          </div>
+        </div>
+        <div class="dt5-item">
+          <svg class="dt5-item-icon" viewBox="0 0 20 20" fill="none">
+            <path d="M2 15 L7 10 L11 13 L18 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 5 L18 5 L18 9"        stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div class="dt5-item-name">Yearly Growth</div>
+            <div class="dt5-item-desc">Watch your psychological landscape evolve across a full year of dreams.</div>
+          </div>
+        </div>
+        <div class="dt5-item">
+          <svg class="dt5-item-icon" viewBox="0 0 20 20" fill="none">
+            <path d="M3 10a7 7 0 1 0 7-7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M8 1 L10 4.5 L8 8"  stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div class="dt5-item-name">Hidden Patterns</div>
+            <div class="dt5-item-desc">Recurring symbols surface automatically — the ones your mind hasn't resolved yet.</div>
+          </div>
+        </div>
+      </div>
+      <a href="#pricing" class="dt5-cta">Upgrade to Pro <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
-    <p class="bm-desc">Every dream you record becomes a branch. Watch your inner world take shape — month by month, year by year.</p>
-  </div>
 
-  <div class="bm-grid" id="bmGrid">
-
-    <!-- Card 0 · Living Timeline (large, 4×2) -->
-    <article class="bm-card bm-c0">
-      <div class="bm-card-bg"></div>
-      <div class="bm-top">
-        <div class="bm-icon-circle">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="animation:bm-float 6s ease-in-out infinite">
-            <path d="M10 18 L10 10" stroke="#9B8FE8" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M10 13 L6 9"   stroke="#9B8FE8" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M10 12 L14 8"  stroke="#9B8FE8" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M6 9 L3.5 6"   stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.7"/>
-            <path d="M6 9 L8 5.5"   stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.7"/>
-            <path d="M14 8 L12 5"   stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.7"/>
-            <path d="M14 8 L16.5 5.5" stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.7"/>
+    <!-- Right: visual card -->
+    <div class="dt5-visual">
+      <div class="dt5-visual-inner">
+        <div class="dt5-fade-t"></div>
+        <div class="dt5-fade-b"></div>
+        <div class="dt5-tree-wrap">
+          <div class="dt5-tree-glow"></div>
+          <svg viewBox="0 0 360 420" fill="none" style="width:100%;max-width:340px;height:auto;">
+            <!-- trunk -->
+            <path d="M180 415 C180 390 178 362 180 335 C182 308 180 285 180 262" stroke="#9B8FE8" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- root hints -->
+            <path d="M180 413 C166 413 148 418 136 422" stroke="#9B8FE8" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <path d="M180 413 C194 413 212 418 224 422" stroke="#9B8FE8" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
+            <!-- main branches (bezier) -->
+            <path d="M180 292 C164 268 136 246 112 222" stroke="#9B8FE8" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M180 278 C196 254 224 232 250 208" stroke="#9B8FE8" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- second tier (bezier) -->
+            <path d="M112 222 C97 197 72 176 55 152" stroke="#C4B8FF" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
+            <path d="M112 222 C124 196 134 174 138 148" stroke="#C4B8FF" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
+            <path d="M250 208 C236 182 226 160 222 134" stroke="#C4B8FF" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
+            <path d="M250 208 C262 182 276 160 288 136" stroke="#C4B8FF" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
+            <!-- third tier -->
+            <path d="M55 152 C43 128 30 106 24 82"   stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
+            <path d="M55 152 C64 126 72 106 76 80"   stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
+            <path d="M138 148 C128 124 118 102 112 78" stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
+            <path d="M138 148 C146 124 156 102 160 78" stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
+            <path d="M222 134 C212 110 204 88 198 64"  stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
+            <path d="M222 134 C230 110 240 88 244 64"  stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
+            <path d="M288 136 C278 112 270 90 264 66"  stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
+            <path d="M288 136 C298 112 310 92 316 68"  stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
+            <!-- branch nodes -->
+            <circle cx="112" cy="222" r="3.5" fill="#9B8FE8" opacity="0.85"/>
+            <circle cx="250" cy="208" r="3.5" fill="#9B8FE8" opacity="0.85"/>
+            <circle cx="55"  cy="152" r="2.5" fill="#C4B8FF" opacity="0.8"/>
+            <circle cx="138" cy="148" r="2.5" fill="#C4B8FF" opacity="0.8"/>
+            <circle cx="222" cy="134" r="2.5" fill="#C4B8FF" opacity="0.8"/>
+            <circle cx="288" cy="136" r="2.5" fill="#C4B8FF" opacity="0.8"/>
+            <!-- leaf clusters -->
+            <circle cx="24"  cy="82"  r="4"   fill="#C4B8FF" opacity="0.42"/>
+            <circle cx="15"  cy="70"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="30"  cy="68"  r="2"   fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="76"  cy="80"  r="4"   fill="#C4B8FF" opacity="0.42"/>
+            <circle cx="67"  cy="68"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="82"  cy="66"  r="2"   fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="112" cy="78"  r="4"   fill="#C4B8FF" opacity="0.42"/>
+            <circle cx="103" cy="66"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="118" cy="64"  r="2"   fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="160" cy="78"  r="4"   fill="#C4B8FF" opacity="0.42"/>
+            <circle cx="151" cy="66"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="166" cy="64"  r="2"   fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="198" cy="64"  r="4"   fill="#C4B8FF" opacity="0.42"/>
+            <circle cx="189" cy="52"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="204" cy="50"  r="2"   fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="244" cy="64"  r="4"   fill="#C4B8FF" opacity="0.42"/>
+            <circle cx="235" cy="52"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="250" cy="50"  r="2"   fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="264" cy="66"  r="4"   fill="#C4B8FF" opacity="0.42"/>
+            <circle cx="255" cy="54"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="270" cy="52"  r="2"   fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="316" cy="68"  r="4"   fill="#C4B8FF" opacity="0.42"/>
+            <circle cx="307" cy="56"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
+            <circle cx="322" cy="54"  r="2"   fill="#C4B8FF" opacity="0.28"/>
           </svg>
         </div>
-        <div class="bm-body">
-          <div class="bm-name-row">
-            <span class="bm-name">Living Timeline</span>
-            <span class="bm-badge">Pro</span>
-          </div>
-          <p class="bm-blurb">Dream Tree maps every entry into a visual, growing structure — revealing emotional patterns your waking mind never noticed.</p>
-        </div>
       </div>
-      <div class="bm-visual">
-        <div class="bm-tree-glow"></div>
-        <svg class="bm-tree-svg" viewBox="0 0 180 200" fill="none">
-          <path d="M90 190 L90 128" stroke="#9B8FE8" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M90 188 L76 196" stroke="#9B8FE8" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
-          <path d="M90 188 L104 196" stroke="#9B8FE8" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
-          <path d="M90 148 L56 108" stroke="#9B8FE8" stroke-width="2" stroke-linecap="round"/>
-          <path d="M90 138 L124 96" stroke="#9B8FE8" stroke-width="2" stroke-linecap="round"/>
-          <path d="M56 108 L34 80"  stroke="#C4B8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-          <path d="M56 108 L70 76"  stroke="#C4B8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-          <path d="M124 96 L110 66" stroke="#C4B8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-          <path d="M124 96 L144 70" stroke="#C4B8FF" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-          <path d="M34 80 L24 58"   stroke="#C4B8FF" stroke-width="1"   stroke-linecap="round" opacity="0.45"/>
-          <path d="M34 80 L44 52"   stroke="#C4B8FF" stroke-width="1"   stroke-linecap="round" opacity="0.45"/>
-          <path d="M70 76 L60 50"   stroke="#C4B8FF" stroke-width="1"   stroke-linecap="round" opacity="0.45"/>
-          <path d="M70 76 L78 46"   stroke="#C4B8FF" stroke-width="1"   stroke-linecap="round" opacity="0.45"/>
-          <path d="M110 66 L100 40" stroke="#C4B8FF" stroke-width="1"   stroke-linecap="round" opacity="0.45"/>
-          <path d="M110 66 L116 36" stroke="#C4B8FF" stroke-width="1"   stroke-linecap="round" opacity="0.45"/>
-          <path d="M144 70 L136 46" stroke="#C4B8FF" stroke-width="1"   stroke-linecap="round" opacity="0.45"/>
-          <path d="M144 70 L154 50" stroke="#C4B8FF" stroke-width="1"   stroke-linecap="round" opacity="0.45"/>
-          <circle cx="90"  cy="190" r="3"   fill="#9B8FE8" opacity="0.45"/>
-          <circle cx="56"  cy="108" r="2.5" fill="#9B8FE8" opacity="0.9"/>
-          <circle cx="124" cy="96"  r="2.5" fill="#9B8FE8" opacity="0.9"/>
-          <circle cx="34"  cy="80"  r="2"   fill="#C4B8FF" opacity="0.75"/>
-          <circle cx="70"  cy="76"  r="2"   fill="#C4B8FF" opacity="0.75"/>
-          <circle cx="110" cy="66"  r="2"   fill="#C4B8FF" opacity="0.75"/>
-          <circle cx="144" cy="70"  r="2"   fill="#C4B8FF" opacity="0.75"/>
-          <circle cx="24"  cy="58"  r="2.5" fill="#C4B8FF" opacity="0.5"/>
-          <circle cx="44"  cy="52"  r="2.5" fill="#C4B8FF" opacity="0.5"/>
-          <circle cx="60"  cy="50"  r="2.5" fill="#C4B8FF" opacity="0.5"/>
-          <circle cx="78"  cy="46"  r="2.5" fill="#C4B8FF" opacity="0.5"/>
-          <circle cx="100" cy="40"  r="2.5" fill="#C4B8FF" opacity="0.5"/>
-          <circle cx="116" cy="36"  r="2.5" fill="#C4B8FF" opacity="0.5"/>
-          <circle cx="136" cy="46"  r="2.5" fill="#C4B8FF" opacity="0.5"/>
-          <circle cx="154" cy="50"  r="2.5" fill="#C4B8FF" opacity="0.5"/>
-        </svg>
-      </div>
-    </article>
-
-    <!-- Card 1 · Monthly Rings -->
-    <article class="bm-card bm-c1">
-      <div class="bm-card-bg"></div>
-      <div class="bm-top">
-        <div class="bm-icon-circle">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="animation:bm-pulse 4s ease-in-out infinite">
-            <circle cx="10" cy="10" r="9"   stroke="#9B8FE8" stroke-width="1.2" opacity="0.3"/>
-            <circle cx="10" cy="10" r="5.5" stroke="#9B8FE8" stroke-width="1.2" opacity="0.6"/>
-            <circle cx="10" cy="10" r="2.5" stroke="#9B8FE8" stroke-width="1.2"/>
-          </svg>
-        </div>
-        <div class="bm-body">
-          <div class="bm-name-row">
-            <span class="bm-name">Monthly Rings</span>
-            <span class="bm-badge">Cycle</span>
-          </div>
-          <p class="bm-blurb">Which emotions dominated? Which symbols returned? Your tree remembers everything you've felt.</p>
-        </div>
-      </div>
-    </article>
-
-    <!-- Card 2 · Yearly Growth -->
-    <article class="bm-card bm-c2">
-      <div class="bm-card-bg"></div>
-      <div class="bm-top">
-        <div class="bm-icon-circle">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="animation:bm-tilt 5.5s ease-in-out infinite">
-            <path d="M2 15 L7 10 L11 13 L18 5" stroke="#9B8FE8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M14 5 L18 5 L18 9"        stroke="#9B8FE8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="bm-body">
-          <div class="bm-name-row">
-            <span class="bm-name">Yearly Growth</span>
-            <span class="bm-badge">Depth</span>
-          </div>
-          <p class="bm-blurb">Watch your psychological landscape evolve in ways your waking mind couldn't track alone.</p>
-        </div>
-      </div>
-    </article>
-
-    <!-- Card 3 · Hidden Patterns -->
-    <article class="bm-card bm-c3">
-      <div class="bm-card-bg"></div>
-      <div class="bm-top">
-        <div class="bm-icon-circle">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="animation:bm-drift 8s ease-in-out infinite">
-            <path d="M3 10a7 7 0 1 0 7-7"   stroke="#9B8FE8" stroke-width="1.4" stroke-linecap="round"/>
-            <path d="M8 1 L10 4.5 L8 8"     stroke="#9B8FE8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="bm-body">
-          <div class="bm-name-row">
-            <span class="bm-name">Hidden Patterns</span>
-            <span class="bm-badge">Signal</span>
-          </div>
-          <p class="bm-blurb">The symbols you keep dreaming about are the ones your mind hasn't resolved yet. Dream Tree makes them impossible to ignore.</p>
-        </div>
-      </div>
-    </article>
-
-    <!-- Card 4 · CTA -->
-    <article class="bm-card bm-c4 bm-cta">
-      <div class="bm-card-bg"></div>
-      <div class="bm-cta-body">
-        <span class="bm-cta-label">Get started</span>
-        <p class="bm-cta-heading">Start growing<br>your tree.</p>
-        <p class="bm-cta-sub-text">Unlock Dream Tree with Pro — unlimited entries, full pattern history.</p>
-        <a href="#pricing" class="bm-cta-btn">Upgrade to Pro <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </article>
+    </div>
 
   </div>
-
-  <p class="bm-footer-line reveal">Quiet precision for expressive inner worlds.</p>
 
 </section>
 
@@ -1204,22 +1143,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: "0px" });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Bento card stagger
-(function(){
-  const cards = document.querySelectorAll('#bmGrid .bm-card');
-  if(!cards.length) return;
-  const bmObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        cards.forEach((c, i) => {
-          setTimeout(() => c.classList.add('bm-in'), i * 90);
-        });
-        bmObs.disconnect();
-      }
-    });
-  }, { threshold: 0.15 });
-  bmObs.observe(document.getElementById('bmGrid'));
-})();
 
 // Nav Blur
 window.addEventListener('scroll', () => {
