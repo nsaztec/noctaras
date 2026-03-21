@@ -223,7 +223,7 @@ nav.scrolled {
 .dt5-item-desc { font-size: 13px; color: var(--muted); margin-top: 2px; line-height: 1.55; }
 .dt5-cta { margin-top: 28px; display: inline-flex; align-items: center; gap: 7px; background: var(--text); color: var(--bg); padding: 11px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
 .dt5-cta:hover { opacity: 0.8; }
-/* Video as full section background — no blend mode, same in both themes */
+/* Video as full section background — GPU-accelerated breathing via CSS */
 .dt5-bg-video {
   position: absolute;
   inset: 0;
@@ -233,6 +233,13 @@ nav.scrolled {
   pointer-events: none;
   filter: hue-rotate(150deg) saturate(0.65) brightness(0.75);
   z-index: 0;
+  transform-origin: center center;
+  will-change: transform;
+  animation: dt5-breathe 8s ease-in-out infinite alternate;
+}
+@keyframes dt5-breathe {
+  from { transform: scale(1.00) translateY(0px);   }
+  to   { transform: scale(1.06) translateY(-12px); }
 }
 /* Gradient overlay: left (text) + top + bottom fades */
 #dream-tree::after {
@@ -1100,36 +1107,18 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// Dream Tree video — breathing effect (forward → reverse → forward)
+// Dream Tree video — scroll-triggered, plays at half speed, loops seamlessly
 (function() {
   var vid = document.getElementById('dt5-video');
   if (!vid) return;
   var started = false;
-  var dir = 1;          // 1 = forward, -1 = backward
-  var lastT = null;
-  var SPEED = 0.32;     // playback speed multiplier
-
-  function breathe(ts) {
-    if (lastT === null) lastT = ts;
-    var dt = Math.min((ts - lastT) / 1000, 0.05);
-    lastT = ts;
-    if (!vid.duration) { requestAnimationFrame(breathe); return; }
-
-    vid.currentTime = Math.max(0, Math.min(vid.duration, vid.currentTime + dir * dt * SPEED));
-
-    if (vid.currentTime >= vid.duration - 0.08) dir = -1;
-    else if (vid.currentTime <= 0.08)           dir =  1;
-
-    requestAnimationFrame(breathe);
-  }
-
   var vidObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting && !started) {
         started = true;
-        vid.pause();
-        vid.currentTime = 0;
-        requestAnimationFrame(breathe);
+        vid.playbackRate = 0.5;
+        vid.loop = true;
+        vid.play();
         vidObs.disconnect();
       }
     });
