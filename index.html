@@ -222,11 +222,10 @@ nav.scrolled {
 .dt5-cta { margin-top: 28px; display: inline-flex; align-items: center; gap: 7px; background: var(--text); color: var(--bg); padding: 11px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
 .dt5-cta:hover { opacity: 0.8; }
 .dt5-visual { border: 1px solid var(--border); border-radius: 24px; padding: 10px; }
-.dt5-visual-inner { position: relative; overflow: hidden; border-radius: 16px; background: var(--surface); }
-.dt5-fade-t { position: absolute; top: 0; left: 0; right: 0; height: 72px; background: linear-gradient(to bottom, var(--surface), transparent); z-index: 2; pointer-events: none; }
-.dt5-fade-b { position: absolute; bottom: 0; left: 0; right: 0; height: 72px; background: linear-gradient(to top, var(--surface), transparent); z-index: 2; pointer-events: none; }
-.dt5-tree-wrap { display: flex; align-items: center; justify-content: center; padding: 28px; min-height: 340px; position: relative; }
-.dt5-tree-glow { position: absolute; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(107,92,231,0.1) 0%, transparent 65%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+.dt5-video-wrap { position: relative; overflow: hidden; border-radius: 16px; background: #07060F; }
+.dt5-video { width: 100%; display: block; filter: hue-rotate(150deg) saturate(0.62) brightness(0.78); }
+.dt5-fade-t { position: absolute; top: 0; left: 0; right: 0; height: 90px; background: linear-gradient(to bottom, #07060F, transparent); z-index: 2; pointer-events: none; }
+.dt5-fade-b { position: absolute; bottom: 0; left: 0; right: 0; height: 90px; background: linear-gradient(to top, #07060F, transparent); z-index: 2; pointer-events: none; }
 
 /* ── PRICING v2 ── */
 .pricing-toggle {
@@ -733,70 +732,14 @@ footer {
       <a href="#pricing" class="dt5-cta">Upgrade to Pro <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
 
-    <!-- Right: visual card -->
+    <!-- Right: video -->
     <div class="dt5-visual">
-      <div class="dt5-visual-inner">
+      <div class="dt5-video-wrap">
         <div class="dt5-fade-t"></div>
         <div class="dt5-fade-b"></div>
-        <div class="dt5-tree-wrap">
-          <div class="dt5-tree-glow"></div>
-          <svg viewBox="0 0 360 420" fill="none" style="width:100%;max-width:340px;height:auto;">
-            <!-- trunk -->
-            <path d="M180 415 C180 390 178 362 180 335 C182 308 180 285 180 262" stroke="#9B8FE8" stroke-width="3.5" stroke-linecap="round"/>
-            <!-- root hints -->
-            <path d="M180 413 C166 413 148 418 136 422" stroke="#9B8FE8" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
-            <path d="M180 413 C194 413 212 418 224 422" stroke="#9B8FE8" stroke-width="2" stroke-linecap="round" opacity="0.15"/>
-            <!-- main branches (bezier) -->
-            <path d="M180 292 C164 268 136 246 112 222" stroke="#9B8FE8" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M180 278 C196 254 224 232 250 208" stroke="#9B8FE8" stroke-width="2.2" stroke-linecap="round"/>
-            <!-- second tier (bezier) -->
-            <path d="M112 222 C97 197 72 176 55 152" stroke="#C4B8FF" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
-            <path d="M112 222 C124 196 134 174 138 148" stroke="#C4B8FF" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
-            <path d="M250 208 C236 182 226 160 222 134" stroke="#C4B8FF" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
-            <path d="M250 208 C262 182 276 160 288 136" stroke="#C4B8FF" stroke-width="1.6" stroke-linecap="round" opacity="0.72"/>
-            <!-- third tier -->
-            <path d="M55 152 C43 128 30 106 24 82"   stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
-            <path d="M55 152 C64 126 72 106 76 80"   stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
-            <path d="M138 148 C128 124 118 102 112 78" stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
-            <path d="M138 148 C146 124 156 102 160 78" stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
-            <path d="M222 134 C212 110 204 88 198 64"  stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
-            <path d="M222 134 C230 110 240 88 244 64"  stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
-            <path d="M288 136 C278 112 270 90 264 66"  stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
-            <path d="M288 136 C298 112 310 92 316 68"  stroke="#C4B8FF" stroke-width="1.1" stroke-linecap="round" opacity="0.46"/>
-            <!-- branch nodes -->
-            <circle cx="112" cy="222" r="3.5" fill="#9B8FE8" opacity="0.85"/>
-            <circle cx="250" cy="208" r="3.5" fill="#9B8FE8" opacity="0.85"/>
-            <circle cx="55"  cy="152" r="2.5" fill="#C4B8FF" opacity="0.8"/>
-            <circle cx="138" cy="148" r="2.5" fill="#C4B8FF" opacity="0.8"/>
-            <circle cx="222" cy="134" r="2.5" fill="#C4B8FF" opacity="0.8"/>
-            <circle cx="288" cy="136" r="2.5" fill="#C4B8FF" opacity="0.8"/>
-            <!-- leaf clusters -->
-            <circle cx="24"  cy="82"  r="4"   fill="#C4B8FF" opacity="0.42"/>
-            <circle cx="15"  cy="70"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="30"  cy="68"  r="2"   fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="76"  cy="80"  r="4"   fill="#C4B8FF" opacity="0.42"/>
-            <circle cx="67"  cy="68"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="82"  cy="66"  r="2"   fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="112" cy="78"  r="4"   fill="#C4B8FF" opacity="0.42"/>
-            <circle cx="103" cy="66"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="118" cy="64"  r="2"   fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="160" cy="78"  r="4"   fill="#C4B8FF" opacity="0.42"/>
-            <circle cx="151" cy="66"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="166" cy="64"  r="2"   fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="198" cy="64"  r="4"   fill="#C4B8FF" opacity="0.42"/>
-            <circle cx="189" cy="52"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="204" cy="50"  r="2"   fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="244" cy="64"  r="4"   fill="#C4B8FF" opacity="0.42"/>
-            <circle cx="235" cy="52"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="250" cy="50"  r="2"   fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="264" cy="66"  r="4"   fill="#C4B8FF" opacity="0.42"/>
-            <circle cx="255" cy="54"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="270" cy="52"  r="2"   fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="316" cy="68"  r="4"   fill="#C4B8FF" opacity="0.42"/>
-            <circle cx="307" cy="56"  r="2.5" fill="#C4B8FF" opacity="0.28"/>
-            <circle cx="322" cy="54"  r="2"   fill="#C4B8FF" opacity="0.28"/>
-          </svg>
-        </div>
+        <video class="dt5-video" autoplay muted loop playsinline>
+          <source src="tree-leaves.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
 
