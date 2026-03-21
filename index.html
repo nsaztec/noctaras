@@ -1109,7 +1109,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     entries.forEach(function(entry) {
       if (entry.isIntersecting && !started) {
         started = true;
-        vid.playbackRate = 0.5;
+        vid.playbackRate = 1;
         vid.loop = true;
         vid.play();
         vidObs.disconnect();
