@@ -256,6 +256,8 @@ textarea { min-height: 160px; resize: vertical; }
 .profile-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .profile-signout { margin-top: 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; transition: 0.2s; }
 .profile-signout:hover { border-color: #ef4444; color: #ef4444; }
+.profile-manage-sub { display: block; margin-top: 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; transition: 0.2s; text-align: center; text-decoration: none; }
+.profile-manage-sub:hover { border-color: var(--accent); color: var(--accent); }
 @media(max-width:600px) { .profile-row { grid-template-columns: 1fr; } }
 
 /* PRICING MODAL REDESIGN */
@@ -845,6 +847,7 @@ textarea { min-height: 160px; resize: vertical; }
     </div>
 
     <button class="profile-save-btn" id="profileSaveBtn" onclick="saveProfile()">Save changes</button>
+    <a class="profile-manage-sub" id="profileManageSub" href="https://www.creem.io/customer-portal" target="_blank" style="display:none">Manage Subscription</a>
     <button class="profile-signout" onclick="signOut()">Sign out</button>
   </div>
 </div>
@@ -952,6 +955,8 @@ onAuthStateChanged(auth, async (user) => {
       if (btn) btn.style.display = 'none';
       const btnM = document.getElementById('btnGetProMobile');
       if (btnM) btnM.style.display = 'none';
+      const manageSub = document.getElementById('profileManageSub');
+      if (manageSub) manageSub.style.display = '';
     }
   } else {
     currentUser = null;
