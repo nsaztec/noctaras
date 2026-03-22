@@ -968,7 +968,7 @@ onAuthStateChanged(auth, async (user) => {
     cachedUserData = null;
     const loader = document.getElementById('appLoader');
     if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 260); }
-    showAuthScreen('login');
+    showAuthScreen(location.hash === '#login' ? 'login' : 'register');
   }
 });
 
