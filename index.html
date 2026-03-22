@@ -60,15 +60,16 @@ a { text-decoration: none; color: inherit; }
 body::before {
   content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4t5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c8TV1mAAAAG3RSTlNAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAvEOwtAAAFVklEQVR4XpWWB67c2BUFb3g557T/hRo9/WUMZHlgr4Bg8Z4qQgQJlHI4A8SzFVrapvmTF9O7dmYRFZ60YiBhJRCgh1FYhiLAmdvX0CzTOpNE77ME0Zty/nWWzchDtiqrmQDeuv3powQ5ta2eN0FY0InkqDD73lT9c9lEzwUNqgFHs9VQce3TVClFCQrSTfOiYkVJQBmpbq2L6iZavPnAPcoU0dSw0SUTqz/GtrGuXfbyyBniKykOWQWGqwwMA7QiYAxi+IlPdqo+hYHnUt5ZPfnsHJyNiDtnpJyayNBkF6cWoYGAMY92ZBKLseWPZmhYAAAAAElFkSuQmCC");
-  background-size: 50px 50px; opacity: 0.035; mix-blend-mode: multiply; will-change: auto;
+  background-size: 50px 50px; opacity: 0.04;
+  /* mix-blend-mode removed — caused full-page recomposite on every scroll frame */
 }
-[data-theme="dark"] body::before { mix-blend-mode: overlay; opacity: 0.05; }
+[data-theme="dark"] body::before { opacity: 0.06; }
 
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 5%; background: transparent; transition: all 0.3s var(--ease-out);
+  padding: 20px 5%; background: transparent; transition: background 0.3s var(--ease-out), padding 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
   border-bottom: 1px solid transparent;
 }
 nav.scrolled {
@@ -1120,10 +1121,10 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   vidObs.observe(document.getElementById('dream-tree'));
 })();
 
-// Nav Blur
+// Nav Blur — passive:true lets browser scroll without waiting for JS
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-});
+}, { passive: true });
 
 const html = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
