@@ -561,8 +561,8 @@ textarea { min-height: 160px; resize: vertical; }
     <!-- Login form -->
     <div id="auth-login" style="display: none; flex-direction: column;">
       <div class="auth-header">
-        <h1 class="auth-title">Sign In or Join Now!</h1>
-        <p class="auth-sub">login or create your Noctaras account.</p>
+        <h1 class="auth-title">Log In</h1>
+        <p class="auth-sub">Welcome back to Noctaras.</p>
       </div>
       <div class="auth-error" id="loginError"></div>
       
@@ -575,19 +575,21 @@ textarea { min-height: 160px; resize: vertical; }
       
       <input class="auth-input" type="email" id="loginEmail" placeholder="Email address">
       <input class="auth-input" type="password" id="loginPassword" placeholder="Password">
-      <button class="auth-btn btn-primary-auth" style="margin-top:4px;" onclick="signInEmail()">Sign in</button>
-      
+      <button class="auth-btn btn-primary-auth" style="margin-top:4px;" onclick="signInEmail()">Log in</button>
+
       <p class="auth-footer-text">
-        Don't have an account? <a onclick="showAuthForm('register')">Sign up here</a>. <br><br>
         By clicking continue, you agree to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.
+      </p>
+      <p class="auth-footer-text" style="margin-top:16px; text-align:center;">
+        Don't have an account? <a onclick="showAuthForm('register')" style="font-weight:600;">Sign up</a>
       </p>
     </div>
 
     <!-- Register form -->
     <div id="auth-register" style="display: flex; flex-direction: column;">
       <div class="auth-header">
-        <h1 class="auth-title">Create an Account!</h1>
-        <p class="auth-sub">begin your dream journaling journey.</p>
+        <h1 class="auth-title">Sign Up</h1>
+        <p class="auth-sub">Create your Noctaras account.</p>
       </div>
       <div class="auth-error" id="registerError"></div>
       
