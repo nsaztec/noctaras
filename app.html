@@ -399,11 +399,12 @@ textarea { min-height: 160px; resize: vertical; }
 
   /* ── Chat screen: flex column, input always visible above nav ── */
   #screen-chat.active {
-    height: calc(100dvh - 60px - env(safe-area-inset-bottom, 0px));
+    height: 100dvh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding-bottom: 0 !important;
+    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box;
   }
   #screen-chat .chat-main {
     flex: 1;
@@ -539,6 +540,14 @@ textarea { min-height: 160px; resize: vertical; }
 </style>
 
 <script src="/logo.js"></script>
+
+<style>
+  /* Global Mobile Scroll Fix */
+  html, body {
+    max-width: 100vw !important;
+    overflow-x: clip !important;
+  }
+</style>
 </head>
 <body>
 <div id="appLoader" style="position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity 0.25s;">
