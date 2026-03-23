@@ -935,7 +935,7 @@ textarea { min-height: 160px; resize: vertical; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getAuth, signInWithPopup, signInWithCredential, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -1035,9 +1035,18 @@ window.showAuthForm = (form) => {
 
 window.signInGoogle = async () => {
   try {
-    await signInWithPopup(auth, googleProvider);
+    const isNative = window.Capacitor?.isNativePlatform?.() ?? false;
+    if (isNative) {
+      const { FirebaseAuthentication } = window.Capacitor.Plugins;
+      const result = await FirebaseAuthentication.signInWithGoogle();
+      const credential = GoogleAuthProvider.credential(result.credential?.idToken);
+      await signInWithCredential(auth, credential);
+    } else {
+      await signInWithPopup(auth, googleProvider);
+    }
   } catch (e) {
-    document.getElementById('loginError').textContent = e.message;
+    const errEl = document.getElementById('loginError') || document.getElementById('registerError');
+    if (errEl) errEl.textContent = e.message;
   }
 };
 
@@ -1111,7 +1120,7 @@ function setBottomNav(name) {
   const nav = document.getElementById('bottomNav');
   if (nav) nav.style.display = name === 'auth' ? 'none' : '';
   const fab = document.getElementById('mobileFAB');
-  if (fab) fab.classList.toggle('fab-hidden', name === 'auth' || name === 'profile');
+  if (fab) fab.classList.toggle('fab-hidden', name === 'auth' || name === 'profile' || name === 'chat');
 }
 
 function resetScreens() {
