@@ -43,8 +43,8 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { overflow-x: hidden; }
-body { background: var(--bg); color: var(--text); font-family: var(--font-sans); font-weight: 400; overflow-x: hidden; -webkit-font-smoothing: antialiased; letter-spacing: -0.01em; }
+html { overflow-x: hidden; max-width: 100%; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); font-weight: 400; overflow-x: hidden; max-width: 100%; -webkit-font-smoothing: antialiased; letter-spacing: -0.01em; }
 button { font-family: inherit; }
 a { text-decoration: none; color: inherit; }
 
@@ -397,10 +397,12 @@ textarea { min-height: 160px; resize: vertical; }
   /* ── Hide mobile-menu ── */
   .mobile-menu { display: none !important; }
 
-  /* ── Chat screen ── */
+  /* ── Chat screen: flex column, input always visible above nav ── */
   #screen-chat.active {
     height: calc(100dvh - 60px - env(safe-area-inset-bottom, 0px));
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
     padding-bottom: 0 !important;
   }
   #screen-chat .chat-main {
@@ -411,7 +413,7 @@ textarea { min-height: 160px; resize: vertical; }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 0 16px 80px;
+    padding: 0 16px 16px;
     margin: 0 auto;
     width: 100%;
     max-width: 760px;
@@ -423,16 +425,15 @@ textarea { min-height: 160px; resize: vertical; }
   .ai-input-textarea { font-size: 16px; }
   .msg-user, .msg-ai { max-width: 92%; font-size: 14px; line-height: 1.6; }
 
-  /* ── Chat input: fixed above nav ── */
+  /* ── Chat input: flex child of screen, always above nav ── */
   #screen-chat .chat-input-wrapper {
-    position: fixed;
-    bottom: calc(60px + env(safe-area-inset-bottom, 0px));
-    left: 0; right: 0;
+    position: static;
+    flex-shrink: 0;
     padding: 8px 16px;
     background: var(--bg);
     border-top: 1px solid var(--border);
-    z-index: 310;
-    max-width: 100%; margin: 0;
+    left: auto; right: auto; bottom: auto;
+    margin: 0; width: 100%;
   }
 
   /* ── Journal / Tree / Profile ── */
@@ -735,12 +736,12 @@ textarea { min-height: 160px; resize: vertical; }
       <p class="chat-sub">Describe your dream and receive its interpretation.</p>
     </div>
     <div id="chatMessages"></div>
-    <div class="chat-input-wrapper">
-      <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
-      <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-      </button>
-    </div>
+  </div>
+  <div class="chat-input-wrapper">
+    <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
+    <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+    </button>
   </div>
 </div>
 
