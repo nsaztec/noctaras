@@ -1247,15 +1247,20 @@ window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); s
   input.addEventListener('focus', () => {
     const nav = document.getElementById('bottomNav');
     if (nav) nav.style.display = 'none';
-    const bar = document.getElementById('chatInputWrapper');
-    setTimeout(() => {
-      if (!bar || bar.style.display === 'none') return;
-      const kbH = window.visualViewport
-        ? Math.max(0, window.innerHeight - window.visualViewport.height)
-        : 0;
-      bar.style.bottom = (kbH > 80 ? kbH : 0) + 'px';
-    }, 300);
   });
+
+  // visualViewport resize fires when keyboard appears/disappears — more reliable
+  // than a setTimeout. screen.height never changes (unlike innerHeight on some iOS).
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+      const bar = document.getElementById('chatInputWrapper');
+      if (!bar || bar.style.display === 'none') return;
+      const kbH = window.screen.height - window.visualViewport.height;
+      if (kbH > 80) {
+        bar.style.bottom = kbH + 'px';
+      }
+    });
+  }
 
   input.addEventListener('blur', () => {
     setTimeout(() => {
