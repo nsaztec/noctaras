@@ -397,24 +397,44 @@ textarea { min-height: 160px; resize: vertical; }
   /* ── Hide mobile-menu ── */
   .mobile-menu { display: none !important; }
 
-  /* ── Chat ── */
-  .chat-main { margin: 20px auto; padding: 0 16px 160px; }
+  /* ── Chat screen: proper flex layout (keyboard-safe) ── */
+  #screen-chat.active {
+    height: calc(100dvh - 60px - env(safe-area-inset-bottom, 0px));
+    overflow: hidden;
+    padding-bottom: 0 !important;
+  }
+  #screen-chat .chat-main {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 16px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 760px;
+  }
+  #screen-chat .chat-hero { flex-shrink: 0; padding: 24px 0 16px; }
+  #screen-chat #chatMessages { flex: 1; max-height: none; overflow: visible; }
   .chat-title { font-size: 26px; font-weight: 700; }
   .chat-sub { font-size: 13px; }
   .ai-input-textarea { font-size: 16px; }
   .msg-user, .msg-ai { max-width: 92%; font-size: 14px; line-height: 1.6; }
-  #chatMessages { max-height: none; }
 
-  /* ── Chat input: fixed to bottom above bottom nav ── */
-  .chat-input-wrapper {
-    position: fixed;
-    bottom: calc(60px + env(safe-area-inset-bottom, 0px));
-    left: 0; right: 0;
+  /* ── Chat input: sticky inside scroll container ── */
+  #screen-chat .chat-input-wrapper {
+    position: sticky;
+    bottom: 0;
+    flex-shrink: 0;
+    margin-left: -16px;
+    margin-right: -16px;
+    width: calc(100% + 32px);
     padding: 8px 16px;
     background: var(--bg);
     border-top: 1px solid var(--border);
-    z-index: 310;
-    max-width: 100%; margin: 0;
+    z-index: 10;
   }
 
   /* ── Journal / Tree / Profile ── */
@@ -1722,33 +1742,40 @@ window.submitChat = async () => {
   }
 };
 
+function getChatScroller() {
+  if (window.innerWidth <= 600) return document.querySelector('#screen-chat .chat-main') || document.getElementById('chatMessages');
+  return document.getElementById('chatMessages');
+}
 function addUserMsg(t) {
   const el = document.createElement('div'); el.className = 'msg-user'; el.textContent = t;
-  const c = document.getElementById('chatMessages'); c.appendChild(el); c.scrollTop = c.scrollHeight;
+  const c = document.getElementById('chatMessages'); c.appendChild(el);
+  const s = getChatScroller(); s.scrollTop = s.scrollHeight;
 }
 function addLoadingMsg() {
   const el = document.createElement('div'); el.className = 'msg-loading';
   el.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
-  const c = document.getElementById('chatMessages'); c.appendChild(el); c.scrollTop = c.scrollHeight;
+  const c = document.getElementById('chatMessages'); c.appendChild(el);
+  const s = getChatScroller(); s.scrollTop = s.scrollHeight;
   return el;
 }
 function addAIMsg(text, dreamText, titleText, isValidAnalysis) {
   const el = document.createElement('div'); el.className = 'msg-ai';
   const c = document.getElementById('chatMessages'); c.appendChild(el);
+  const s = getChatScroller();
   let i = 0;
   let userScrolled = false;
   const onScroll = () => {
-    const atBottom = c.scrollHeight - c.scrollTop - c.clientHeight < 60;
+    const atBottom = s.scrollHeight - s.scrollTop - s.clientHeight < 60;
     if (!atBottom) userScrolled = true;
     else userScrolled = false;
   };
-  c.addEventListener('scroll', onScroll, { passive: true });
+  s.addEventListener('scroll', onScroll, { passive: true });
   // Use setTimeout recursion instead of setInterval so typing continues on hidden tabs
   function typeNext() {
     if (i < text.length) {
       el.innerHTML = text.slice(0, i + 1).replace(/\n/g, '<br>') + '<span class="cursor"></span>';
       i++;
-      if (!userScrolled) c.scrollTop = c.scrollHeight;
+      if (!userScrolled) s.scrollTop = s.scrollHeight;
       setTimeout(typeNext, 12);
     } else {
       el.innerHTML = text.replace(/\n/g, '<br>');
