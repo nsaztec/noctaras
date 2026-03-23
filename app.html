@@ -107,8 +107,6 @@ a { text-decoration: none; color: inherit; }
 /* SCREENS */
 .screen { display: none; min-height: 100vh; position: relative; z-index: 1; }
 .screen.active { display: flex; flex-direction: column; }
-/* Chat screen: fixed height so input naturally sits at bottom without scrolling */
-#screen-chat.active { height: 100vh; min-height: unset; overflow: hidden; }
 
 /* CHAT */
 .chat-topbar { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface); position: sticky; top: 0; z-index: 50; }
@@ -762,15 +760,14 @@ textarea { min-height: 160px; resize: vertical; }
       <p class="chat-sub">Describe your dream and receive its interpretation.</p>
     </div>
     <div id="chatMessages"></div>
-  </div>
-
-  <div class="chat-input-wrapper" id="chatInputWrapper">
+    <div class="chat-input-wrapper" id="chatInputWrapper">
     <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
     <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
     </button>
-  </div>
-</div>
+    </div><!-- /chat-input-wrapper -->
+  </div><!-- /chat-main -->
+</div><!-- /screen-chat -->
 
 <!-- ══════════════ SCREEN 2: JOURNAL ══════════════ -->
 <div id="screen-journal" class="screen">
