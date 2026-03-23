@@ -8,6 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07060F" id="themeColorMeta">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Noctaras — Dream Journal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -477,6 +478,17 @@ textarea { min-height: 160px; resize: vertical; }
   /* ── Toast: above bottom nav ── */
   .toast-container { left: 12px; right: 12px; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
   .toast { min-width: 0; width: 100%; }
+
+  /* ── iOS Install Banner ── */
+  #iosInstallBanner { display: none; position: fixed; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); left: 12px; right: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; z-index: 390; box-shadow: var(--shadow-lg); align-items: center; gap: 12px; }
+  #iosInstallBanner.visible { display: flex; }
+  .install-banner-icon { flex-shrink: 0; width: 36px; height: 36px; background: rgba(155,143,232,0.12); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .install-banner-icon svg { width: 18px; height: 18px; color: #9B8FE8; }
+  .install-banner-text { flex: 1; }
+  .install-banner-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .install-banner-text span { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .install-banner-text .share-inline { display: inline-block; width: 13px; height: 13px; vertical-align: middle; margin: 0 1px; }
+  .install-banner-dismiss { flex-shrink: 0; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--surface-hover); border: none; border-radius: 50%; color: var(--muted); font-size: 16px; cursor: pointer; line-height: 1; }
 
   /* ── Paywall ── */
   .paywall-plans { grid-template-columns: 1fr; }
@@ -956,6 +968,18 @@ textarea { min-height: 160px; resize: vertical; }
   </button>
 </nav>
 
+<!-- ── iOS Install Banner ── -->
+<div id="iosInstallBanner">
+  <div class="install-banner-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+  </div>
+  <div class="install-banner-text">
+    <strong>Add to Home Screen</strong>
+    <span>Tap <svg class="share-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> then "Add to Home Screen"</span>
+  </div>
+  <button class="install-banner-dismiss" onclick="dismissInstallBanner()">✕</button>
+</div>
+
 <!-- ── MOBILE FAB: Record Dream ── -->
 <button class="mobile-fab fab-hidden" id="mobileFAB" aria-label="Record dream" onclick="goJournal();setTimeout(()=>showJP('new'),80);">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -994,6 +1018,11 @@ let vanishData = [], vanishBusy = false;
 let _currentAiTitle = '', _isValidAnalysis = false, _pa = '', _isDetailValid = false;
 
 // ── Auth state ──
+// authStateReady() waits until Firebase has restored the cached session from
+// IndexedDB before the first onAuthStateChanged fires. Without this, Firebase
+// fires null immediately (before cache check), then fires the real user — causing
+// the auth screen to flash briefly before jumping to the app.
+auth.authStateReady().then(() => {
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     // Block email/password accounts that haven't verified their email yet
@@ -1055,6 +1084,7 @@ onAuthStateChanged(auth, async (user) => {
     showAuthScreen(location.hash === '#login' ? 'login' : 'register');
   }
 });
+}); // end authStateReady
 
 // ── Auth functions ──
 window.showAuthForm = (form) => {
@@ -2039,6 +2069,21 @@ window.deleteDream = async () => {
 
 function fmtDate(iso) { return new Date(iso).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}); }
 function moodLbl(m) { return {mysterious:'Mysterious',peaceful:'Peaceful',anxious:'Anxious',joyful:'Joyful',dark:'Dark',neutral:'Neutral'}[m] || m; }
+
+// ── iOS "Add to Home Screen" banner ──
+(function() {
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+  if (!isIOS || isStandalone || localStorage.getItem('installBannerDismissed')) return;
+  const banner = document.getElementById('iosInstallBanner');
+  if (banner) banner.classList.add('visible');
+})();
+
+window.dismissInstallBanner = () => {
+  const banner = document.getElementById('iosInstallBanner');
+  if (banner) banner.classList.remove('visible');
+  localStorage.setItem('installBannerDismissed', '1');
+};
 
 </script>
 
