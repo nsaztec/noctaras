@@ -398,46 +398,27 @@ textarea { min-height: 160px; resize: vertical; }
   /* ── Hide mobile-menu ── */
   .mobile-menu { display: none !important; }
 
-  /* ── Chat screen: flex column, input always visible above nav ── */
-  #screen-chat.active {
-    position: fixed;
-    top: env(safe-area-inset-top, 0px);
-    left: 0; right: 0;
-    bottom: calc(60px + env(safe-area-inset-bottom, 0px));
-    height: auto; min-height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0 !important;
-  }
+  /* ── Chat screen ── */
   #screen-chat .chat-main {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 0 16px 16px;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 760px;
+    padding: 0 16px 140px;
+    margin: 20px auto;
   }
-  #screen-chat .chat-hero { flex-shrink: 0; padding: 24px 0 16px; }
-  #screen-chat #chatMessages { flex: 1; max-height: none; overflow: visible; }
+  #screen-chat .chat-hero { padding: 8px 0 16px; }
+  #screen-chat #chatMessages { max-height: none; }
   .chat-title { font-size: 26px; font-weight: 700; }
   .chat-sub { font-size: 13px; }
   .ai-input-textarea { font-size: 16px; }
   .msg-user, .msg-ai { max-width: 92%; font-size: 14px; line-height: 1.6; }
 
-  /* ── Chat input: flex child of screen ── */
-  #screen-chat .chat-input-wrapper {
-    flex-shrink: 0;
-    position: static;
+  /* ── Chat input: fixed at body level, above nav ── */
+  .chat-input-wrapper {
+    position: fixed;
+    bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+    left: 0; right: 0;
     padding: 8px 16px;
     background: var(--bg);
     border-top: 1px solid var(--border);
-    width: 100%;
+    z-index: 320;
   }
 
   /* ── Journal / Tree / Profile ── */
@@ -749,12 +730,14 @@ textarea { min-height: 160px; resize: vertical; }
     </div>
     <div id="chatMessages"></div>
   </div>
-  <div class="chat-input-wrapper">
-    <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
-    <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-    </button>
-  </div>
+</div>
+
+<!-- Chat input: outside screen so it sits above bottom nav (z-index independent) -->
+<div class="chat-input-wrapper" id="chatInputWrapper" style="display:none">
+  <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
+  <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+  </button>
 </div>
 
 <!-- ══════════════ SCREEN 2: JOURNAL ══════════════ -->
@@ -1152,6 +1135,8 @@ function setBottomNav(name) {
   if (nav) nav.style.display = name === 'auth' ? 'none' : '';
   const fab = document.getElementById('mobileFAB');
   if (fab) fab.classList.toggle('fab-hidden', name === 'auth' || name === 'profile' || name === 'chat');
+  const chatInput = document.getElementById('chatInputWrapper');
+  if (chatInput) chatInput.style.display = name === 'chat' ? '' : 'none';
 }
 
 function resetScreens() {
