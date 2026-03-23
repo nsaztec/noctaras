@@ -1238,20 +1238,27 @@ window.goChat = () => { history.replaceState(null, '', 'app.html'); showScreen('
 window.goTree = () => { history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
 window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
 
-// ── Mobile keyboard: use focus/blur on chat textarea (more reliable than visualViewport on iOS) ──
+// ── Mobile keyboard: prevent iOS page scroll when chat input is focused ──
+// Uses body{position:fixed} trick — prevents scroll before it happens (reactive
+// window.scroll listeners fire too late and cause a visible flash on iOS).
 (function() {
   const input = document.getElementById('vanishInput');
   if (!input) return;
-  let scrollPrev = null;
 
   input.addEventListener('focus', () => {
     const nav = document.getElementById('bottomNav');
     const bar = document.getElementById('chatInputWrapper');
-    // Immediately lock scroll so iOS can't shift the page background
-    scrollPrev = window.scrollY;
-    window.addEventListener('scroll', _lockScroll);
+
+    // Lock the page so iOS keyboard open doesn't shift content
+    const scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+
     if (nav) nav.style.display = 'none';
-    // After keyboard animation (~300ms), read actual keyboard height and reposition
+
+    // After keyboard animation (~300ms), move input above keyboard
     setTimeout(() => {
       if (bar && bar.style.display !== 'none') {
         const kbH = window.visualViewport
@@ -1263,18 +1270,22 @@ window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); s
   });
 
   input.addEventListener('blur', () => {
-    window.removeEventListener('scroll', _lockScroll);
-    // Delay so send-button tap doesn't flash the nav before submit runs
+    // Restore body scroll — read saved top before clearing it
+    const savedTop = parseInt(document.body.style.top || '0', 10);
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    window.scrollTo(0, -savedTop);
+
+    // Delay nav restore so send-button tap doesn't flash nav mid-submit
     setTimeout(() => {
       const nav = document.getElementById('bottomNav');
       const bar = document.getElementById('chatInputWrapper');
       if (nav) nav.style.display = '';
       if (bar) bar.style.bottom = 'calc(60px + env(safe-area-inset-bottom, 0px))';
-      if (scrollPrev !== null) { window.scrollTo(0, scrollPrev); scrollPrev = null; }
     }, 150);
   });
-
-  function _lockScroll() { window.scrollTo(0, scrollPrev || 0); }
 })();
 
 // ── Update theme-color meta on theme change ──
