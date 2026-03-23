@@ -107,6 +107,8 @@ a { text-decoration: none; color: inherit; }
 /* SCREENS */
 .screen { display: none; min-height: 100vh; position: relative; z-index: 1; }
 .screen.active { display: flex; flex-direction: column; }
+/* Chat screen: fixed height so input naturally sits at bottom without scrolling */
+#screen-chat.active { height: 100vh; min-height: unset; overflow: hidden; }
 
 /* CHAT */
 .chat-topbar { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface); position: sticky; top: 0; z-index: 50; }
@@ -126,7 +128,7 @@ a { text-decoration: none; color: inherit; }
 .btn-icon:hover { background: var(--surface-hover); border-color: var(--border-strong); }
 .btn-icon svg { width: 18px; height: 18px; fill: currentColor; }
 
-.chat-main { max-width: 760px; width: 100%; margin: 60px auto; padding: 0 24px 120px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.chat-main { max-width: 760px; width: 100%; margin: 0 auto; padding: 40px 24px 0; flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .chat-hero { text-align: center; margin-bottom: 40px; }
 .chat-title { font-size: 32px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 8px; }
 .chat-sub { color: var(--muted); font-size: 15px; }
@@ -148,7 +150,7 @@ a { text-decoration: none; color: inherit; }
 @keyframes blink { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
 
 /* AI Input */
-.chat-input-wrapper { position: fixed; bottom: 28px; left: 0; right: 0; max-width: 600px; margin: 0 auto; padding: 0 24px; z-index: 100; }
+.chat-input-wrapper { position: relative; width: 100%; max-width: 600px; margin: 0 auto; padding: 16px 24px; }
 .ai-input-textarea { width: 100%; background: var(--surface-hover); border: 1px solid var(--border); border-radius: 24px; padding: 16px 48px 16px 24px; color: var(--text); font-family: var(--font-sans); font-size: 15px; resize: none; overflow-y: hidden; box-sizing: border-box; line-height: 1.2; min-height: 52px; max-height: 200px; transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out); box-shadow: var(--shadow-sm); outline: none; }
 .ai-input-textarea:focus { border-color: var(--text); box-shadow: var(--shadow-md); }
 .ai-input-textarea::placeholder { color: var(--muted); }
@@ -761,14 +763,13 @@ textarea { min-height: 160px; resize: vertical; }
     </div>
     <div id="chatMessages"></div>
   </div>
-</div>
 
-<!-- Chat input: outside screen so it sits above bottom nav (z-index independent) -->
-<div class="chat-input-wrapper" id="chatInputWrapper" style="display:none">
-  <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
-  <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-  </button>
+  <div class="chat-input-wrapper" id="chatInputWrapper">
+    <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
+    <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+    </button>
+  </div>
 </div>
 
 <!-- ══════════════ SCREEN 2: JOURNAL ══════════════ -->
@@ -1200,8 +1201,7 @@ function setBottomNav(name) {
   if (nav) nav.style.display = name === 'auth' ? 'none' : '';
   const fab = document.getElementById('mobileFAB');
   if (fab) fab.classList.toggle('fab-hidden', name === 'auth' || name === 'profile' || name === 'chat');
-  const chatInput = document.getElementById('chatInputWrapper');
-  if (chatInput) chatInput.style.display = name === 'chat' ? '' : 'none';
+  // chatInputWrapper is inside #screen-chat so screen visibility handles show/hide
 }
 
 function resetScreens() {
@@ -1254,7 +1254,7 @@ window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); s
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', () => {
       const bar = document.getElementById('chatInputWrapper');
-      if (!bar || bar.style.display === 'none') return;
+      if (!bar) return;
       const kbH = window.screen.height - window.visualViewport.height;
       if (kbH > 80) {
         bar.style.bottom = kbH + 'px';
