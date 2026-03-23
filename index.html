@@ -536,6 +536,13 @@ footer {
   #navSignIn, #navAccount { display: none !important; }
   .theme-switch-wrapper { display: none; }
   nav { padding: 16px 5%; }
+
+  /* ── Dream Tree: hide video on mobile (performance), text-only layout ── */
+  .dt5-bg-video { display: none; }
+  #dream-tree { padding: 64px 0 48px; }
+  #dream-tree::after { background: none; }
+  .dt5-wrap { padding: 0 5%; }
+  .dt5-title { font-size: clamp(24px, 7vw, 34px); }
 }
 
 /* ── ANIMATIONS ── */

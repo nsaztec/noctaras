@@ -336,14 +336,17 @@ textarea { min-height: 160px; resize: vertical; }
 
 /* ══ BOTTOM NAV (mobile only) ══ */
 .bottom-nav { display: none; }
+.mobile-fab { display: none; }
+.btn-hamburger { display: none; }
+
 @media(max-width:600px){
-  /* Topbar: hide desktop nav, keep logo + Get Pro */
+  /* ── Topbar ── */
   .chat-topbar { padding: 10px 16px; }
   .topbar-nav-group, .topbar-divider, .topbar-blog-link { display: none !important; }
   .btn-icon { display: none !important; }
   #btnGetPro { display: inline-flex !important; font-size: 12px; padding: 6px 10px; height: 34px; white-space: nowrap; align-items: center; }
 
-  /* Bottom navigation bar */
+  /* ── Bottom nav ── */
   .bottom-nav {
     display: flex;
     position: fixed; bottom: 0; left: 0; right: 0;
@@ -355,69 +358,116 @@ textarea { min-height: 160px; resize: vertical; }
   }
   .bnav-item {
     flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 8px 4px 6px; min-height: 56px;
+    padding: 10px 4px 8px; min-height: 60px;
     background: none; border: none; color: var(--muted);
     font-size: 10px; font-weight: 500; letter-spacing: 0.02em;
-    font-family: inherit; cursor: pointer; gap: 3px;
+    font-family: inherit; cursor: pointer; gap: 4px;
     transition: color 0.15s; -webkit-tap-highlight-color: transparent;
   }
-  .bnav-item.active { color: var(--text); }
-  .bnav-item svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
-  .bnav-item.active svg { transform: scale(1.08); }
+  .bnav-item.active { color: #9B8FE8; }
+  .bnav-item svg { width: 26px; height: 26px; fill: currentColor; flex-shrink: 0; }
+  .bnav-item.active svg { transform: scale(1.1); }
 
-  /* Pad screens so content doesn't hide behind bottom nav */
-  .screen.active { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  /* ── Pad screens behind bottom nav ── */
+  .screen.active { padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
 
-  /* Hide mobile-menu (replaced by bottom nav) */
+  /* ── FAB ── */
+  .mobile-fab {
+    display: flex;
+    position: fixed;
+    right: 20px;
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--text); color: var(--bg);
+    border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    align-items: center; justify-content: center;
+    cursor: pointer; z-index: 290;
+    transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.15s, opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-fab svg { width: 24px; height: 24px; }
+  .mobile-fab:active { transform: scale(0.92); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .mobile-fab.fab-hidden { opacity: 0; pointer-events: none; transform: scale(0.8); }
+
+  /* ── Hide topbar "Record dream" — FAB handles it ── */
+  .journal-topbar .btn-new-dream { display: none !important; }
+
+  /* ── Hide mobile-menu ── */
   .mobile-menu { display: none !important; }
 
-  /* Chat */
-  .chat-main { margin: 20px auto; padding: 0 16px; }
-  .chat-title { font-size: 24px; }
+  /* ── Chat ── */
+  .chat-main { margin: 20px auto; padding: 0 16px 130px; }
+  .chat-title { font-size: 26px; font-weight: 700; }
   .chat-sub { font-size: 13px; }
   .ai-input-textarea { font-size: 16px; }
   .msg-user, .msg-ai { max-width: 92%; font-size: 14px; line-height: 1.6; }
+  #chatMessages { max-height: none; }
 
-  /* Journal / Tree / Profile */
+  /* ── Chat input: fixed to bottom above bottom nav ── */
+  .chat-input-wrapper {
+    position: fixed;
+    bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+    left: 0; right: 0;
+    padding: 8px 16px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    z-index: 200;
+    max-width: 100%; margin: 0;
+  }
+
+  /* ── Journal / Tree / Profile ── */
   .journal-wrap, .tree-wrap { padding: 0 16px 24px; margin: 20px auto; }
   .journal-topbar, .tree-topbar { margin-bottom: 20px; padding-bottom: 16px; }
-  /* Hide Back button and secondary theme toggle in journal/tree topbar — bottom nav handles navigation */
   #screen-journal .journal-topbar > .btn-action,
   #screen-journal .journal-topbar .theme-switch-wrapper,
   #screen-tree .journal-topbar > .btn-action,
   #screen-tree .journal-topbar .theme-switch-wrapper { display: none !important; }
-  /* Profile topbar: hide back button too */
   #screen-profile .journal-topbar > .btn-action { display: none !important; }
-  .j-title { font-size: 22px; }
-  .detail-title { font-size: 20px; }
-  .dream-card { padding: 14px 16px; }
-  .card-preview { font-size: 13px; }
 
-  /* Tree */
+  /* ── Typography ── */
+  .j-title { font-size: 26px; font-weight: 700; }
+  .detail-title { font-size: 22px; font-weight: 700; }
+
+  /* ── Dream cards ── */
+  .dream-card { padding: 16px; border-radius: 12px; }
+  .dream-card:active { background: var(--surface-hover); transform: none; box-shadow: var(--shadow-sm); }
+  .card-title { font-size: 16px; }
+  .card-preview { font-size: 13px; }
+  .card-mood { border-radius: 20px; padding: 3px 10px; font-size: 10px; background: rgba(155,143,232,0.12); color: #9B8FE8; border-color: rgba(155,143,232,0.25); }
+
+  /* ── Tree ── */
   .tree-months-grid { grid-template-columns: 1fr; }
   .tree-annual-btn { width: 100%; }
   .tree-analysis-panel { padding: 20px 16px; }
   .month-card { padding: 16px; }
 
-  /* Profile */
-  .profile-section { padding: 16px; }
+  /* ── Account: iOS grouped list ── */
+  .profile-section { border-radius: 12px; padding: 0; overflow: hidden; }
+  .profile-section-title { padding: 20px 16px 10px; font-size: 12px; background: transparent; margin-bottom: 0; }
+  .profile-field { border-bottom: 1px solid var(--border); padding: 14px 16px; margin-bottom: 0; }
+  .profile-field:last-child { border-bottom: none; }
+  .profile-field label { font-size: 12px; margin-bottom: 4px; }
+  .profile-section .profile-field input,
+  .profile-section .profile-field textarea { border: none; background: transparent; padding: 4px 0; font-size: 16px; box-shadow: none; }
+  .profile-section .profile-field input:focus,
+  .profile-section .profile-field textarea:focus { border: none; box-shadow: none; }
   .profile-row { grid-template-columns: 1fr; }
-  .profile-field input, .profile-field textarea { font-size: 16px; }
 
-  /* Toast: above bottom nav */
-  .toast-container { left: 12px; right: 12px; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+  /* ── Toast: above bottom nav ── */
+  .toast-container { left: 12px; right: 12px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
   .toast { min-width: 0; width: 100%; }
 
-  /* Paywall */
+  /* ── Paywall ── */
   .paywall-plans { grid-template-columns: 1fr; }
   .paywall-card-new { padding: 20px 12px; max-height: 90vh; overflow-y: auto; }
   .pricing-price { font-size: 32px; }
 
-  /* Auth */
+  /* ── Auth ── */
   .auth-container { padding: 20px 16px; }
   .auth-title { font-size: 20px; }
 }
-.btn-hamburger { display: none; }
 
 /* Light & Dark Mode Background Gradients */
 .app-bg-gradient-light, .app-bg-gradient-dark {
@@ -877,6 +927,11 @@ textarea { min-height: 160px; resize: vertical; }
   </button>
 </nav>
 
+<!-- ── MOBILE FAB: Record Dream ── -->
+<button class="mobile-fab fab-hidden" id="mobileFAB" aria-label="Record dream" onclick="goJournal();setTimeout(()=>showJP('new'),80);">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+</button>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
@@ -1055,6 +1110,8 @@ function setBottomNav(name) {
   if (map[name]) { const el = document.getElementById(map[name]); if (el) el.classList.add('active'); }
   const nav = document.getElementById('bottomNav');
   if (nav) nav.style.display = name === 'auth' ? 'none' : '';
+  const fab = document.getElementById('mobileFAB');
+  if (fab) fab.classList.toggle('fab-hidden', name === 'auth' || name === 'profile');
 }
 
 function resetScreens() {
@@ -1814,6 +1871,8 @@ window.showJP = (name) => {
   document.querySelectorAll('.jpage').forEach(p => p.classList.remove('active'));
   document.getElementById('jp-'+name).classList.add('active');
   if (name === 'new') resetForm();
+  const fab = document.getElementById('mobileFAB');
+  if (fab) fab.classList.toggle('fab-hidden', name !== 'list');
 };
 
 function resetForm() {
