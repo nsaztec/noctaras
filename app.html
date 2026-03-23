@@ -399,11 +399,15 @@ textarea { min-height: 160px; resize: vertical; }
 
   /* ── Chat screen: flex column, input always visible above nav ── */
   #screen-chat.active {
-    height: 100dvh;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    height: auto !important; min-height: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     padding-bottom: 0 !important;
+    z-index: 200;
   }
   #screen-chat .chat-main {
     flex: 1;
@@ -413,7 +417,7 @@ textarea { min-height: 160px; resize: vertical; }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 0 16px 140px;
+    padding: 0 16px 16px;
     margin: 0 auto;
     width: 100%;
     max-width: 760px;
@@ -427,14 +431,12 @@ textarea { min-height: 160px; resize: vertical; }
 
   /* ── Chat input: flex child of screen, always above nav ── */
   #screen-chat .chat-input-wrapper {
-    position: fixed;
-    bottom: calc(60px + env(safe-area-inset-bottom, 0px));
-    left: 0; right: 0;
+    position: static;
+    flex-shrink: 0;
     padding: 12px 16px;
     background: var(--bg);
     border-top: 1px solid var(--border);
     margin: 0; width: 100%;
-    z-index: 250;
   }
 
   /* ── Journal / Tree / Profile ── */
