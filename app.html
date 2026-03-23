@@ -348,7 +348,10 @@ textarea { min-height: 160px; resize: vertical; }
 /* ══ BOTTOM NAV (mobile only) ══ */
 .bottom-nav { display: none; }
 .mobile-fab { display: none; }
-.btn-hamburger { display: none; }
+
+/* ── iOS Install Banner (Base) ── */
+#iosInstallBanner { display: none; }
+.install-banner-text .share-inline { width: 13px; height: 13px; vertical-align: middle; }
 
 @media(max-width:600px){
   /* ── Topbar ── */
@@ -487,8 +490,8 @@ textarea { min-height: 160px; resize: vertical; }
   .toast { min-width: 0; width: 100%; }
 
   /* ── iOS Install Banner ── */
-  #iosInstallBanner { display: none; position: fixed; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); left: 12px; right: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; z-index: 390; box-shadow: var(--shadow-lg); align-items: center; gap: 12px; }
-  #iosInstallBanner.visible { display: flex; }
+  #iosInstallBanner { display: flex; position: fixed; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); left: 12px; right: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; z-index: 390; box-shadow: var(--shadow-lg); align-items: center; gap: 12px; }
+  #iosInstallBanner:not(.visible) { display: none; }
   .install-banner-icon { flex-shrink: 0; width: 36px; height: 36px; background: rgba(155,143,232,0.12); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
   .install-banner-icon svg { width: 18px; height: 18px; color: #9B8FE8; }
   .install-banner-text { flex: 1; }
