@@ -1242,6 +1242,7 @@ window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); s
 // Uses body{position:fixed} trick — prevents scroll before it happens (reactive
 // window.scroll listeners fire too late and cause a visible flash on iOS).
 (function() {
+  if (window.innerWidth > 600) return; // desktop: no keyboard handling needed
   const input = document.getElementById('vanishInput');
   if (!input) return;
 
