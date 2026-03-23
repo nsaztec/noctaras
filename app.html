@@ -147,6 +147,7 @@ a { text-decoration: none; color: inherit; }
 .ai-input-submit.visible { opacity: 1; transform: scale(1); pointer-events: auto; }
 .ai-input-submit:hover { transform: scale(1.05); opacity: 0.9; }
 .ai-input-submit svg { width: 16px; height: 16px; stroke-width: 2.5; }
+.chat-keyboard-dismiss { display: none; }
 .chat-moon { display: none; }
 
 /* JOURNAL */
@@ -415,11 +416,41 @@ textarea { min-height: 160px; resize: vertical; }
     position: fixed;
     bottom: calc(60px + env(safe-area-inset-bottom, 0px));
     left: 0; right: 0;
-    padding: 8px 16px;
+    padding: 8px 12px;
     background: var(--bg);
     border-top: 1px solid var(--border);
     z-index: 320;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
   }
+  .chat-input-wrapper .ai-input-textarea {
+    flex: 1;
+    padding-right: 16px;
+    min-height: 44px;
+  }
+  .chat-input-wrapper .ai-input-submit {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    flex-shrink: 0;
+    margin-bottom: 6px;
+  }
+  .chat-keyboard-dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .chat-keyboard-dismiss svg { width: 18px; height: 18px; stroke-width: 2.5; }
 
   /* ── Journal / Tree / Profile ── */
   .journal-wrap, .tree-wrap { padding: 0 16px 24px; margin: 20px auto; }
@@ -734,6 +765,9 @@ textarea { min-height: 160px; resize: vertical; }
 
 <!-- Chat input: outside screen so it sits above bottom nav (z-index independent) -->
 <div class="chat-input-wrapper" id="chatInputWrapper" style="display:none">
+  <button class="chat-keyboard-dismiss" onclick="document.getElementById('vanishInput').blur()" aria-label="Dismiss keyboard">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
   <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1" autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
   <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
@@ -1173,15 +1207,33 @@ window.goChat = () => { history.replaceState(null, '', 'app.html'); showScreen('
 window.goTree = () => { history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
 window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
 
-// ── Keyboard-aware bottom nav (hide when soft keyboard is open) ──
+// ── Keyboard-aware repositioning (hide nav, move chat input above keyboard) ──
 if (window.visualViewport) {
-  let lastHeight = window.visualViewport.height;
   window.visualViewport.addEventListener('resize', () => {
+    const vv = window.visualViewport;
     const nav = document.getElementById('bottomNav');
-    if (!nav) return;
-    const keyboardOpen = window.visualViewport.height < lastHeight * 0.85;
-    nav.style.transform = keyboardOpen ? 'translateY(100%)' : '';
-    nav.style.transition = 'transform 0.2s ease';
+    const chatInput = document.getElementById('chatInputWrapper');
+    const keyboardOpen = vv.height < window.innerHeight * 0.75;
+
+    if (nav) {
+      nav.style.transform = keyboardOpen ? 'translateY(100%)' : '';
+      nav.style.transition = 'transform 0.15s ease';
+    }
+
+    if (chatInput && chatInput.style.display !== 'none') {
+      if (keyboardOpen) {
+        // Place input just above the keyboard
+        const kbHeight = window.innerHeight - vv.height;
+        chatInput.style.bottom = kbHeight + 'px';
+        chatInput.style.transition = 'bottom 0.15s ease';
+        // Scroll messages to bottom so content doesn't look blank
+        const cm = document.querySelector('#screen-chat .chat-main');
+        if (cm) setTimeout(() => { cm.scrollTop = cm.scrollHeight; }, 50);
+      } else {
+        chatInput.style.bottom = 'calc(60px + env(safe-area-inset-bottom, 0px))';
+        chatInput.style.transition = 'bottom 0.15s ease';
+      }
+    }
   });
 }
 
