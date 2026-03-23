@@ -1238,48 +1238,26 @@ window.goChat = () => { history.replaceState(null, '', 'app.html'); showScreen('
 window.goTree = () => { history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
 window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
 
-// ── Mobile keyboard: prevent iOS page scroll when chat input is focused ──
-// Uses body{position:fixed} trick — prevents scroll before it happens (reactive
-// window.scroll listeners fire too late and cause a visible flash on iOS).
+// ── Mobile keyboard: hide nav + reposition input when keyboard opens ──
 (function() {
-  if (window.innerWidth > 600) return; // desktop: no keyboard handling needed
+  if (window.innerWidth > 600) return;
   const input = document.getElementById('vanishInput');
   if (!input) return;
 
   input.addEventListener('focus', () => {
     const nav = document.getElementById('bottomNav');
-    const bar = document.getElementById('chatInputWrapper');
-
-    // Lock the page so iOS keyboard open doesn't shift content
-    const scrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-
     if (nav) nav.style.display = 'none';
-
-    // After keyboard animation (~300ms), move input above keyboard
+    const bar = document.getElementById('chatInputWrapper');
     setTimeout(() => {
-      if (bar && bar.style.display !== 'none') {
-        const kbH = window.visualViewport
-          ? Math.max(0, window.innerHeight - window.visualViewport.height)
-          : 0;
-        bar.style.bottom = kbH + 'px';
-      }
+      if (!bar || bar.style.display === 'none') return;
+      const kbH = window.visualViewport
+        ? Math.max(0, window.innerHeight - window.visualViewport.height)
+        : 0;
+      bar.style.bottom = (kbH > 80 ? kbH : 0) + 'px';
     }, 300);
   });
 
   input.addEventListener('blur', () => {
-    // Restore body scroll — read saved top before clearing it
-    const savedTop = parseInt(document.body.style.top || '0', 10);
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    window.scrollTo(0, -savedTop);
-
-    // Delay nav restore so send-button tap doesn't flash nav mid-submit
     setTimeout(() => {
       const nav = document.getElementById('bottomNav');
       const bar = document.getElementById('chatInputWrapper');
