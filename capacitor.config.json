@@ -1,0 +1,8 @@
+{
+  "appId": "com.noctaras.app",
+  "appName": "Noctaras",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
