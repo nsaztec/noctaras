@@ -403,8 +403,7 @@ textarea { min-height: 160px; resize: vertical; }
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
-    box-sizing: border-box;
+    padding-bottom: 0 !important;
   }
   #screen-chat .chat-main {
     flex: 1;
@@ -414,7 +413,7 @@ textarea { min-height: 160px; resize: vertical; }
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 0 16px 16px;
+    padding: 0 16px 140px;
     margin: 0 auto;
     width: 100%;
     max-width: 760px;
@@ -428,13 +427,14 @@ textarea { min-height: 160px; resize: vertical; }
 
   /* ── Chat input: flex child of screen, always above nav ── */
   #screen-chat .chat-input-wrapper {
-    position: static;
-    flex-shrink: 0;
-    padding: 8px 16px;
+    position: fixed;
+    bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+    left: 0; right: 0;
+    padding: 12px 16px;
     background: var(--bg);
     border-top: 1px solid var(--border);
-    left: auto; right: auto; bottom: auto;
     margin: 0; width: 100%;
+    z-index: 250;
   }
 
   /* ── Journal / Tree / Profile ── */
