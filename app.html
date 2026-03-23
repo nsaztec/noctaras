@@ -358,26 +358,26 @@ textarea { min-height: 160px; resize: vertical; }
   }
   .bnav-item {
     flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 10px 4px 8px; min-height: 60px;
+    padding: 6px 4px 4px; min-height: 40px;
     background: none; border: none; color: var(--muted);
-    font-size: 10px; font-weight: 500; letter-spacing: 0.02em;
-    font-family: inherit; cursor: pointer; gap: 4px;
+    font-size: 9px; font-weight: 500; letter-spacing: 0.02em;
+    font-family: inherit; cursor: pointer; gap: 2px;
     transition: color 0.15s; -webkit-tap-highlight-color: transparent;
   }
   .bnav-item.active { color: #9B8FE8; }
-  .bnav-item svg { width: 26px; height: 26px; fill: currentColor; flex-shrink: 0; }
+  .bnav-item svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
   .bnav-item.active svg { transform: scale(1.1); }
 
   /* ── Pad screens behind bottom nav ── */
-  .screen.active { padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
+  .screen.active { padding-bottom: calc(46px + env(safe-area-inset-bottom, 0px)); }
 
   /* ── FAB ── */
   .mobile-fab {
     display: flex;
     position: fixed;
     right: 20px;
-    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
-    width: 56px; height: 56px;
+    bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+    width: 48px; height: 48px;
     border-radius: 50%;
     background: var(--text); color: var(--bg);
     border: none;
@@ -401,7 +401,7 @@ textarea { min-height: 160px; resize: vertical; }
   #screen-chat.active {
     position: fixed;
     top: 0; left: 0; right: 0;
-    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(41px + env(safe-area-inset-bottom, 0px));
     height: auto !important; min-height: 0;
     overflow: hidden;
     display: flex;
@@ -478,7 +478,7 @@ textarea { min-height: 160px; resize: vertical; }
   .profile-row { grid-template-columns: 1fr; }
 
   /* ── Toast: above bottom nav ── */
-  .toast-container { left: 12px; right: 12px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  .toast-container { left: 12px; right: 12px; bottom: calc(56px + env(safe-area-inset-bottom, 0px)); }
   .toast { min-width: 0; width: 100%; }
 
   /* ── Paywall ── */
