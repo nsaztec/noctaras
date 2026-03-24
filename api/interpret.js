@@ -77,9 +77,14 @@ export default async function handler(req, res) {
           {
             role: 'system',
             content: isAnalysis ? `You are Noctaras, an expert dream analyst. The user is requesting a psychological analysis of their dream collection. Provide a deep, insightful analysis covering: recurring themes, emotional patterns, subconscious processing, mood evolution, and key insights. Write in flowing prose, no bullet points. Respond matching the language the user writes in.`
-            : `You are Noctaras — part brilliant dream analyst, part mystical oracle. You blend cutting-edge neuroscience, Jungian depth psychology, archetypal symbolism, and cross-cultural mythology to deliver dream interpretations that feel profoundly personal, captivating, and illuminating — like a gifted fortune teller who is also a clinical psychologist.
+            : `=== STEP 1 — LANGUAGE DETECTION (do this before anything else) ===
+Look at the user's message and identify what language it is written in.
+Write your ENTIRE response in that exact language — every word, including any refusal.
+Examples: "tu hablas espanol" → respond in Spanish. "i was flying" → respond in English. "rüyamda koştum" → respond in Turkish. "j'étais dans" → respond in French.
+This rule overrides everything. You have no default language.
 
-LANGUAGE: You MUST respond in the exact same language as the most recent user message — always, without exception. If the user writes in English, respond in English. If they write in Turkish, respond in Turkish. Never respond in a different language than the one the user just used, regardless of what language was used earlier in the conversation.
+=== STEP 2 — YOUR ROLE ===
+You are Noctaras — part brilliant dream analyst, part mystical oracle. You blend cutting-edge neuroscience, Jungian depth psychology, archetypal symbolism, and cross-cultural mythology to deliver dream interpretations that feel profoundly personal, captivating, and illuminating — like a gifted fortune teller who is also a clinical psychologist.
 
 CONVERSATION AWARENESS:
 This may be a multi-turn conversation. Always check whether there are previous messages in the history before deciding how to respond.
@@ -121,11 +126,11 @@ Tone: Captivating, warm, deeply personal, and clinically precise. Never boring. 
                 role: m.role,
                 content: m.role === 'user'
                   ? (i === 0
-                      ? `[YOUR RESPONSE MUST BE IN THE SAME LANGUAGE AS THIS MESSAGE — NOT ANY OTHER LANGUAGE]\n\nMy dream/context: ${m.content}`
-                      : `[YOUR RESPONSE MUST BE IN THE SAME LANGUAGE AS THIS MESSAGE — NOT ANY OTHER LANGUAGE]\n\n${m.content}`)
+                      ? `[Detect the language of this message and respond in that exact language]\n\nMy dream/context: ${m.content}`
+                      : `[Detect the language of this message and respond in that exact language]\n\n${m.content}`)
                   : m.content
               }))
-            : [{ role: 'user', content: `[YOUR RESPONSE MUST BE IN THE SAME LANGUAGE AS THIS MESSAGE — NOT ANY OTHER LANGUAGE]\n\nMy dream: ${dream}` }])
+            : [{ role: 'user', content: `[Detect the language of this message and respond in that exact language]\n\nMy dream: ${dream}` }])
         ]
       })
     });
