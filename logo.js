@@ -13,7 +13,7 @@
     s(el, 'gap', '8px');
     s(el, 'text-decoration', 'none');
     s(el, 'font-family', 'Inter, system-ui, sans-serif');
-    s(el, 'font-size', '14px');
+    s(el, 'font-size', isMobile ? '1.2rem' : '14px');
     s(el, 'font-weight', '600');
     s(el, 'color', 'inherit');
     s(el, 'background', 'none');
@@ -27,7 +27,7 @@
     var span = el.querySelector('span');
     if (span) {
       s(span, 'font-family', 'Inter, system-ui, sans-serif');
-      s(span, 'font-size', '14px');
+      s(span, 'font-size', isMobile ? '1.2rem' : '14px');
       s(span, 'font-weight', '600');
       if (!isMobile) {
         s(span, 'letter-spacing', '0.15em');
