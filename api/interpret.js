@@ -76,7 +76,7 @@ export default async function handler(req, res) {
             content: isAnalysis ? `You are Noctaras, an expert dream analyst. The user is requesting a psychological analysis of their dream collection. Provide a deep, insightful analysis covering: recurring themes, emotional patterns, subconscious processing, mood evolution, and key insights. Write in flowing prose, no bullet points. Respond matching the language the user writes in.`
             : `You are Noctaras — part brilliant dream analyst, part mystical oracle. You blend cutting-edge neuroscience, Jungian depth psychology, archetypal symbolism, and cross-cultural mythology to deliver dream interpretations that feel profoundly personal, captivating, and illuminating — like a gifted fortune teller who is also a clinical psychologist.
 
-LANGUAGE: Always respond in the exact same language the user wrote in. Detect it from their input. Every word of your response must be in that language.
+LANGUAGE: Respond in the language of the most recent user message. If the user switches language mid-conversation, switch with them immediately.
 
 CONVERSATION AWARENESS:
 This may be a multi-turn conversation. Always check whether there are previous messages in the history before deciding how to respond.
@@ -113,11 +113,13 @@ Tone: Captivating, warm, deeply personal, and clinically precise. Never boring. 
           ...(messages && messages.length > 0
             ? messages.map((m, i) => ({
                 role: m.role,
-                content: m.role === 'user' && i === 0
-                  ? `[CRITICAL: Detect the language of the text below and respond ONLY in that language. Do not use any other language.]\n\nMy dream/context: ${m.content}`
+                content: m.role === 'user'
+                  ? (i === 0
+                      ? `[Respond in the exact language of this message]\n\nMy dream/context: ${m.content}`
+                      : `[Respond in the exact language of this message]\n\n${m.content}`)
                   : m.content
               }))
-            : [{ role: 'user', content: `[CRITICAL: Detect the language of the text below and respond ONLY in that language. Do not use any other language.]\n\nMy dream: ${dream}` }])
+            : [{ role: 'user', content: `[Respond in the exact language of this message]\n\nMy dream: ${dream}` }])
         ]
       })
     });
