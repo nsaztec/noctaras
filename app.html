@@ -698,6 +698,11 @@
       bottom: 26px;
       width: 32px;
       height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+      max-width: 32px;
+      max-height: 32px;
+      overflow: hidden;
       background: var(--text);
       border: none;
       border-radius: 10px;
@@ -2792,7 +2797,7 @@
         <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1"
           autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
         <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="19" x2="12" y2="5"></line>
             <polyline points="5 12 12 5 19 12"></polyline>
           </svg>
