@@ -49,9 +49,12 @@ export default async function handler(req, res) {
           });
         }
 
-        // Increment usage
+        // Increment usage (filter out any non-numeric stale keys like isPro)
+        const cleanUsage = Object.fromEntries(
+          Object.entries(usage).filter(([, v]) => typeof v === 'number')
+        );
         await db.collection('users').doc(userId).set({
-          usage: { ...usage, [monthKey]: monthlyCount + 1 },
+          usage: { ...cleanUsage, [monthKey]: monthlyCount + 1 },
           email: email || userData.email || '',
         }, { merge: true });
       }
