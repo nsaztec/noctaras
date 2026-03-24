@@ -6,6 +6,7 @@
   }
 
   function logoStyle(el) {
+    var isMobile = window.innerWidth <= 600;
     el.innerHTML = SVG + '<span>Noctaras</span>';
     s(el, 'display', 'flex');
     s(el, 'align-items', 'center');
@@ -14,20 +15,24 @@
     s(el, 'font-family', 'Inter, system-ui, sans-serif');
     s(el, 'font-size', '14px');
     s(el, 'font-weight', '600');
-    s(el, 'letter-spacing', '0.15em');
-    s(el, 'text-transform', 'uppercase');
     s(el, 'color', 'inherit');
     s(el, 'background', 'none');
     s(el, 'border', 'none');
     s(el, 'padding', '0');
     s(el, 'cursor', 'pointer');
+    if (!isMobile) {
+      s(el, 'letter-spacing', '0.15em');
+      s(el, 'text-transform', 'uppercase');
+    }
     var span = el.querySelector('span');
     if (span) {
       s(span, 'font-family', 'Inter, system-ui, sans-serif');
       s(span, 'font-size', '14px');
       s(span, 'font-weight', '600');
-      s(span, 'letter-spacing', '0.15em');
-      s(span, 'text-transform', 'uppercase');
+      if (!isMobile) {
+        s(span, 'letter-spacing', '0.15em');
+        s(span, 'text-transform', 'uppercase');
+      }
     }
     var svg = el.querySelector('svg');
     if (svg) {
@@ -45,6 +50,8 @@
   }
 
   function run() {
+    var isMobile = window.innerWidth <= 600;
+
     // 1. Standard nav (index, contact, blog, privacy, terms...)
     var nav = document.querySelector('nav');
     if (nav) {
@@ -59,10 +66,10 @@
       }
     }
 
-    // 2. app.html — chat topbar
+    // 2. app.html — chat topbar (bar padding handled by CSS, skip on mobile)
     var topbar = document.querySelector('.chat-topbar');
     if (topbar) {
-      barStyle(topbar);
+      if (!isMobile) barStyle(topbar);
       var tLogo = topbar.querySelector('.logo, .nav-logo');
       if (tLogo) logoStyle(tLogo);
     }
@@ -73,7 +80,7 @@
       logoStyle(authLogo);
       s(authLogo, 'position', 'absolute');
       s(authLogo, 'top', '20px');
-      s(authLogo, 'left', '48px');
+      s(authLogo, 'left', isMobile ? '16px' : '48px');
     }
   }
 
