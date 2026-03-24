@@ -113,9 +113,11 @@ Tone: Captivating, warm, deeply personal, and clinically precise. Never boring. 
           ...(messages && messages.length > 0
             ? messages.map((m, i) => ({
                 role: m.role,
-                content: m.role === 'user' && i === 0 ? `My dream/context: ${m.content}` : m.content
+                content: m.role === 'user' && i === 0
+                  ? `[CRITICAL: Detect the language of the text below and respond ONLY in that language. Do not use any other language.]\n\nMy dream/context: ${m.content}`
+                  : m.content
               }))
-            : [{ role: 'user', content: `My dream: ${dream}` }])
+            : [{ role: 'user', content: `[CRITICAL: Detect the language of the text below and respond ONLY in that language. Do not use any other language.]\n\nMy dream: ${dream}` }])
         ]
       })
     });
