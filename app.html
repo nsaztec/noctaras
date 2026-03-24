@@ -2788,19 +2788,17 @@
         <p class="chat-sub">Describe your dream and receive its interpretation.</p>
       </div>
       <div id="chatMessages"></div>
+      <div class="chat-input-wrapper" id="chatInputWrapper">
+        <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1"
+          autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
+        <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </button>
+      </div>
     </div>
-  </div>
-
-  <!-- Chat input: outside screen so it sits above bottom nav (z-index independent) -->
-  <div class="chat-input-wrapper" id="chatInputWrapper" style="display:none">
-    <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1"
-      autocomplete="off" spellcheck="false" oninput="window.onInput()" onkeydown="window.onKey(event)"></textarea>
-    <button class="ai-input-submit" id="vanishBtn" onclick="submitChat()" disabled>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="19" x2="12" y2="5"></line>
-        <polyline points="5 12 12 5 19 12"></polyline>
-      </svg>
-    </button>
   </div>
 
   <!-- ══════════════ SCREEN 2: JOURNAL ══════════════ -->
