@@ -3128,6 +3128,9 @@
     let selectedId = null;
     let typingIv = null;
     let activeTyping = null;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && activeTyping) activeTyping.finish();
+    });
     let vanishData = [], vanishBusy = false;
     let _currentAiTitle = '', _isValidAnalysis = false, _pa = '', _isDetailValid = false;
 
