@@ -3127,6 +3127,7 @@
     let currentAnalysis = '';
     let selectedId = null;
     let typingIv = null;
+    let activeTyping = null;
     let vanishData = [], vanishBusy = false;
     let _currentAiTitle = '', _isValidAnalysis = false, _pa = '', _isDetailValid = false;
 
@@ -3307,6 +3308,7 @@
     }
 
     function showScreen(name) {
+      if (name !== 'chat' && activeTyping) activeTyping.finish();
       resetScreens();
       if (name === 'auth') {
         document.getElementById('screen-auth').classList.add('active');
@@ -3943,6 +3945,7 @@
       const c = document.getElementById('chatMessages'); c.appendChild(el);
       const s = getChatScroller();
       let i = 0;
+      let done = false;
       let userScrolled = false;
       const onScroll = () => {
         const atBottom = s.scrollHeight - s.scrollTop - s.clientHeight < 60;
@@ -3950,32 +3953,39 @@
         else userScrolled = false;
       };
       s.addEventListener('scroll', onScroll, { passive: true });
-      // Use setTimeout recursion instead of setInterval so typing continues on hidden tabs
+
+      function finish() {
+        if (done) return;
+        done = true;
+        activeTyping = null;
+        s.removeEventListener('scroll', onScroll);
+        el.innerHTML = text.replace(/\n/g, '<br>');
+        if (dreamText && isValidAnalysis) {
+          const finalTitle = titleText || 'Dream Entry';
+          const dreamData = {
+            title: finalTitle,
+            text: dreamText,
+            mood: 'mysterious',
+            date: new Date().toISOString(),
+            analysis: text
+          };
+          saveDreamToDB(dreamData).then(id => {
+            if (id) dreams.unshift({ id, ...dreamData });
+          });
+        }
+      }
+
+      activeTyping = { finish };
+
       function typeNext() {
+        if (done) return;
         if (i < text.length) {
           el.innerHTML = text.slice(0, i + 1).replace(/\n/g, '<br>') + '<span class="cursor"></span>';
           i++;
           if (!userScrolled) s.scrollTop = s.scrollHeight;
           setTimeout(typeNext, 12);
         } else {
-          el.innerHTML = text.replace(/\n/g, '<br>');
-          if (dreamText && isValidAnalysis) {
-            const finalTitle = titleText || 'Dream Entry';
-            const dreamData = {
-              title: finalTitle,
-              text: dreamText,
-              mood: 'mysterious',
-              date: new Date().toISOString(),
-              analysis: text
-            };
-            // Auto-save quietly in the background only if it's a valid analysis
-            saveDreamToDB(dreamData).then(id => {
-              if (id) {
-                dreams.unshift({ id, ...dreamData });
-              }
-            });
-          }
-          c.removeEventListener('scroll', onScroll);
+          finish();
         }
       }
       typeNext();
