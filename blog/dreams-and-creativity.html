@@ -152,6 +152,107 @@
 @media(max-width: 480px) { .acc-content { grid-template-columns: 1fr; } .acc-summary { font-size: 15px; } }
 </style>
 
+
+<style>
+/* Premium Paginated Accordion - Modern Noctaras Theme */
+.acc-container.categories-section {
+    padding: 5rem 0;
+    margin: 0 auto;
+    max-width: 900px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+}
+.acc-header-box { text-align: center; margin-bottom: 3rem; }
+.acc-header-box h3 { font-family: var(--serif); font-size: 28px; color: var(--text); font-weight: 500; margin-bottom: 8px; }
+.acc-header-box p { color: var(--muted); font-size: 14.5px; opacity: 0.8; }
+
+.acc-details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.acc-details[open] {
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(90, 123, 107, 0.08);
+}
+.acc-summary {
+    padding: 20px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    outline: none;
+    user-select: none;
+    transition: background 0.3s;
+}
+.acc-summary::-webkit-details-marker { display: none; }
+.acc-summary:hover { background: rgba(0,0,0,0.015); }
+[data-theme="dark"] .acc-summary:hover { background: rgba(255,255,255,0.03); }
+
+.acc-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(90, 123, 107, 0.1);
+    color: var(--accent);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.acc-details[open] .acc-icon { transform: rotate(180deg); background: var(--accent); color: var(--surface); }
+
+.acc-content {
+    padding: 0 24px 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 24px;
+    animation: acc-fade-in 0.4s ease-out;
+}
+@keyframes acc-fade-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+.acc-link {
+    font-size: 13.5px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 6px 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid transparent;
+    transition: all 0.25s;
+}
+.acc-link:hover { color: var(--accent); transform: translateX(4px); }
+
+/* Pagination Styles */
+.acc-content .acc-link.hide-link { display: none !important; }
+.acc-pagination {
+    display: flex; justify-content: center; align-items: center; gap: 16px;
+    padding: 0 24px 24px;
+    animation: acc-fade-in 0.4s ease-out;
+}
+.acc-btn {
+    background: transparent; border: 1.5px solid var(--accent); color: var(--accent);
+    width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    font-size: 16px;
+}
+.acc-btn:hover:not(:disabled) { background: var(--accent); color: var(--surface); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(90,123,107,0.2); }
+.acc-btn:disabled { opacity: 0.35; cursor: not-allowed; border-color: var(--muted); color: var(--muted); }
+.acc-page-info { font-size: 14px; color: var(--muted); font-weight: 500; font-family: var(--sans); user-select: none; }
+
+@media(max-width: 768px) { .acc-content { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 480px) { .acc-content { grid-template-columns: 1fr; } .acc-summary { font-size: 15px; } }
+</style>
+
 <section class="categories-section acc-container">
     <div class="acc-header-box">
         <h3>Explore Detailed Dream Analysis</h3>
@@ -161,31 +262,99 @@
     <details class="acc-details">
         <summary class="acc-summary">Dream Symbols & Meanings (A-Z) <span class="acc-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></summary>
         <div class="acc-content">
-            <a href="activation-synthesis-hypothesis.html" class="acc-link">Activation Synthesis Hypothesis</a><a href="active-imagination.html" class="acc-link">Active Imagination</a><a href="amplification-method.html" class="acc-link">Amplification Method</a><a href="anxiety-dreams-meaning.html" class="acc-link">Anxiety Dreams Meaning</a><a href="attachment-styles-dreams.html" class="acc-link">Attachment Styles Dreams</a><a href="bedroom-smells-dream-themes.html" class="acc-link">Bedroom Smells Dream Themes</a><a href="best-ai-dream-interpretation-tools-2026.html" class="acc-link">Best Ai Dream Interpretation Tools 2026</a><a href="blind-people-visual-dreams.html" class="acc-link">Blind People Visual Dreams</a><a href="children-dreams.html" class="acc-link">Children Dreams</a><a href="collective-unconscious-dreams.html" class="acc-link">Collective Unconscious Dreams</a><a href="colors-in-dreams-meaning.html" class="acc-link">Colors In Dreams Meaning</a><a href="compensation-theory-dreams.html" class="acc-link">Compensation Theory Dreams</a><a href="continuity-hypothesis-dreaming.html" class="acc-link">Continuity Hypothesis Dreaming</a><a href="couples-shared-dreams.html" class="acc-link">Couples Shared Dreams</a><a href="daydreaming-vs-nocturnal-dreaming.html" class="acc-link">Daydreaming Vs Nocturnal Dreaming</a><a href="do-dreams-have-meaning.html" class="acc-link">Do Dreams Have Meaning</a><a href="dream-emotions-guide.html" class="acc-link">Dream Emotions Guide</a><a href="dream-incubation.html" class="acc-link">Dream Incubation</a><a href="dream-intentions.html" class="acc-link">Dream Intentions</a><a href="dream-journaling-guide.html" class="acc-link">Dream Journaling Guide</a><a href="dream-rebound-suppressing-thoughts.html" class="acc-link">Dream Rebound Suppressing Thoughts</a><a href="dream-sharing.html" class="acc-link">Dream Sharing</a><a href="dream-signs.html" class="acc-link">Dream Signs</a><a href="dream-symbols-dictionary.html" class="acc-link">Dream Symbols Dictionary</a><a href="dream-symbols-guide.html" class="acc-link">Dream Symbols Guide</a><a href="dream-telepathy.html" class="acc-link">Dream Telepathy</a><a href="dream-types-guide.html" class="acc-link">Dream Types Guide</a><a href="dreaming-about-arguing.html" class="acc-link">Dreaming About Arguing</a><a href="dreaming-about-babies.html" class="acc-link">Dreaming About Babies</a><a href="dreaming-about-being-late.html" class="acc-link">Dreaming About Being Late</a><a href="dreaming-about-being-lost.html" class="acc-link">Dreaming About Being Lost</a><a href="dreaming-about-being-naked.html" class="acc-link">Dreaming About Being Naked</a><a href="dreaming-about-being-shot.html" class="acc-link">Dreaming About Being Shot</a><a href="dreaming-about-birds.html" class="acc-link">Dreaming About Birds</a><a href="dreaming-about-blood.html" class="acc-link">Dreaming About Blood</a><a href="dreaming-about-cars.html" class="acc-link">Dreaming About Cars</a><a href="dreaming-about-cats.html" class="acc-link">Dreaming About Cats</a><a href="dreaming-about-cheating-partner.html" class="acc-link">Dreaming About Cheating Partner</a><a href="dreaming-about-crying.html" class="acc-link">Dreaming About Crying</a><a href="dreaming-about-dead-person-talking.html" class="acc-link">Dreaming About Dead Person Talking</a><a href="dreaming-about-dogs.html" class="acc-link">Dreaming About Dogs</a><a href="dreaming-about-elevator.html" class="acc-link">Dreaming About Elevator</a><a href="dreaming-about-ex.html" class="acc-link">Dreaming About Ex</a><a href="dreaming-about-fire.html" class="acc-link">Dreaming About Fire</a><a href="dreaming-about-flying.html" class="acc-link">Dreaming About Flying</a><a href="dreaming-about-getting-fired.html" class="acc-link">Dreaming About Getting Fired</a><a href="dreaming-about-hair.html" class="acc-link">Dreaming About Hair</a><a href="dreaming-about-hidden-rooms.html" class="acc-link">Dreaming About Hidden Rooms</a><a href="dreaming-about-house-many-rooms.html" class="acc-link">Dreaming About House Many Rooms</a><a href="dreaming-about-houses.html" class="acc-link">Dreaming About Houses</a><a href="dreaming-about-kissing.html" class="acc-link">Dreaming About Kissing</a><a href="dreaming-about-lottery.html" class="acc-link">Dreaming About Lottery</a><a href="dreaming-about-mirror-someone-else.html" class="acc-link">Dreaming About Mirror Someone Else</a><a href="dreaming-about-missing-flight.html" class="acc-link">Dreaming About Missing Flight</a><a href="dreaming-about-money.html" class="acc-link">Dreaming About Money</a><a href="dreaming-about-mother.html" class="acc-link">Dreaming About Mother</a><a href="dreaming-about-ocean.html" class="acc-link">Dreaming About Ocean</a><a href="dreaming-about-packing-not-leaving.html" class="acc-link">Dreaming About Packing Not Leaving</a><a href="dreaming-about-poop.html" class="acc-link">Dreaming About Poop</a><a href="dreaming-about-pregnancy.html" class="acc-link">Dreaming About Pregnancy</a><a href="dreaming-about-same-person.html" class="acc-link">Dreaming About Same Person</a><a href="dreaming-about-school-exams.html" class="acc-link">Dreaming About School Exams</a><a href="dreaming-about-snakes.html" class="acc-link">Dreaming About Snakes</a><a href="dreaming-about-someone-dying.html" class="acc-link">Dreaming About Someone Dying</a><a href="dreaming-about-someone-no-contact.html" class="acc-link">Dreaming About Someone No Contact</a><a href="dreaming-about-someone.html" class="acc-link">Dreaming About Someone</a><a href="dreaming-about-spiders.html" class="acc-link">Dreaming About Spiders</a><a href="dreaming-about-storms.html" class="acc-link">Dreaming About Storms</a><a href="dreaming-about-technology.html" class="acc-link">Dreaming About Technology</a><a href="dreaming-about-tornadoes.html" class="acc-link">Dreaming About Tornadoes</a><a href="dreaming-about-water.html" class="acc-link">Dreaming About Water</a><a href="dreaming-about-wedding.html" class="acc-link">Dreaming About Wedding</a><a href="dreaming-about-wolves.html" class="acc-link">Dreaming About Wolves</a><a href="dreaming-third-person.html" class="acc-link">Dreaming Third Person</a><a href="dreams-across-cultures.html" class="acc-link">Dreams Across Cultures</a><a href="dreams-and-aging.html" class="acc-link">Dreams And Aging</a><a href="dreams-and-creativity.html" class="acc-link">Dreams And Creativity</a><a href="dreams-and-emotional-processing.html" class="acc-link">Dreams And Emotional Processing</a><a href="false-awakenings.html" class="acc-link">False Awakenings</a><a href="food-and-dreams.html" class="acc-link">Food And Dreams</a><a href="forgetting-dreams-immediately.html" class="acc-link">Forgetting Dreams Immediately</a><a href="grief-dreams.html" class="acc-link">Grief Dreams</a><a href="how-to-have-better-dreams.html" class="acc-link">How To Have Better Dreams</a><a href="individuation-dreams.html" class="acc-link">Individuation Dreams</a><a href="interpret-your-dreams.html" class="acc-link">Interpret Your Dreams</a><a href="male-vs-female-dreams.html" class="acc-link">Male Vs Female Dreams</a><a href="medication-dreams.html" class="acc-link">Medication Dreams</a><a href="meditation-and-dreams.html" class="acc-link">Meditation And Dreams</a><a href="mutual-dreaming-phenomenon.html" class="acc-link">Mutual Dreaming Phenomenon</a><a href="napping-and-dreams.html" class="acc-link">Napping And Dreams</a><a href="persona-mask-dreams.html" class="acc-link">Persona Mask Dreams</a><a href="personality-introvert-extrovert-dreams.html" class="acc-link">Personality Introvert Extrovert Dreams</a><a href="physical-pain-in-dreams.html" class="acc-link">Physical Pain In Dreams</a><a href="prophetic-dreams.html" class="acc-link">Prophetic Dreams</a><a href="ptsd-dream-structures.html" class="acc-link">Ptsd Dream Structures</a><a href="reading-writing-in-dreams.html" class="acc-link">Reading Writing In Dreams</a><a href="reality-checks-guide.html" class="acc-link">Reality Checks Guide</a><a href="recurring-dreams-meaning.html" class="acc-link">Recurring Dreams Meaning</a><a href="running-fast-in-dreams.html" class="acc-link">Running Fast In Dreams</a><a href="stress-dreams-guide.html" class="acc-link">Stress Dreams Guide</a><a href="threat-simulation-theory.html" class="acc-link">Threat Simulation Theory</a><a href="vivid-dreams-guide.html" class="acc-link">Vivid Dreams Guide</a><a href="wake-back-to-bed.html" class="acc-link">Wake Back To Bed</a><a href="waking-up-angry-from-dream.html" class="acc-link">Waking Up Angry From Dream</a><a href="why-are-dreams-bizarre.html" class="acc-link">Why Are Dreams Bizarre</a><a href="why-do-we-dream.html" class="acc-link">Why Do We Dream</a><a href="why-dreams-feel-real.html" class="acc-link">Why Dreams Feel Real</a>
+            <a href="activation-synthesis-hypothesis.html" class="acc-link">Activation Synthesis Hypothesis</a>\n            <a href="active-imagination.html" class="acc-link">Active Imagination</a>\n            <a href="amplification-method.html" class="acc-link">Amplification Method</a>\n            <a href="anxiety-dreams-meaning.html" class="acc-link">Anxiety Dreams Meaning</a>\n            <a href="attachment-styles-dreams.html" class="acc-link">Attachment Styles Dreams</a>\n            <a href="bedroom-smells-dream-themes.html" class="acc-link">Bedroom Smells Dream Themes</a>\n            <a href="best-ai-dream-interpretation-tools-2026.html" class="acc-link">Best Ai Dream Interpretation Tools 2026</a>\n            <a href="blind-people-visual-dreams.html" class="acc-link">Blind People Visual Dreams</a>\n            <a href="children-dreams.html" class="acc-link">Children Dreams</a>\n            <a href="collective-unconscious-dreams.html" class="acc-link">Collective Unconscious Dreams</a>\n            <a href="colors-in-dreams-meaning.html" class="acc-link">Colors In Dreams Meaning</a>\n            <a href="compensation-theory-dreams.html" class="acc-link">Compensation Theory Dreams</a>\n            <a href="continuity-hypothesis-dreaming.html" class="acc-link">Continuity Hypothesis Dreaming</a>\n            <a href="couples-shared-dreams.html" class="acc-link">Couples Shared Dreams</a>\n            <a href="daydreaming-vs-nocturnal-dreaming.html" class="acc-link">Daydreaming Vs Nocturnal Dreaming</a>\n            <a href="do-dreams-have-meaning.html" class="acc-link">Do Dreams Have Meaning</a>\n            <a href="dream-emotions-guide.html" class="acc-link">Dream Emotions Guide</a>\n            <a href="dream-incubation.html" class="acc-link">Dream Incubation</a>\n            <a href="dream-intentions.html" class="acc-link">Dream Intentions</a>\n            <a href="dream-journaling-guide.html" class="acc-link">Dream Journaling Guide</a>\n            <a href="dream-rebound-suppressing-thoughts.html" class="acc-link">Dream Rebound Suppressing Thoughts</a>\n            <a href="dream-sharing.html" class="acc-link">Dream Sharing</a>\n            <a href="dream-signs.html" class="acc-link">Dream Signs</a>\n            <a href="dream-symbols-dictionary.html" class="acc-link">Dream Symbols Dictionary</a>\n            <a href="dream-symbols-guide.html" class="acc-link">Dream Symbols Guide</a>\n            <a href="dream-telepathy.html" class="acc-link">Dream Telepathy</a>\n            <a href="dream-types-guide.html" class="acc-link">Dream Types Guide</a>\n            <a href="dreaming-about-arguing.html" class="acc-link">Dreaming About Arguing</a>\n            <a href="dreaming-about-babies.html" class="acc-link">Dreaming About Babies</a>\n            <a href="dreaming-about-being-late.html" class="acc-link">Dreaming About Being Late</a>\n            <a href="dreaming-about-being-lost.html" class="acc-link">Dreaming About Being Lost</a>\n            <a href="dreaming-about-being-naked.html" class="acc-link">Dreaming About Being Naked</a>\n            <a href="dreaming-about-being-shot.html" class="acc-link">Dreaming About Being Shot</a>\n            <a href="dreaming-about-birds.html" class="acc-link">Dreaming About Birds</a>\n            <a href="dreaming-about-blood.html" class="acc-link">Dreaming About Blood</a>\n            <a href="dreaming-about-cars.html" class="acc-link">Dreaming About Cars</a>\n            <a href="dreaming-about-cats.html" class="acc-link">Dreaming About Cats</a>\n            <a href="dreaming-about-cheating-partner.html" class="acc-link">Dreaming About Cheating Partner</a>\n            <a href="dreaming-about-crying.html" class="acc-link">Dreaming About Crying</a>\n            <a href="dreaming-about-dead-person-talking.html" class="acc-link">Dreaming About Dead Person Talking</a>\n            <a href="dreaming-about-dogs.html" class="acc-link">Dreaming About Dogs</a>\n            <a href="dreaming-about-elevator.html" class="acc-link">Dreaming About Elevator</a>\n            <a href="dreaming-about-ex.html" class="acc-link">Dreaming About Ex</a>\n            <a href="dreaming-about-fire.html" class="acc-link">Dreaming About Fire</a>\n            <a href="dreaming-about-flying.html" class="acc-link">Dreaming About Flying</a>\n            <a href="dreaming-about-getting-fired.html" class="acc-link">Dreaming About Getting Fired</a>\n            <a href="dreaming-about-hair.html" class="acc-link">Dreaming About Hair</a>\n            <a href="dreaming-about-hidden-rooms.html" class="acc-link">Dreaming About Hidden Rooms</a>\n            <a href="dreaming-about-house-many-rooms.html" class="acc-link">Dreaming About House Many Rooms</a>\n            <a href="dreaming-about-houses.html" class="acc-link">Dreaming About Houses</a>\n            <a href="dreaming-about-kissing.html" class="acc-link">Dreaming About Kissing</a>\n            <a href="dreaming-about-lottery.html" class="acc-link">Dreaming About Lottery</a>\n            <a href="dreaming-about-mirror-someone-else.html" class="acc-link">Dreaming About Mirror Someone Else</a>\n            <a href="dreaming-about-missing-flight.html" class="acc-link">Dreaming About Missing Flight</a>\n            <a href="dreaming-about-money.html" class="acc-link">Dreaming About Money</a>\n            <a href="dreaming-about-mother.html" class="acc-link">Dreaming About Mother</a>\n            <a href="dreaming-about-ocean.html" class="acc-link">Dreaming About Ocean</a>\n            <a href="dreaming-about-packing-not-leaving.html" class="acc-link">Dreaming About Packing Not Leaving</a>\n            <a href="dreaming-about-poop.html" class="acc-link">Dreaming About Poop</a>\n            <a href="dreaming-about-pregnancy.html" class="acc-link">Dreaming About Pregnancy</a>\n            <a href="dreaming-about-same-person.html" class="acc-link">Dreaming About Same Person</a>\n            <a href="dreaming-about-school-exams.html" class="acc-link">Dreaming About School Exams</a>\n            <a href="dreaming-about-snakes.html" class="acc-link">Dreaming About Snakes</a>\n            <a href="dreaming-about-someone-dying.html" class="acc-link">Dreaming About Someone Dying</a>\n            <a href="dreaming-about-someone-no-contact.html" class="acc-link">Dreaming About Someone No Contact</a>\n            <a href="dreaming-about-someone.html" class="acc-link">Dreaming About Someone</a>\n            <a href="dreaming-about-spiders.html" class="acc-link">Dreaming About Spiders</a>\n            <a href="dreaming-about-storms.html" class="acc-link">Dreaming About Storms</a>\n            <a href="dreaming-about-technology.html" class="acc-link">Dreaming About Technology</a>\n            <a href="dreaming-about-tornadoes.html" class="acc-link">Dreaming About Tornadoes</a>\n            <a href="dreaming-about-water.html" class="acc-link">Dreaming About Water</a>\n            <a href="dreaming-about-wedding.html" class="acc-link">Dreaming About Wedding</a>\n            <a href="dreaming-about-wolves.html" class="acc-link">Dreaming About Wolves</a>\n            <a href="dreaming-third-person.html" class="acc-link">Dreaming Third Person</a>\n            <a href="dreams-across-cultures.html" class="acc-link">Dreams Across Cultures</a>\n            <a href="dreams-and-aging.html" class="acc-link">Dreams And Aging</a>\n            <a href="dreams-and-creativity.html" class="acc-link">Dreams And Creativity</a>\n            <a href="dreams-and-emotional-processing.html" class="acc-link">Dreams And Emotional Processing</a>\n            <a href="false-awakenings.html" class="acc-link">False Awakenings</a>\n            <a href="food-and-dreams.html" class="acc-link">Food And Dreams</a>\n            <a href="forgetting-dreams-immediately.html" class="acc-link">Forgetting Dreams Immediately</a>\n            <a href="grief-dreams.html" class="acc-link">Grief Dreams</a>\n            <a href="how-to-have-better-dreams.html" class="acc-link">How To Have Better Dreams</a>\n            <a href="individuation-dreams.html" class="acc-link">Individuation Dreams</a>\n            <a href="interpret-your-dreams.html" class="acc-link">Interpret Your Dreams</a>\n            <a href="male-vs-female-dreams.html" class="acc-link">Male Vs Female Dreams</a>\n            <a href="medication-dreams.html" class="acc-link">Medication Dreams</a>\n            <a href="meditation-and-dreams.html" class="acc-link">Meditation And Dreams</a>\n            <a href="mutual-dreaming-phenomenon.html" class="acc-link">Mutual Dreaming Phenomenon</a>\n            <a href="napping-and-dreams.html" class="acc-link">Napping And Dreams</a>\n            <a href="persona-mask-dreams.html" class="acc-link">Persona Mask Dreams</a>\n            <a href="personality-introvert-extrovert-dreams.html" class="acc-link">Personality Introvert Extrovert Dreams</a>\n            <a href="physical-pain-in-dreams.html" class="acc-link">Physical Pain In Dreams</a>\n            <a href="prophetic-dreams.html" class="acc-link">Prophetic Dreams</a>\n            <a href="ptsd-dream-structures.html" class="acc-link">Ptsd Dream Structures</a>\n            <a href="reading-writing-in-dreams.html" class="acc-link">Reading Writing In Dreams</a>\n            <a href="reality-checks-guide.html" class="acc-link">Reality Checks Guide</a>\n            <a href="recurring-dreams-meaning.html" class="acc-link">Recurring Dreams Meaning</a>\n            <a href="running-fast-in-dreams.html" class="acc-link">Running Fast In Dreams</a>\n            <a href="stress-dreams-guide.html" class="acc-link">Stress Dreams Guide</a>\n            <a href="threat-simulation-theory.html" class="acc-link">Threat Simulation Theory</a>\n            <a href="vivid-dreams-guide.html" class="acc-link">Vivid Dreams Guide</a>\n            <a href="wake-back-to-bed.html" class="acc-link">Wake Back To Bed</a>\n            <a href="waking-up-angry-from-dream.html" class="acc-link">Waking Up Angry From Dream</a>\n            <a href="why-are-dreams-bizarre.html" class="acc-link">Why Are Dreams Bizarre</a>\n            <a href="why-do-we-dream.html" class="acc-link">Why Do We Dream</a>\n            <a href="why-dreams-feel-real.html" class="acc-link">Why Dreams Feel Real</a>
         </div>
     </details>
 
     <details class="acc-details">
         <summary class="acc-summary">Psychology & Psychoanalysis <span class="acc-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></summary>
         <div class="acc-content">
-            <a href="anima-animus-dreams.html" class="acc-link">Anima Animus Dreams</a><a href="astral-projection-guide.html" class="acc-link">Astral Projection Guide</a><a href="dream-archetypes-guide.html" class="acc-link">Dream Archetypes Guide</a><a href="false-awakenings-psychology.html" class="acc-link">False Awakenings Psychology</a><a href="freud-vs-jung-dreams.html" class="acc-link">Freud Vs Jung Dreams</a><a href="jung-shadow-self-dreams.html" class="acc-link">Jung Shadow Self Dreams</a><a href="jungian-dream-analysis.html" class="acc-link">Jungian Dream Analysis</a><a href="projection-in-dreams.html" class="acc-link">Projection In Dreams</a><a href="psychology-liminal-spaces-dreams.html" class="acc-link">Psychology Liminal Spaces Dreams</a><a href="subconscious-mind-dream-symbols.html" class="acc-link">Subconscious Mind Dream Symbols</a><a href="trauma-and-dreams.html" class="acc-link">Trauma And Dreams</a><a href="trauma-impact-dream-content.html" class="acc-link">Trauma Impact Dream Content</a>
+            <a href="anima-animus-dreams.html" class="acc-link">Anima Animus Dreams</a>\n            <a href="astral-projection-guide.html" class="acc-link">Astral Projection Guide</a>\n            <a href="dream-archetypes-guide.html" class="acc-link">Dream Archetypes Guide</a>\n            <a href="false-awakenings-psychology.html" class="acc-link">False Awakenings Psychology</a>\n            <a href="freud-vs-jung-dreams.html" class="acc-link">Freud Vs Jung Dreams</a>\n            <a href="jung-shadow-self-dreams.html" class="acc-link">Jung Shadow Self Dreams</a>\n            <a href="jungian-dream-analysis.html" class="acc-link">Jungian Dream Analysis</a>\n            <a href="projection-in-dreams.html" class="acc-link">Projection In Dreams</a>\n            <a href="psychology-liminal-spaces-dreams.html" class="acc-link">Psychology Liminal Spaces Dreams</a>\n            <a href="subconscious-mind-dream-symbols.html" class="acc-link">Subconscious Mind Dream Symbols</a>\n            <a href="trauma-and-dreams.html" class="acc-link">Trauma And Dreams</a>\n            <a href="trauma-impact-dream-content.html" class="acc-link">Trauma Impact Dream Content</a>
         </div>
     </details>
 
     <details class="acc-details">
         <summary class="acc-summary">Sleep Science & Phenomena <span class="acc-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></summary>
         <div class="acc-content">
-            <a href="bilingual-brain-sleeping.html" class="acc-link">Bilingual Brain Sleeping</a><a href="creative-problem-solving-rem.html" class="acc-link">Creative Problem Solving Rem</a><a href="diet-late-night-eating-dreams.html" class="acc-link">Diet Late Night Eating Dreams</a><a href="dreams-and-memory.html" class="acc-link">Dreams And Memory</a><a href="evolution-of-sleep-dreams.html" class="acc-link">Evolution Of Sleep Dreams</a><a href="grief-mourning-rem-sleep.html" class="acc-link">Grief Mourning Rem Sleep</a><a href="hippocampus-dream-memory.html" class="acc-link">Hippocampus Dream Memory</a><a href="how-to-remember-dreams.html" class="acc-link">How To Remember Dreams</a><a href="hypnagogic-states.html" class="acc-link">Hypnagogic States</a><a href="lucid-dreaming-beginners.html" class="acc-link">Lucid Dreaming Beginners</a><a href="menstrual-cycles-hormones-dreams.html" class="acc-link">Menstrual Cycles Hormones Dreams</a><a href="pregnancy-dreams-science.html" class="acc-link">Pregnancy Dreams Science</a><a href="rem-sleep-guide.html" class="acc-link">Rem Sleep Guide</a><a href="science-rem-sleep-emotions.html" class="acc-link">Science Rem Sleep Emotions</a><a href="screen-time-blue-light-rem.html" class="acc-link">Screen Time Blue Light Rem</a><a href="sleep-hygiene-dreams.html" class="acc-link">Sleep Hygiene Dreams</a><a href="sleep-stages-dreams.html" class="acc-link">Sleep Stages Dreams</a><a href="sleeping-position-dream-types.html" class="acc-link">Sleeping Position Dream Types</a>
+            <a href="bilingual-brain-sleeping.html" class="acc-link">Bilingual Brain Sleeping</a>\n            <a href="creative-problem-solving-rem.html" class="acc-link">Creative Problem Solving Rem</a>\n            <a href="diet-late-night-eating-dreams.html" class="acc-link">Diet Late Night Eating Dreams</a>\n            <a href="dreams-and-memory.html" class="acc-link">Dreams And Memory</a>\n            <a href="evolution-of-sleep-dreams.html" class="acc-link">Evolution Of Sleep Dreams</a>\n            <a href="grief-mourning-rem-sleep.html" class="acc-link">Grief Mourning Rem Sleep</a>\n            <a href="hippocampus-dream-memory.html" class="acc-link">Hippocampus Dream Memory</a>\n            <a href="how-to-remember-dreams.html" class="acc-link">How To Remember Dreams</a>\n            <a href="hypnagogic-states.html" class="acc-link">Hypnagogic States</a>\n            <a href="lucid-dreaming-beginners.html" class="acc-link">Lucid Dreaming Beginners</a>\n            <a href="menstrual-cycles-hormones-dreams.html" class="acc-link">Menstrual Cycles Hormones Dreams</a>\n            <a href="pregnancy-dreams-science.html" class="acc-link">Pregnancy Dreams Science</a>\n            <a href="rem-sleep-guide.html" class="acc-link">Rem Sleep Guide</a>\n            <a href="science-rem-sleep-emotions.html" class="acc-link">Science Rem Sleep Emotions</a>\n            <a href="screen-time-blue-light-rem.html" class="acc-link">Screen Time Blue Light Rem</a>\n            <a href="sleep-hygiene-dreams.html" class="acc-link">Sleep Hygiene Dreams</a>\n            <a href="sleep-stages-dreams.html" class="acc-link">Sleep Stages Dreams</a>\n            <a href="sleeping-position-dream-types.html" class="acc-link">Sleeping Position Dream Types</a>
         </div>
     </details>
 
     <details class="acc-details">
         <summary class="acc-summary">Nightmares & Dark Dreams <span class="acc-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></summary>
         <div class="acc-content">
-            <a href="cbt-for-recurring-nightmares.html" class="acc-link">Cbt For Recurring Nightmares</a><a href="dreaming-about-being-chased.html" class="acc-link">Dreaming About Being Chased</a><a href="dreaming-about-being-trapped.html" class="acc-link">Dreaming About Being Trapped</a><a href="dreaming-about-car-accident.html" class="acc-link">Dreaming About Car Accident</a><a href="dreaming-about-death.html" class="acc-link">Dreaming About Death</a><a href="dreaming-about-falling.html" class="acc-link">Dreaming About Falling</a><a href="dreaming-about-kidnapping.html" class="acc-link">Dreaming About Kidnapping</a><a href="dreaming-about-murder.html" class="acc-link">Dreaming About Murder</a><a href="dreaming-about-zombies.html" class="acc-link">Dreaming About Zombies</a><a href="fever-dreams-vs-nightmares.html" class="acc-link">Fever Dreams Vs Nightmares</a><a href="lucid-dreaming-therapy-nightmares.html" class="acc-link">Lucid Dreaming Therapy Nightmares</a><a href="nightmares-in-children-guide.html" class="acc-link">Nightmares In Children Guide</a><a href="sleep-deprivation-nightmares.html" class="acc-link">Sleep Deprivation Nightmares</a><a href="sleep-paralysis-explained.html" class="acc-link">Sleep Paralysis Explained</a><a href="sleep-paralysis-neurology.html" class="acc-link">Sleep Paralysis Neurology</a><a href="stop-nightmares-guide.html" class="acc-link">Stop Nightmares Guide</a><a href="teeth-falling-out-dream.html" class="acc-link">Teeth Falling Out Dream</a><a href="what-do-nightmares-mean.html" class="acc-link">What Do Nightmares Mean</a>
+            <a href="cbt-for-recurring-nightmares.html" class="acc-link">Cbt For Recurring Nightmares</a>\n            <a href="dreaming-about-being-chased.html" class="acc-link">Dreaming About Being Chased</a>\n            <a href="dreaming-about-being-trapped.html" class="acc-link">Dreaming About Being Trapped</a>\n            <a href="dreaming-about-car-accident.html" class="acc-link">Dreaming About Car Accident</a>\n            <a href="dreaming-about-death.html" class="acc-link">Dreaming About Death</a>\n            <a href="dreaming-about-falling.html" class="acc-link">Dreaming About Falling</a>\n            <a href="dreaming-about-kidnapping.html" class="acc-link">Dreaming About Kidnapping</a>\n            <a href="dreaming-about-murder.html" class="acc-link">Dreaming About Murder</a>\n            <a href="dreaming-about-zombies.html" class="acc-link">Dreaming About Zombies</a>\n            <a href="fever-dreams-vs-nightmares.html" class="acc-link">Fever Dreams Vs Nightmares</a>\n            <a href="lucid-dreaming-therapy-nightmares.html" class="acc-link">Lucid Dreaming Therapy Nightmares</a>\n            <a href="nightmares-in-children-guide.html" class="acc-link">Nightmares In Children Guide</a>\n            <a href="sleep-deprivation-nightmares.html" class="acc-link">Sleep Deprivation Nightmares</a>\n            <a href="sleep-paralysis-explained.html" class="acc-link">Sleep Paralysis Explained</a>\n            <a href="sleep-paralysis-neurology.html" class="acc-link">Sleep Paralysis Neurology</a>\n            <a href="stop-nightmares-guide.html" class="acc-link">Stop Nightmares Guide</a>\n            <a href="teeth-falling-out-dream.html" class="acc-link">Teeth Falling Out Dream</a>\n            <a href="what-do-nightmares-mean.html" class="acc-link">What Do Nightmares Mean</a>
         </div>
     </details>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.acc-details').forEach(details => {
+                const contentDiv = details.querySelector('.acc-content');
+                if (!contentDiv) return;
+                const links = Array.from(contentDiv.querySelectorAll('.acc-link'));
+                const pageSize = 18;
+                if(links.length <= pageSize) return;
+                
+                let currentPage = 1;
+                const totalPages = Math.ceil(links.length / pageSize);
+
+                // Create Pagination Component
+                const paginationDiv = document.createElement('div');
+                paginationDiv.className = 'acc-pagination';
+                
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'acc-btn prev';
+                prevBtn.innerHTML = '←';
+                prevBtn.disabled = true;
+
+                const infoSpan = document.createElement('span');
+                infoSpan.className = 'acc-page-info';
+                infoSpan.textContent = '1 / ' + totalPages;
+
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'acc-btn next';
+                nextBtn.innerHTML = '→';
+
+                paginationDiv.appendChild(prevBtn);
+                paginationDiv.appendChild(infoSpan);
+                paginationDiv.appendChild(nextBtn);
+                details.appendChild(paginationDiv);
+
+                function renderPage(page) {
+                    const start = (page - 1) * pageSize;
+                    const end = start + pageSize;
+                    
+                    links.forEach((link, idx) => {
+                        if (idx >= start && idx < end) {
+                            link.classList.remove('hide-link');
+                        } else {
+                            link.classList.add('hide-link');
+                        }
+                    });
+                    
+                    infoSpan.textContent = page + ' / ' + totalPages;
+                    prevBtn.disabled = (page === 1);
+                    nextBtn.disabled = (page === totalPages);
+                }
+
+                // Initial render requires opening the details tag slightly early if we want width calculations, 
+                // but display logic works regardless.
+                renderPage(currentPage);
+
+                prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (currentPage > 1) { currentPage--; renderPage(currentPage); }
+                });
+                nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (currentPage < totalPages) { currentPage++; renderPage(currentPage); }
+                });
+            });
+        });
+    </script>
 </section>
+
 <footer><p> —  2026 Noctaras  —  <a href="../privacy.html">Privacy</a>  —  <a href="../terms.html">Terms</a>  —  <a href="../index.html">Home</a></p></footer><script>
 (function() {
   const html = document.documentElement;
