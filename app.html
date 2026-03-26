@@ -3405,7 +3405,7 @@
       if (!wrapper || !micBtn || !inp) return;
       wrapper.classList.add('has-mic');
       const rec = new SR();
-      rec.continuous = false;
+      rec.continuous = true;
       rec.interimResults = true;
       let recording = false;
       let _stream = null;
