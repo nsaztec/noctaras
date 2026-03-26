@@ -3408,16 +3408,10 @@
       rec.continuous = false;
       rec.interimResults = true;
       let recording = false;
-      micBtn.addEventListener('click', async () => {
+      micBtn.addEventListener('click', () => {
         if (recording) { rec.stop(); return; }
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          stream.getTracks().forEach(t => t.stop());
-          rec.start();
-        } catch(e) {
-          micBtn.style.color = '#e05555';
-          setTimeout(() => { micBtn.style.color = ''; }, 3000);
-        }
+        try { rec.start(); }
+        catch(e) { console.warn('Speech recognition error:', e); }
       });
       rec.onstart = () => { recording = true; micBtn.classList.add('recording'); };
       rec.onresult = (e) => {
