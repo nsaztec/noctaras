@@ -548,10 +548,17 @@ footer {
   .t-feat:last-child { border-bottom: none; }
   /* Nav: hide Sign in / Account — keep toggle + CTA */
   #navSignIn, #navAccount { display: none !important; }
+<<<<<<< HEAD
   nav, nav.scrolled { padding: 14px 12px; }
   .nav-left { margin-left: 0 !important; padding-left: 0 !important; }
   .nav-right { justify-content: flex-end; gap: 8px; }
   .theme-switch-wrapper { transform: scale(0.65); transform-origin: center center; margin-left: -16px; margin-right: -16px; }
+=======
+  nav { padding: 14px 20px; }
+  .nav-left { flex: 1; }
+  .nav-right { flex: 1; justify-content: flex-end; }
+  .theme-switch-wrapper { transform-origin: center center; }
+>>>>>>> stage
   #navCTA { font-size: 12px; padding: 0 12px; height: 32px; line-height: 32px; white-space: nowrap; border-radius: 6px; }
 
   /* ── Dream Tree: hide video on mobile (performance), text-only layout ── */
@@ -1349,12 +1356,19 @@ const app = initializeApp({
   appId: "1:414698039475:web:958d09a4a63421815ba8c6"
 });
 const auth = getAuth(app);
-// Pre-set CTA from localStorage to avoid flash
+// Pre-set nav from localStorage synchronously to avoid flash on load
 const cta = document.getElementById('navCTA');
+const navSignInEl = document.getElementById('navSignIn');
+const navAccountEl = document.getElementById('navAccount');
 const isMobile = () => window.innerWidth <= 600;
 const ctaDefault = () => isMobile() ? 'Sign Up' : 'Start Journaling';
-// Set immediately (sync) to avoid flash on load
-if (cta) cta.textContent = localStorage.getItem('nc_user') ? 'Journal' : ctaDefault();
+if (localStorage.getItem('nc_user')) {
+  if (cta) cta.textContent = 'Journal';
+  if (navSignInEl) navSignInEl.style.display = 'none';
+  if (navAccountEl) navAccountEl.style.display = '';
+} else {
+  if (cta) cta.textContent = ctaDefault();
+}
 onAuthStateChanged(auth, (user) => {
   const signIn = document.getElementById('navSignIn');
   const account = document.getElementById('navAccount');
