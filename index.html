@@ -630,7 +630,11 @@ footer {
     max-width: 100vw !important;
     overflow-x: clip !important;
   }
+  /* Pre-auth nav state — prevents flash on load */
+  html.nc-logged-in #navSignIn { display: none !important; }
+  html.nc-logged-in #navAccount { display: inline-flex !important; }
 </style>
+<script>if(localStorage.getItem('nc_user'))document.documentElement.classList.add('nc-logged-in');</script>
 
 <!-- Vercel Web Analytics -->
 <script defer src="/_vercel/insights/script.js"></script>
