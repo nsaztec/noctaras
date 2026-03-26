@@ -550,6 +550,7 @@ footer {
   #navSignIn, #navAccount { display: none !important; }
   .theme-switch-wrapper { display: none; }
   nav { padding: 16px 5%; }
+  #navCTA { font-size: 11px; padding: 0 10px; height: 28px; border-radius: 6px; }
 
   /* ── Dream Tree: hide video on mobile (performance), text-only layout ── */
   .dt5-bg-video { display: none; }
@@ -1348,6 +1349,7 @@ const app = initializeApp({
 const auth = getAuth(app);
 // Pre-set CTA from localStorage to avoid flash
 const cta = document.getElementById('navCTA');
+const isMobile = () => window.innerWidth <= 600;
 if (localStorage.getItem('nc_user') && cta) cta.textContent = 'Journal';
 onAuthStateChanged(auth, (user) => {
   const signIn = document.getElementById('navSignIn');
@@ -1361,7 +1363,7 @@ onAuthStateChanged(auth, (user) => {
     localStorage.removeItem('nc_user');
     signIn.style.display = '';
     account.style.display = 'none';
-    cta.textContent = 'Start Journaling';
+    cta.textContent = isMobile() ? 'Start' : 'Start Journaling';
   }
 });
 </script>
