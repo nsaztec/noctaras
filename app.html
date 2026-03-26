@@ -695,7 +695,8 @@
     .ai-input-submit {
       position: absolute;
       right: 12px;
-      bottom: 26px;
+      top: 50%;
+      transform: translateY(-50%) scale(0.9);
       width: 32px;
       height: 32px;
       min-width: 32px;
@@ -720,12 +721,12 @@
 
     .ai-input-submit.visible {
       opacity: 1;
-      transform: scale(1);
+      transform: translateY(-50%) scale(1);
       pointer-events: auto;
     }
 
     .ai-input-submit:hover {
-      transform: scale(1.05);
+      transform: translateY(-50%) scale(1.05);
       opacity: 0.9;
     }
 
@@ -737,39 +738,39 @@
 
     .ai-mic-btn {
       position: absolute;
-      left: 12px;
-      bottom: 26px;
+      right: 52px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 32px;
       height: 32px;
       background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      border: none;
+      border-radius: 50%;
       color: var(--muted);
       cursor: pointer;
       display: none;
       align-items: center;
       justify-content: center;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      transition: color 0.15s, background 0.15s;
+      padding: 0;
     }
     .ai-mic-btn:hover {
       color: var(--text);
-      border-color: var(--text);
+      background: var(--surface-hover);
     }
     .ai-mic-btn.recording {
       color: #e05555;
-      border-color: #e05555;
-      background: rgba(224,85,85,0.08);
-      animation: mic-pulse 1.2s ease-in-out infinite;
+      animation: mic-pulse 1s ease-in-out infinite;
     }
     @keyframes mic-pulse {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      50% { opacity: 0.4; }
     }
     .has-mic .ai-mic-btn {
       display: flex;
     }
     .has-mic .ai-input-textarea {
-      padding-left: 52px;
+      padding-right: 88px;
     }
 
     .chat-moon {
@@ -2839,10 +2840,10 @@
       <div id="chatMessages"></div>
       <div class="chat-input-wrapper" id="chatInputWrapper">
         <button class="ai-mic-btn" id="micBtn" type="button" aria-label="Voice input">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="2" width="6" height="12" rx="3"></rect>
-            <path d="M5 10a7 7 0 0 0 14 0"></path>
-            <line x1="12" y1="19" x2="12" y2="22"></line>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
           </svg>
         </button>
         <textarea id="vanishInput" class="ai-input-textarea" placeholder="I was flying over a city of clouds..." rows="1"
@@ -3397,15 +3398,21 @@
       let recording = false;
       micBtn.addEventListener('click', () => {
         if (recording) { rec.stop(); return; }
-        try { rec.start(); } catch(e) {}
+        try { rec.start(); }
+        catch(e) { console.warn('Speech recognition error:', e); }
       });
       rec.onstart = () => { recording = true; micBtn.classList.add('recording'); };
       rec.onresult = (e) => {
-        inp.value = Array.from(e.results).map(r => r[0].transcript).join('');
+        const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
+        inp.value = transcript;
         window.onInput();
       };
       rec.onend = () => { recording = false; micBtn.classList.remove('recording'); };
-      rec.onerror = () => { recording = false; micBtn.classList.remove('recording'); };
+      rec.onerror = (e) => {
+        recording = false;
+        micBtn.classList.remove('recording');
+        if (e.error === 'not-allowed') alert('Microphone permission denied. Please allow microphone access in your browser settings.');
+      };
     })();
 
     // ── Mobile keyboard: use focus/blur on chat textarea (more reliable than visualViewport on iOS) ──
