@@ -738,7 +738,7 @@
 
     .ai-mic-btn {
       position: absolute;
-      right: 52px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       width: 32px;
@@ -751,7 +751,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      transition: color 0.15s, background 0.15s;
+      transition: color 0.15s, background 0.15s, right 0.15s;
       padding: 0;
     }
     .ai-mic-btn:hover {
@@ -770,6 +770,12 @@
       display: flex;
     }
     .has-mic .ai-input-textarea {
+      padding-right: 52px;
+    }
+    .has-mic:has(.ai-input-submit.visible) .ai-mic-btn {
+      right: 52px;
+    }
+    .has-mic:has(.ai-input-submit.visible) .ai-input-textarea {
       padding-right: 88px;
     }
 
@@ -2232,6 +2238,12 @@
         margin-top: -16px;
         /* half of 32px button height → vertically centered */
       }
+      .chat-input-wrapper.has-mic .ai-mic-btn {
+        right: 20px;
+      }
+      .chat-input-wrapper.has-mic:has(.ai-input-submit.visible) .ai-mic-btn {
+        right: 60px;
+      }
 
       /* ── Journal / Tree / Profile ── */
       .journal-wrap,
@@ -3411,7 +3423,11 @@
       rec.onerror = (e) => {
         recording = false;
         micBtn.classList.remove('recording');
-        if (e.error === 'not-allowed') alert('Microphone permission denied. Please allow microphone access in your browser settings.');
+        if (e.error === 'not-allowed') {
+          micBtn.title = 'Microphone access denied — check browser settings';
+          micBtn.style.color = '#e05555';
+          setTimeout(() => { micBtn.style.color = ''; micBtn.title = ''; }, 3000);
+        }
       };
     })();
 
