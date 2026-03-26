@@ -6,6 +6,7 @@
     "@capacitor/cli": "^8.2.0",
     "@capacitor/core": "^8.2.0",
     "@capacitor/ios": "^8.2.0",
+    "@vercel/analytics": "^2.0.1",
     "firebase-admin": "^12.7.0",
     "resend": "^3.2.0"
   },
