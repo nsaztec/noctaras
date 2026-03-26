@@ -550,8 +550,9 @@ footer {
   #navSignIn, #navAccount { display: none !important; }
   nav { padding: 14px 20px; }
   .nav-left { flex: 1; }
-  .nav-right { flex: 1; justify-content: flex-end; }
-  .theme-switch-wrapper { transform-origin: center center; }
+  .nav-right { flex: 1; justify-content: flex-end; gap: 8px; }
+  .theme-switch-wrapper { transform: none; margin-right: 0; }
+  .theme-switch-wrapper .theme-switch { --toggle-size: 10.4px; }
   #navCTA { font-size: 12px; padding: 0 12px; height: 32px; line-height: 32px; white-space: nowrap; border-radius: 6px; }
 
   /* ── Dream Tree: hide video on mobile (performance), text-only layout ── */
