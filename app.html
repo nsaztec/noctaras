@@ -3408,25 +3408,40 @@
       rec.continuous = false;
       rec.interimResults = true;
       let recording = false;
-      micBtn.addEventListener('click', () => {
+      let _stream = null;
+      function releaseStream() {
+        if (_stream) { _stream.getTracks().forEach(t => t.stop()); _stream = null; }
+      }
+      micBtn.addEventListener('click', async () => {
         if (recording) { rec.stop(); return; }
-        try { rec.start(); }
-        catch(e) { console.warn('Speech recognition error:', e); }
+        try {
+          // getUserMedia reliably triggers native browser permission popup
+          _stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          rec.start(); // start while stream still open — no mic contention
+        } catch(e) {
+          releaseStream();
+          micBtn.style.color = '#e05555';
+          setTimeout(() => { micBtn.style.color = ''; }, 3000);
+        }
       });
-      rec.onstart = () => { recording = true; micBtn.classList.add('recording'); };
+      rec.onstart = () => {
+        recording = true;
+        micBtn.classList.add('recording');
+        releaseStream(); // rec has acquired its own stream now
+      };
       rec.onresult = (e) => {
         const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
         inp.value = transcript;
         window.onInput();
       };
-      rec.onend = () => { recording = false; micBtn.classList.remove('recording'); };
+      rec.onend = () => { recording = false; micBtn.classList.remove('recording'); releaseStream(); };
       rec.onerror = (e) => {
         recording = false;
         micBtn.classList.remove('recording');
+        releaseStream();
         if (e.error === 'not-allowed') {
-          micBtn.title = 'Microphone access denied — check browser settings';
           micBtn.style.color = '#e05555';
-          setTimeout(() => { micBtn.style.color = ''; micBtn.title = ''; }, 3000);
+          setTimeout(() => { micBtn.style.color = ''; }, 3000);
         }
       };
     })();
