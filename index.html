@@ -546,10 +546,12 @@ footer {
   .trust-features { grid-template-columns: 1fr; }
   .t-feat { border-right: none !important; border-bottom: 1px dashed var(--border-strong); }
   .t-feat:last-child { border-bottom: none; }
-  /* Nav: hide Sign in / Account / theme toggle — show only CTA */
+  /* Nav: hide Sign in / Account — keep toggle + CTA */
   #navSignIn, #navAccount { display: none !important; }
-  .theme-switch-wrapper { display: none !important; }
-  nav { padding: 16px 5%; }
+  nav { padding: 14px 20px; }
+  .nav-left { flex: 1; }
+  .nav-right { flex: 1; justify-content: flex-end; }
+  .theme-switch-wrapper { transform-origin: center center; }
   #navCTA { font-size: 12px; padding: 0 12px; height: 32px; line-height: 32px; white-space: nowrap; border-radius: 6px; }
 
   /* ── Dream Tree: hide video on mobile (performance), text-only layout ── */
