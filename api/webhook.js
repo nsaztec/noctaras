@@ -1,6 +1,9 @@
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import crypto from 'crypto';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 if (!getApps().length) {
   initializeApp({
@@ -68,6 +71,20 @@ export default async function handler(req, res) {
         subscriptionStatus: status || 'active',
         updatedAt: new Date().toISOString(),
       }, { merge: true });
+
+      if (eventType === 'checkout.completed') {
+        await resend.emails.send({
+          from: 'Noctaras <noreply@noctaras.com>',
+          to: userEmail,
+          bcc: 'noctaras.com+7701671ee5@invite.trustpilot.com',
+          subject: 'Welcome to Noctaras Pro!',
+          html: `<p>Hi,</p>
+<p>Thank you for subscribing to <strong>Noctaras Pro</strong>! Your account has been upgraded.</p>
+<p>You now have access to unlimited dream interpretations, advanced AI analysis, and all premium features.</p>
+<p>Start journaling at <a href="https://www.noctaras.com/app.html">noctaras.com</a>.</p>
+<p>Sweet dreams,<br>The Noctaras Team</p>`,
+        }).catch(err => console.error('Trustpilot email error:', err));
+      }
     }
 
     if (CANCELLING.includes(eventType)) {
