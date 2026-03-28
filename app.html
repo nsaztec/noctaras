@@ -2885,13 +2885,14 @@
         </div>
         <div class="topbar-divider"></div>
         <button class="btn-get-pro" id="btnGetPro" onclick="showPaywall()">Get Pro</button>
-        <button class="btn-icon" onclick="goProfile()" title="Profile">
+        <a id="topbarSignUp" href="app.html#register" class="btn-get-pro" style="display:none;text-decoration:none;">Sign Up</a>
+        <button class="btn-icon" id="topbarProfile" onclick="goProfile()" title="Profile">
           <svg viewBox="0 0 24 24">
             <path
               d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
           </svg>
         </button>
-        <button class="btn-icon" onclick="signOut()" title="Sign out">
+        <button class="btn-icon" id="topbarSignOut" onclick="signOut()" title="Sign out">
           <svg viewBox="0 0 24 24">
             <path
               d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
@@ -3339,6 +3340,15 @@
           } else {
             guestMode = true;
             showScreen('chat');
+            // Hide auth-only topbar elements for guests
+            const tProfile = document.getElementById('topbarProfile');
+            const tSignOut = document.getElementById('topbarSignOut');
+            const tSignUp = document.getElementById('topbarSignUp');
+            const tGetPro = document.getElementById('btnGetPro');
+            if (tProfile) tProfile.style.display = 'none';
+            if (tSignOut) tSignOut.style.display = 'none';
+            if (tGetPro) tGetPro.style.display = 'none';
+            if (tSignUp) tSignUp.style.display = '';
           }
         }
       });
@@ -3474,7 +3484,16 @@
 
     window.goJournal = () => { history.replaceState(null, '', 'app.html'); showScreen('journal'); renderJournal(); };
     window.goChat = () => { history.replaceState(null, '', 'app.html'); showScreen('chat'); };
-    window.goTree = () => { history.replaceState(null, '', 'app.html'); showScreen('tree'); renderTree(); };
+    window.goTree = () => {
+      history.replaceState(null, '', 'app.html');
+      showScreen('tree');
+      if (guestMode || !currentUser) {
+        const treeEl = document.getElementById('screen-tree');
+        if (treeEl) treeEl.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:16px;text-align:center;padding:32px;"><div style="font-size:32px;opacity:0.4;">🌳</div><h2 style="font-family:var(--serif,Georgia,serif);font-weight:500;font-size:22px;color:var(--text);">Your Dream Tree awaits</h2><p style="color:var(--muted);font-size:15px;max-width:360px;line-height:1.7;">Create a free account to unlock your Dream Tree — a visual map of every dream you\'ve recorded over time.</p><a href="app.html#register" style="display:inline-block;background:var(--accent,#5a7b6b);color:#fff;font-size:14px;font-weight:600;padding:12px 28px;border-radius:8px;text-decoration:none;margin-top:8px;">Create Free Account →</a></div>';
+        return;
+      }
+      renderTree();
+    };
     window.goProfile = () => { history.replaceState(null, '', 'app.html#profile'); showScreen('profile'); loadProfile(); };
 
     // ── Voice input (Web Speech API) ──
